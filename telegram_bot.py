@@ -243,6 +243,29 @@ async def profile_command(message: types.Message):
         reply_markup=keyboard
     )
 
+# Handle when user opens bot chat (no command)
+@dp.message()
+async def handle_any_message(message: types.Message):
+    """Any message handler - auto start"""
+    if message.text and not message.text.startswith('/'):
+        # If user sends any text (not command), show start
+        await start_command(message)
+    else:
+        # For unknown commands
+        await message.answer(
+            "💕 LinkUp Dating ga xush kelibsiz!\n\n"
+            "Boshlash uchun /start tugmasini bosing",
+            reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="🚀 Boshlash", callback_data="start_bot")]
+            ])
+        )
+
+@dp.callback_query(F.data == "start_bot")
+async def start_bot_callback(callback: CallbackQuery):
+    """Start bot callback"""
+    await callback.answer()
+    await start_command(callback.message)
+
 async def main():
     """Bot ishga tushirish"""
     print("🤖 LinkUp Dating Bot - REAL MODE")
