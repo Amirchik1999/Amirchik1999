@@ -7,18 +7,15 @@ const tg = window.Telegram?.WebApp;
 // API Configuration
 const API_URL = process.env.REACT_APP_BACKEND_URL || 'https://a8447bef-3339-4070-80f8-ad58b7c2a078.preview.emergentagent.com';
 
-// Language detection
+// Language detection - always Russian like real TON Dating
 const getTelegramLanguage = () => {
-  if (tg?.initDataUnsafe?.user?.language_code) {
-    const lang = tg.initDataUnsafe.user.language_code;
-    return ['ru', 'uk', 'be'].includes(lang) ? 'ru' : 'ru'; // Always Russian like real TON Dating
-  }
   return 'ru';
 };
 
-// Exact texts from real TON Dating
+// Exact texts from TON Dating
 const texts = {
   'ru': {
+    welcome_title: 'Добро пожаловать в TON Dating',
     app_name: 'TON Dating',
     welcome_subtitle: 'Знакомства в Telegram.\nПрисоединяйтесь к сообществу\nамбициозных и реальных людей.',
     create_profile: 'Создать профиль',
@@ -53,56 +50,40 @@ const getText = (key) => {
   return texts[lang]?.[key] || texts['ru'][key] || key;
 };
 
-// Main Auth/Welcome Screen - exact copy from screenshots
-const AuthScreen = ({ onAuth }) => {
-  const [loading, setLoading] = useState(false);
-
-  const handleCreateProfile = async () => {
-    setLoading(true);
-    try {
-      // Mock authentication for demo
-      const mockUser = {
-        telegram_id: 123456789,
-        first_name: 'Пользователь',
-        username: 'user123'
-      };
-      
-      setTimeout(() => {
-        onAuth(mockUser);
-        setLoading(false);
-      }, 1000);
-    } catch (error) {
-      console.error('Auth error:', error);
-      setLoading(false);
-    }
-  };
-
-  const handleConnectWallet = () => {
-    if (tg?.showAlert) {
-      tg.showAlert('Функция подключения кошелька пока недоступна');
-    } else {
-      alert('Функция подключения кошелька пока недоступна');
-    }
-  };
-
-  // Auto-start for demo
+// Intro Screen - "Добро пожаловать в TON Dating"
+const IntroScreen = ({ onContinue }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (!loading) {
-        // Auto proceed to profile creation for demo
-      }
-    }, 2000);
+      onContinue();
+    }, 3000); // Show for 3 seconds
     return () => clearTimeout(timer);
-  }, [loading]);
+  }, [onContinue]);
 
   return (
     <div className="ton-app">
-      {/* Background pattern */}
       <div className="ton-background">
         <div className="pattern-overlay"></div>
       </div>
-      
-      {/* Main content */}
+      <div className="ton-content">
+        <div className="intro-container">
+          <div className="intro-icon">💎</div>
+          <h1 className="intro-title">{getText('welcome_title')}</h1>
+          <p className="intro-subtitle">
+            Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Main Welcome Screen - with TON Dating logo and buttons
+const WelcomeScreen = ({ onCreateProfile, onConnectWallet }) => {
+  return (
+    <div className="ton-app">
+      <div className="ton-background">
+        <div className="pattern-overlay"></div>
+      </div>
       <div className="ton-content">
         <div className="welcome-container">
           {/* TON Dating Logo */}
@@ -110,7 +91,7 @@ const AuthScreen = ({ onAuth }) => {
             <div className="ton-logo">
               <div className="logo-diamond">💎</div>
             </div>
-            <h1 className="app-title">TON Dating</h1>
+            <h1 className="app-title">{getText('app_name')}</h1>
           </div>
           
           {/* Welcome text */}
@@ -122,15 +103,14 @@ const AuthScreen = ({ onAuth }) => {
           <div className="welcome-actions">
             <button 
               className="ton-btn primary"
-              onClick={handleCreateProfile}
-              disabled={loading}
+              onClick={onCreateProfile}
             >
-              {loading ? getText('loading') : getText('create_profile')}
+              {getText('create_profile')}
             </button>
             
             <button 
               className="ton-btn secondary"
-              onClick={handleConnectWallet}
+              onClick={onConnectWallet}
             >
               {getText('connect_wallet')}
             </button>
@@ -602,9 +582,8 @@ const TabBar = ({ activeTab, onTabChange }) => {
 };
 
 const App = () => {
+  const [currentScreen, setCurrentScreen] = useState('intro'); // intro -> welcome -> profile -> app
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [needsProfile, setNeedsProfile] = useState(false);
   const [activeTab, setActiveTab] = useState('discover');
 
   useEffect(() => {
@@ -615,25 +594,49 @@ const App = () => {
     }
   }, []);
 
-  const handleAuth = (userData) => {
-    setUser(userData);
-    setIsAuthenticated(true);
-    setNeedsProfile(true); // Always show profile setup for demo
+  const handleIntroComplete = () => {
+    setCurrentScreen('welcome');
   };
 
-  const handleProfileComplete = (updatedUser) => {
-    setUser(updatedUser);
-    setNeedsProfile(false);
+  const handleCreateProfile = () => {
+    setCurrentScreen('profile');
+    setUser({ telegram_id: 123456789, first_name: 'Пользователь' });
   };
 
-  if (!isAuthenticated) {
-    return <AuthScreen onAuth={handleAuth} />;
+  const handleConnectWallet = () => {
+    if (tg?.showAlert) {
+      tg.showAlert('Функция подключения кошелька пока недоступна');
+    } else {
+      alert('Функция подключения кошелька пока недоступна');
+    }
+  };
+
+  const handleProfileComplete = (profileData) => {
+    setUser(profileData);
+    setCurrentScreen('app');
+  };
+
+  // Intro sequence
+  if (currentScreen === 'intro') {
+    return <IntroScreen onContinue={handleIntroComplete} />;
   }
 
-  if (needsProfile) {
+  // Welcome screen with buttons
+  if (currentScreen === 'welcome') {
+    return (
+      <WelcomeScreen 
+        onCreateProfile={handleCreateProfile}
+        onConnectWallet={handleConnectWallet}
+      />
+    );
+  }
+
+  // Profile setup
+  if (currentScreen === 'profile') {
     return <ProfileSetup user={user} onComplete={handleProfileComplete} />;
   }
 
+  // Main app
   return (
     <div className="ton-dating-app">
       <div className="app-content">
