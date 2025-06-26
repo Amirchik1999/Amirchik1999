@@ -119,6 +119,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "Tested Telegram webhook endpoint. It successfully receives and acknowledges webhook data. Fixed issue with MongoDB ObjectId serialization."
+      - working: true
+        agent: "testing"
+        comment: "Re-tested Telegram webhook endpoint after frontend changes. The endpoint is still working correctly and returns status 200 with proper response."
 
   - task: "User Profile Management"
     implemented: true
@@ -134,6 +137,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "Successfully tested user profile creation and retrieval. Fixed MongoDB ObjectId serialization issue. Created test profiles with different genders and interests."
+      - working: true
+        agent: "testing"
+        comment: "Re-tested user profile management after frontend changes. The API endpoints for user profile management are still working correctly."
 
   - task: "Daily Viewing Limits"
     implemented: true
@@ -149,6 +155,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "Successfully tested daily limit functionality. View count increments correctly and daily limit is enforced. Fixed MongoDB ObjectId serialization issue."
+      - working: true
+        agent: "testing"
+        comment: "Re-tested daily viewing limits functionality after frontend changes. The API endpoints for daily limits are still working correctly."
 
   - task: "Matching System"
     implemented: true
@@ -164,6 +173,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "Successfully tested matching system. Users can like each other and matches are created when both users like each other. Fixed MongoDB ObjectId serialization issue."
+      - working: true
+        agent: "testing"
+        comment: "Re-tested matching system after frontend changes. The API endpoints for the matching system are still working correctly."
 
 frontend:
   - task: "Remove Emergent Watermark"
@@ -208,7 +220,7 @@ frontend:
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 0
+  test_sequence: 1
   run_ui: false
 
 test_plan:
@@ -227,3 +239,5 @@ agent_communication:
     message: "Completed testing of all backend API endpoints. Fixed MongoDB ObjectId serialization issues that were causing errors in several endpoints. All tests are now passing. The Telegram Dating Bot API is working correctly with proper profile management, daily limits, and matching system."
   - agent: "main"
     message: "Removed persistent Emergent watermark from site. Updated frontend UI to better match TON Dating app - improved intro screen, welcome screen styling, glass morphism buttons, logo design, typography. User previously reported UI was not similar to TON Dating app. Need frontend testing to verify if 1:1 visual match is achieved."
+  - agent: "testing"
+    message: "Completed re-testing of all backend API endpoints after frontend changes. All backend functionality is working correctly. The API health check, user profile management, daily viewing limits, matching system, and Telegram webhook are all functioning as expected. No issues were found with the backend."
