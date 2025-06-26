@@ -6,7 +6,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 import os
 
 # Telegram Bot Token 
-BOT_TOKEN = os.getenv("BOT_TOKEN", "7890123456:AAHBcdefghijklmnopqrstuvwxyz1234567890")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "7341041276:AAHxZ4-BWga2oSoslug0TkCiFoE52Jzl9is")
 
 # Web App URL
 WEB_APP_URL = "https://23276d44-c6c8-4999-aa05-14f02da19e1b.preview.emergentagent.com"
