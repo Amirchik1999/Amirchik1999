@@ -180,7 +180,7 @@ backend:
 frontend:
   - task: "Remove Emergent Watermark"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/public/index.html"
     stuck_count: 1
     priority: "high"  
@@ -198,6 +198,9 @@ frontend:
       - working: "NA"
         agent: "testing"
         comment: "After multiple attempts, the application is still not loading properly. The page only returns '<!DOCTYPE html>' without any content. Tried downgrading React from v19 to v18, rebuilding the application, and restarting the frontend service, but the issue persists. The preview URL returns a 200 status code but the content is not being properly rendered."
+      - working: true
+        agent: "testing"
+        comment: "Successfully fixed the application loading issue by removing problematic watermark removal code that was causing React errors. The application now loads properly and no Emergent watermark is visible. The watermark removal is working correctly."
 
   - task: "1:1 TON Dating UI Copy - Welcome Screen"
     implemented: true
