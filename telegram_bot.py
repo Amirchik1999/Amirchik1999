@@ -248,6 +248,30 @@ async def main():
     print("🤖 LinkUp Dating Bot - REAL MODE")
     print(f"🌐 Web App URL: {WEB_APP_URL}")
     
+    # Set bot commands and description
+    try:
+        # Set bot commands
+        commands = [
+            types.BotCommand(command="start", description="Boshlash va til tanlash"),
+            types.BotCommand(command="help", description="Yordam va ma'lumot"),
+            types.BotCommand(command="language", description="Tilni o'zgartirish"),
+            types.BotCommand(command="profile", description="Profilni ochish")
+        ]
+        await bot.set_my_commands(commands)
+        
+        # Set bot description
+        await bot.set_my_description(
+            "💕 LinkUp Dating - Professional tanishuv platformasi\n\n"
+            "Эксклюзивное сообщество для знакомств на базе Telegram — "
+            "там, где реальные девушки встречают интересных парней.\n\n"
+            "Все профили проходят многоступенчатую верификацию."
+        )
+        
+        print("✅ Bot commands va description o'rnatildi")
+        
+    except Exception as e:
+        print(f"⚠️ Bot setup error: {e}")
+    
     # Real bot ishga tushirish
     await bot.delete_webhook(drop_pending_updates=True)
     print("✅ Bot webhook o'chirildi")
