@@ -213,10 +213,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Telegram Bot API Integration"
-    - "User Profile Management"
-    - "Matching System"
-  stuck_tasks: []
+    - "1:1 TON Dating UI Copy - Welcome Screen"
+    - "Remove Emergent Watermark"
+  stuck_tasks:
+    - "1:1 TON Dating UI Copy - Welcome Screen"
   test_all: false
   test_priority: "high_first"
 
