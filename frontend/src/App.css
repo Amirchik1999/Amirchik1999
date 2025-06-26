@@ -57,56 +57,6 @@ body {
   margin-bottom: 40px;
 }
 
-.intro-logo-container {
-  width: 320px;
-  height: 100px;
-  margin-bottom: 25px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.3),
-    0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.professional-heart-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.intro-logo-svg {
-  width: 280px;
-  height: 70px;
-  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.2));
-}
-
-.intro-brand-text {
-  text-align: center;
-}
-
-.intro-brand-title {
-  font-size: 42px;
-  font-weight: 800;
-  color: #fff;
-  margin: 0 0 8px 0;
-  letter-spacing: -1.2px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  line-height: 1.1;
-}
-
-.intro-brand-subtitle {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-}
-
 .language-indicator {
   margin-bottom: 30px;
   padding: 8px 16px;
