@@ -741,6 +741,35 @@ body {
   cursor: pointer;
 }
 
+/* Empty States */
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.empty-container h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.empty-container p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 30px;
+}
+
 /* Tab Bar */
 .tab-bar {
   display: flex;
@@ -748,11 +777,9 @@ body {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   height: 70px;
-  position: relative;
-  z-index: 10;
 }
 
-.tab {
+.tab-item {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -768,7 +795,6 @@ body {
 
 .tab-icon {
   font-size: 22px;
-  transition: transform 0.2s ease;
 }
 
 .tab-label {
@@ -777,46 +803,12 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.tab.active .tab-icon {
-  transform: scale(1.1);
-}
-
-.tab.active .tab-label {
+.tab-item.active .tab-label {
   color: #fff;
 }
 
-.tab:active {
+.tab-item:active {
   transform: scale(0.95);
-}
-
-/* Empty States */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.empty-emoji {
-  font-size: 60px;
-  margin-bottom: 20px;
-  opacity: 0.7;
-}
-
-.empty-state h3 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 10px;
-}
-
-.empty-state p {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 30px;
 }
 
 /* Responsive Design */
