@@ -96,6 +96,12 @@ body {
   justify-content: center;
 }
 
+.logo-svg {
+  width: 70px;
+  height: 70px;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.15));
+}
+
 .logo-image {
   width: 60px;
   height: 60px;
