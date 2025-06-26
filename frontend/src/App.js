@@ -283,12 +283,27 @@ const ProfileSetup = ({ onComplete }) => {
 
   const handleLocationRequest = async () => {
     try {
-      const pos = await LocationService.getCurrentPosition();
-      setLocation(pos);
-      setProfile(prev => ({ ...prev, location: 'Москва' })); // Mock city
+      console.log('📍 Location so\'raldi...');
+      const locationData = await LocationService.getCurrentPosition();
+      console.log('📍 Location olindi:', locationData);
+      
+      setLocation(locationData);
+      setProfile(prev => ({ 
+        ...prev, 
+        location: locationData.city || 'Неизвестный город'
+      }));
+      
+      // Show success message
+      if (window.Telegram?.WebApp?.showAlert) {
+        window.Telegram.WebApp.showAlert(`Joylashuv aniqlandi: ${locationData.city}`);
+      }
     } catch (error) {
       console.error('Location error:', error);
       setProfile(prev => ({ ...prev, location: 'Москва' }));
+      
+      if (window.Telegram?.WebApp?.showAlert) {
+        window.Telegram.WebApp.showAlert('GPS ishlamadi, Moskva qo\'yildi');
+      }
     }
   };
 
