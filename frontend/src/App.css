@@ -666,16 +666,16 @@ body {
 }
 
 /* Matches Screen */
-.matches-content {
-  height: 100vh;
+.matches-container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
   padding: 20px;
 }
 
 .matches-header {
-  padding: 20px 0;
   text-align: center;
+  padding: 20px 0;
 }
 
 .matches-header h2 {
@@ -684,54 +684,38 @@ body {
   color: #fff;
 }
 
-.matches-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 15px;
+.matches-list {
   flex: 1;
   overflow-y: auto;
 }
 
-.match-card {
+.match-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  overflow: hidden;
-  transition: transform 0.2s ease;
   backdrop-filter: blur(10px);
 }
 
-.match-card:active {
-  transform: scale(0.98);
-}
-
-.match-photo {
-  height: 180px;
-  background: rgba(255, 255, 255, 0.05);
-  position: relative;
-}
-
-.match-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.photo-placeholder {
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
+.match-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 36px;
+  font-size: 24px;
   font-weight: bold;
 }
 
 .match-info {
-  padding: 15px;
-  text-align: center;
+  flex: 1;
 }
 
 .match-info h4 {
@@ -744,24 +728,17 @@ body {
 .match-info p {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 15px;
 }
 
-.chat-btn {
-  width: 100%;
-  padding: 10px;
+.chat-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 18px;
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.chat-btn:active {
-  transform: scale(0.98);
 }
 
 /* Tab Bar */
