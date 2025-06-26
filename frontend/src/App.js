@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// Telegram Web App SDK
-const tg = window.Telegram?.WebApp;
+// Telegram Web App SDK with error handling
+let tg = null;
+try {
+  tg = window.Telegram?.WebApp;
+} catch (error) {
+  console.log('Telegram Web App not available');
+}
 
 // API Configuration
 const API_URL = process.env.REACT_APP_BACKEND_URL || 'https://23276d44-c6c8-4999-aa05-14f02da19e1b.preview.emergentagent.com';
