@@ -350,11 +350,11 @@ const ProfileSetup = ({ onComplete }) => {
   ];
 
   const steps = [
-    { key: 'name', title: texts.name_question },
-    { key: 'age', title: texts.age_question },
-    { key: 'bio', title: texts.bio_question },
-    { key: 'location', title: texts.location_question },
-    { key: 'interests', title: texts.interests_question }
+    { key: 'name', title: getText('name_question') },
+    { key: 'age', title: getText('age_question') },
+    { key: 'bio', title: getText('bio_question') },
+    { key: 'location', title: getText('location_question') },
+    { key: 'interests', title: getText('interests_question') }
   ];
 
   const handleLocationRequest = async () => {
