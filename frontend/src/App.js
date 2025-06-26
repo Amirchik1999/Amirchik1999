@@ -50,12 +50,12 @@ const getText = (key) => {
   return texts[lang]?.[key] || texts['ru'][key] || key;
 };
 
-// Intro Screen - "Добро пожаловать в TON Dating"
+// Intro Screen - Simple TON Dating logo
 const IntroScreen = ({ onContinue }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onContinue();
-    }, 3000); // Show for 3 seconds
+    }, 2000); // Show for 2 seconds
     return () => clearTimeout(timer);
   }, [onContinue]);
 
@@ -66,11 +66,10 @@ const IntroScreen = ({ onContinue }) => {
       </div>
       <div className="ton-content">
         <div className="intro-container">
-          <div className="intro-icon">💎</div>
+          <div className="ton-logo-intro">
+            <div className="logo-diamond-intro">💎</div>
+          </div>
           <h1 className="intro-title">{getText('welcome_title')}</h1>
-          <p className="intro-subtitle">
-            Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней.
-          </p>
         </div>
       </div>
     </div>
