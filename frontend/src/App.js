@@ -309,7 +309,7 @@ const WelcomeScreen = ({ onCreateProfile, onConnectWallet }) => {
       <div className="welcome-content">
         <div className="logo-section">
           <div className="app-logo">
-            <div className="diamond-icon">💎</div>
+            <div className="diamond-icon">❤️</div>
           </div>
           <h1 className="app-title">{getText('app_name')}</h1>
         </div>
