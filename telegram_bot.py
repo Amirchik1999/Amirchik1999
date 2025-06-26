@@ -125,35 +125,25 @@ def get_text(user_id, key):
 async def start_command(message: types.Message):
     """Start komanda - logo ko'rsatish va til tanlash"""
     
-    # First send the professional logo
-    logo_caption = """🌟 **LinkUp Dating** 🌟
+    # Professional logo caption in 3 languages
+    logo_caption = """💕 **LinkUp Dating** 💕
 
-💕 Professional tanishuv platformasi
-🔥 Exclusive sообщество для знакомств  
-✨ Professional dating community
+🌟 **O'zbek**: Professional tanishuv platformasi
+🌟 **Русский**: Эксклюзивная платформа знакомств  
+🌟 **English**: Professional dating platform
 
-Davom etish uchun tilni tanlang 👇
-Выберите язык для продолжения 👇  
-Choose language to continue 👇"""
+Davom etish uchun tilni tanlang 👇"""
 
-    # Create logo image URL (using a placeholder, you can replace with real image)
-    logo_url = "https://i.imgur.com/placeholder.png"  # Replace with actual logo URL
+    # Send the logo as a document/sticker simulation
+    # Note: In real bot, you would upload your logo image to Telegram and use file_id
     
-    try:
-        # Send logo photo
-        await message.answer_photo(
-            photo=logo_url,
-            caption=logo_caption,
-            parse_mode="Markdown"
-        )
-    except:
-        # If photo fails, send text version
-        await message.answer(
-            text=f"💕 **LinkUp Dating** 💕\n\n{logo_caption}",
-            parse_mode="Markdown"
-        )
+    # Send welcome message with logo description
+    await message.answer(
+        text=logo_caption,
+        parse_mode="Markdown"
+    )
     
-    # Then send language selection
+    # Language selection
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [
             InlineKeyboardButton(text="🇺🇿 O'zbekcha", callback_data="lang_uz")
@@ -167,8 +157,9 @@ Choose language to continue 👇"""
     ])
     
     await message.answer(
-        text="💫 Tilni tanlang / Выберите язык / Choose language:",
-        reply_markup=keyboard
+        text="💫 **Tilni tanlang / Выберите язык / Choose language:**",
+        reply_markup=keyboard,
+        parse_mode="Markdown"
     )
 
 @dp.callback_query(F.data.startswith("lang_"))
