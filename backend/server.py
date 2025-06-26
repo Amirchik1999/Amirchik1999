@@ -233,9 +233,11 @@ async def discover_profiles(
     if daily_limit.get("views_count", 0) >= 20:
         return {"profiles": [], "message": "Daily limit reached"}
     
-    # Use Moscow coordinates as default
+    # Use provided coordinates or default to Moscow
     user_lat = lat or 55.7558
     user_lng = lng or 37.6173
+    
+    print(f"🔍 Discovery request: lat={user_lat}, lng={user_lng}")
     
     # Get all profiles except current user
     available_profiles = []
@@ -262,6 +264,8 @@ async def discover_profiles(
     # Sort by distance and return limited results
     available_profiles.sort(key=lambda x: float(x["distance"].split()[0]))
     profiles = available_profiles[:limit]
+    
+    print(f"📊 Found {len(profiles)} profiles")
     
     return {"profiles": profiles}
 
