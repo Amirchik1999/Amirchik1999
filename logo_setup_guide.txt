@@ -1,0 +1,50 @@
+🖼️ TELEGRAM BOTGA LOGO RASM QO'SHISH YO'RIQNOMASI
+
+===============================
+📱 HOZIRGI HOLAT:
+===============================
+✅ Bot ishlamoqda: @LinkUp_Dating_bot
+✅ /start bosganda 3 tilda matn ko'rsatiladi
+✅ Mini app ichi professional logo bor
+
+===============================
+🎨 LOGO RASM QO'SHISH:
+===============================
+
+1️⃣ RASMNI TAYYORLASH:
+   • Sizning ko'rsatgan logo rasmingizni saqlang
+   • Recommended: 512x512 px, PNG format
+   • Heart + ♀♂ symbols + "LinkUp Dating" text
+
+2️⃣ TELEGRAM GA YUKLASH:
+   • @LinkUp_Dating_bot ga boring
+   • Rasmni bot chatiga yuboring
+   • Rasmni right-click -> Copy file_id
+
+3️⃣ BOT KODIGA QO'SHISH:
+   • Telegram file_id ni olish kerak
+   • Bot kodida logo_url o'rniga file_id qo'yish
+
+4️⃣ AUTOMATIC QILISH:
+   • Men sizga kod yozib beraman
+   • Siz faqat rasmni bot chatiga yuboring
+   • Bot avtomatik file_id ni oladi
+
+===============================
+💡 HOZIRCHA:
+===============================
+• Bot text ko'rinishida ishlayapti ✅
+• 3 til support qiladi ✅
+• Professional welcome message ✅
+• Logo matn ko'rinishida 💕
+
+===============================
+🔥 KEYINGI QADAM:
+===============================
+1. Logo rasmini tayyorlang
+2. @LinkUp_Dating_bot ga yuboring  
+3. Men file_id ni olaman
+4. Bot kodini yangilayman
+5. Logo rasm ko'rsatiladi! 🎉
+
+===============================
