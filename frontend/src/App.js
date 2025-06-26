@@ -527,7 +527,7 @@ const ProfileSetup = ({ onComplete }) => {
       <div className="setup-actions">
         {step > 0 && (
           <button className="btn btn-secondary" onClick={handleBack}>
-            {texts.back}
+            {getText('back')}
           </button>
         )}
         <button 
