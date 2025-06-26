@@ -71,12 +71,111 @@ const REALISTIC_PROFILES = [
   }
 ];
 
-// Language texts
-const texts = {
-  app_name: 'LinkUp Dating',
-  welcome_subtitle: 'Tanishuv Mini App.\nYaqin atrofdagi odamlar bilan\ntanishing va chat qiling.',
-  create_profile: 'Profil yaratish',
-  connect_wallet: 'Koshyolok ulash',
+// Language texts - dynamic based on user selection
+const TEXTS = {
+  en: {
+    app_name: 'LinkUp Dating',
+    welcome_subtitle: 'Dating Mini App.\nMeet people nearby\nand start meaningful connections.',
+    create_profile: 'Create Profile',
+    connect_wallet: 'Connect Wallet',
+    discover: 'Discover',
+    matches: 'Matches',
+    profile: 'Profile',
+    chat: 'Chats',
+    its_match: 'IT\'S A MATCH!',
+    start_chat: 'Start Chat',
+    continue_swiping: 'Continue Swiping',
+    no_more_cards: 'No more profiles',
+    try_tomorrow: 'Try again tomorrow!',
+    no_matches: 'No matches yet',
+    start_discovering: 'Start discovering people!',
+    online: 'Online',
+    recently_active: 'Recently active',
+    name_question: 'What\'s your name?',
+    age_question: 'How old are you?',
+    bio_question: 'Tell us about yourself',
+    location_question: 'Your city',
+    interests_question: 'Your interests',
+    next: 'Next',
+    back: 'Back',
+    save: 'Save',
+    enable_location: 'Enable Location',
+    location_help: 'To find people near you'
+  },
+  ru: {
+    app_name: 'LinkUp Dating',
+    welcome_subtitle: 'Мини Приложение Знакомств.\nВстречайте людей рядом\nи создавайте связи.',
+    create_profile: 'Создать Профиль',
+    connect_wallet: 'Подключить Кошелёк',
+    discover: 'Поиск',
+    matches: 'Пары',
+    profile: 'Профиль',
+    chat: 'Чаты',
+    its_match: 'ЭТО СОВПАДЕНИЕ!',
+    start_chat: 'Начать Чат',
+    continue_swiping: 'Продолжить',
+    no_more_cards: 'Больше нет профилей',
+    try_tomorrow: 'Попробуйте завтра!',
+    no_matches: 'Пока нет совпадений',
+    start_discovering: 'Начните поиск людей!',
+    online: 'В сети',
+    recently_active: 'Недавно был(а)',
+    name_question: 'Как вас зовут?',
+    age_question: 'Сколько вам лет?',
+    bio_question: 'Расскажите о себе',
+    location_question: 'Ваш город',
+    interests_question: 'Ваши интересы',
+    next: 'Далее',
+    back: 'Назад',
+    save: 'Сохранить',
+    enable_location: 'Разрешить Геолокацию',
+    location_help: 'Для поиска людей рядом с вами'
+  },
+  uz: {
+    app_name: 'LinkUp Dating',
+    welcome_subtitle: 'Tanishuv Mini Ilova.\nYaqin atrofdagi odamlar bilan\ntanishing va aloqa o\'rnatishni boshlang.',
+    create_profile: 'Profil Yaratish',
+    connect_wallet: 'Hamyon Ulash',
+    discover: 'Qidiruv',
+    matches: 'Matchlar',
+    profile: 'Profil',
+    chat: 'Chatlar',
+    its_match: 'BU MATCH!',
+    start_chat: 'Chat Boshlash',
+    continue_swiping: 'Davom Etish',
+    no_more_cards: 'Boshqa profil yo\'q',
+    try_tomorrow: 'Ertaga qayta urinib ko\'ring!',
+    no_matches: 'Hali matchlar yo\'q',
+    start_discovering: 'Odamlarni qidirishni boshlang!',
+    online: 'Onlayn',
+    recently_active: 'Yaqinda faol bo\'lgan',
+    name_question: 'Ismingiz nima?',
+    age_question: 'Necha yoshdasiz?',
+    bio_question: 'O\'zingiz haqingizda gapirib bering',
+    location_question: 'Shaharingiz',
+    interests_question: 'Qiziqishlaringiz',
+    next: 'Keyingi',
+    back: 'Orqaga',
+    save: 'Saqlash',
+    enable_location: 'Joylashuvni Ruxsat Berish',
+    location_help: 'Yaqin atrofdagi odamlarni topish uchun'
+  }
+};
+
+// Get user language from URL parameters
+const getUserLanguage = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const lang = urlParams.get('lang');
+  return lang && TEXTS[lang] ? lang : 'uz'; // Default to Uzbek
+};
+
+// Current user language
+const USER_LANGUAGE = getUserLanguage();
+
+// Get text function
+const getText = (key) => {
+  return TEXTS[USER_LANGUAGE][key] || TEXTS['uz'][key] || key;
+};
   discover: 'Поиск',
   matches: 'Пары',
   profile: 'Профиль',
