@@ -535,7 +535,7 @@ const ProfileSetup = ({ onComplete }) => {
           onClick={handleNext}
           disabled={!isValid()}
         >
-          {step === steps.length - 1 ? texts.save : texts.next}
+          {step === steps.length - 1 ? getText('save') : getText('next')}
         </button>
       </div>
     </div>
