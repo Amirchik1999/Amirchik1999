@@ -193,10 +193,12 @@ const ProfileSetup = ({ onComplete }) => {
   };
 
   const handleNext = () => {
-    if (step < steps.length - 1) {
-      setStep(step + 1);
-    } else {
-      onComplete({ ...profile, location });
+    if (isValid()) {
+      if (step < steps.length - 1) {
+        setStep(step + 1);
+      } else {
+        onComplete({ ...profile, location });
+      }
     }
   };
 
@@ -212,7 +214,7 @@ const ProfileSetup = ({ onComplete }) => {
       case 'bio': return profile.bio.length >= 10;
       case 'location': return profile.location.length > 0;
       case 'interests': return profile.interests.length >= 2;
-      default: return false;
+      default: return true;
     }
   };
 
