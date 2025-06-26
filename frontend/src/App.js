@@ -928,6 +928,10 @@ const App = () => {
   };
 
   // Render different screens
+  if (currentScreen === 'intro') {
+    return <IntroSplashScreen onContinue={() => setCurrentScreen('welcome')} />;
+  }
+  
   if (currentScreen === 'welcome') {
     return (
       <WelcomeScreen 
