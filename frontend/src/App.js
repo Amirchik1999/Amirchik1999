@@ -584,7 +584,7 @@ const DiscoverScreen = ({ user }) => {
         <div className="match-modal">
           <div className="match-content">
             <div className="match-icon">🎉</div>
-            <h2>{texts.its_match}</h2>
+            <h2>{getText('its_match')}</h2>
             <div className="match-users">
               <div className="user-avatar">{user?.name?.charAt(0) || 'Я'}</div>
               <div className="heart-icon">💕</div>
@@ -592,10 +592,10 @@ const DiscoverScreen = ({ user }) => {
             </div>
             <div className="match-actions">
               <button className="btn btn-primary" onClick={() => setShowMatch(false)}>
-                {texts.start_chat}
+                {getText('start_chat')}
               </button>
               <button className="btn btn-secondary" onClick={() => setShowMatch(false)}>
-                {texts.continue_swiping}
+                {getText('continue_swiping')}
               </button>
             </div>
           </div>
