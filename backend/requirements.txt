@@ -23,3 +23,6 @@ numpy>=1.26.0
 python-multipart>=0.0.9
 jq>=1.6.0
 typer>=0.9.0
+python-telegram-bot>=20.0
+httpx>=0.25.0
+pillow>=10.0.0
