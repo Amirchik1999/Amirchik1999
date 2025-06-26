@@ -311,19 +311,19 @@ const WelcomeScreen = ({ onCreateProfile, onConnectWallet }) => {
           <div className="app-logo">
             <div className="diamond-icon">💎</div>
           </div>
-          <h1 className="app-title">{texts.app_name}</h1>
+          <h1 className="app-title">{getText('app_name')}</h1>
         </div>
         
         <div className="welcome-text">
-          <p>{texts.welcome_subtitle}</p>
+          <p>{getText('welcome_subtitle')}</p>
         </div>
         
         <div className="action-buttons">
           <button className="btn btn-primary" onClick={onCreateProfile}>
-            {texts.create_profile}
+            {getText('create_profile')}
           </button>
           <button className="btn btn-secondary" onClick={onConnectWallet}>
-            {texts.connect_wallet}
+            {getText('connect_wallet')}
           </button>
         </div>
       </div>
