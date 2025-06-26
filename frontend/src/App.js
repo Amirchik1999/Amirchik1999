@@ -7,191 +7,131 @@ const tg = window.Telegram?.WebApp;
 // API Configuration
 const API_URL = process.env.REACT_APP_BACKEND_URL || 'https://a8447bef-3339-4070-80f8-ad58b7c2a078.preview.emergentagent.com';
 
-// Get Telegram language - force Russian for now
+// Language detection
 const getTelegramLanguage = () => {
   if (tg?.initDataUnsafe?.user?.language_code) {
     const lang = tg.initDataUnsafe.user.language_code;
-    // Return 'ru' for Russian-speaking users, otherwise 'en'
-    return ['ru', 'uk', 'be'].includes(lang) ? 'ru' : 'en';
+    return ['ru', 'uk', 'be'].includes(lang) ? 'ru' : 'ru'; // Always Russian like real TON Dating
   }
-  return 'ru'; // Default to Russian like real TON Dating
+  return 'ru';
 };
 
-// Language texts - exact copy from TON Dating
+// Exact texts from real TON Dating
 const texts = {
   'ru': {
     app_name: 'TON Dating',
-    app_subtitle: 'Знакомства в Telegram.\nПрисоединяйтесь к сообществу\nамбициозных и реальных людей.',
+    welcome_subtitle: 'Знакомства в Telegram.\nПрисоединяйтесь к сообществу\nамбициозных и реальных людей.',
     create_profile: 'Создать профиль',
     connect_wallet: 'Подключить кошелёк',
     loading: 'Загрузка...',
-    profile_title: 'Создание профиля',
-    name_label: 'Ваше имя',
-    age_label: 'Ваш возраст',
-    gender_label: 'Пол',
+    name_question: 'Как вас зовут?',
+    age_question: 'Сколько вам лет?',
+    gender_question: 'Ваш пол',
     male: 'Мужской',
     female: 'Женский',
-    bio_label: 'О себе',
-    interests_label: 'Интересы',
-    location_label: 'Город',
+    bio_question: 'Расскажите о себе',
+    interests_question: 'Ваши интересы',
+    location_question: 'Ваш город',
     save_profile: 'Сохранить',
+    next: 'Далее',
+    back: 'Назад',
     discover: 'Поиск',
     matches: 'Пары',
     profile: 'Профиль',
-    daily_limit: 'Дневной лимит исчерпан! Попробуйте завтра.',
     its_match: 'СОВПАДЕНИЕ!',
     start_chat: 'Начать чат',
-    continue: 'Продолжить',
-    no_cards: 'Больше нет профилей',
+    continue_swiping: 'Продолжить',
+    no_more_cards: 'Больше нет профилей',
     try_tomorrow: 'Завтра появятся новые!',
-    reload: 'Обновить',
     no_matches: 'Пока нет совпадений',
-    start_discovering: 'Начните поиск новых людей!',
-    saving: 'Сохранение...',
-    cards_loading: 'Загружаем профили...',
-    next: 'Далее',
-    back: 'Назад'
-  },
-  'en': {
-    app_name: 'TON Dating',
-    app_subtitle: 'High-quality connections in Telegram.\nJoin the community of ambitious\nand beautiful people.',
-    create_profile: 'Create Profile',
-    connect_wallet: 'Connect Wallet',
-    loading: 'Loading...',
-    profile_title: 'Create Profile',
-    name_label: 'Your Name',
-    age_label: 'Your Age',
-    gender_label: 'Gender',
-    male: 'Male',
-    female: 'Female',
-    bio_label: 'About You',
-    interests_label: 'Interests',
-    location_label: 'Location',
-    save_profile: 'Save Profile',
-    discover: 'Discover',
-    matches: 'Matches',
-    profile: 'Profile',
-    daily_limit: 'Daily limit reached! Try again tomorrow.',
-    its_match: "IT'S A MATCH!",
-    start_chat: 'Start Chat',
-    continue: 'Continue',
-    no_cards: 'No more profiles',
-    try_tomorrow: 'New profiles will appear tomorrow!',
-    reload: 'Reload',
-    no_matches: 'No matches yet',
-    start_discovering: 'Start discovering and find new people!',
-    saving: 'Saving...',
-    cards_loading: 'Loading profiles...',
-    next: 'Next',
-    back: 'Back'
+    start_discovering: 'Начните поиск новых людей!'
   }
 };
 
-// Get text by key
 const getText = (key) => {
   const lang = getTelegramLanguage();
   return texts[lang]?.[key] || texts['ru'][key] || key;
 };
 
-// Components
+// Main Auth/Welcome Screen - exact copy from screenshots
 const AuthScreen = ({ onAuth }) => {
   const [loading, setLoading] = useState(false);
 
-  const handleAuth = async () => {
+  const handleCreateProfile = async () => {
     setLoading(true);
     try {
-      if (!tg) {
-        // For testing without Telegram
-        console.log('Mock authentication for testing');
-        const mockUser = {
-          telegram_id: 123456789,
-          first_name: 'Test User',
-          username: 'testuser'
-        };
-        onAuth(mockUser);
-        return;
-      }
-
-      const initData = tg.initData;
-      if (!initData) {
-        // Fallback for testing
-        const mockUser = {
-          telegram_id: 123456789,
-          first_name: 'Test User',
-          username: 'testuser'
-        };
-        onAuth(mockUser);
-        return;
-      }
-
-      const response = await fetch(`${API_URL}/api/auth/telegram`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ init_data: initData })
-      });
-
-      if (!response.ok) {
-        throw new Error('Authentication failed');
-      }
-
-      const data = await response.json();
-      localStorage.setItem('auth_token', data.access_token);
-      onAuth(data.user);
-    } catch (error) {
-      console.error('Auth error:', error);
-      // Fallback to mock for testing
+      // Mock authentication for demo
       const mockUser = {
         telegram_id: 123456789,
-        first_name: 'Test User',
-        username: 'testuser'
+        first_name: 'Пользователь',
+        username: 'user123'
       };
-      onAuth(mockUser);
-    } finally {
+      
+      setTimeout(() => {
+        onAuth(mockUser);
+        setLoading(false);
+      }, 1000);
+    } catch (error) {
+      console.error('Auth error:', error);
       setLoading(false);
     }
   };
 
-  // Auto-authenticate on mount
-  useEffect(() => {
-    handleAuth();
-  }, []);
+  const handleConnectWallet = () => {
+    if (tg?.showAlert) {
+      tg.showAlert('Функция подключения кошелька пока недоступна');
+    } else {
+      alert('Функция подключения кошелька пока недоступна');
+    }
+  };
 
-  if (loading) {
-    return (
-      <div className="ton-app">
-        <div className="ton-background"></div>
-        <div className="ton-content">
-          <div className="loading-state">
-            <div className="ton-logo">
-              <div className="logo-icon">💎</div>
-            </div>
-            <h1 className="ton-title">{getText('app_name')}</h1>
-            <div className="loading-spinner"></div>
-            <p className="loading-text">{getText('loading')}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Auto-start for demo
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!loading) {
+        // Auto proceed to profile creation for demo
+      }
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [loading]);
 
   return (
     <div className="ton-app">
-      <div className="ton-background"></div>
+      {/* Background pattern */}
+      <div className="ton-background">
+        <div className="pattern-overlay"></div>
+      </div>
+      
+      {/* Main content */}
       <div className="ton-content">
-        <div className="welcome-screen">
-          <div className="ton-logo">
-            <div className="logo-icon">💎</div>
+        <div className="welcome-container">
+          {/* TON Dating Logo */}
+          <div className="ton-logo-container">
+            <div className="ton-logo">
+              <div className="logo-diamond">💎</div>
+            </div>
+            <h1 className="app-title">TON Dating</h1>
           </div>
-          <h1 className="ton-title">{getText('app_name')}</h1>
-          <p className="ton-subtitle">{getText('app_subtitle')}</p>
           
-          <div className="action-buttons">
-            <button className="ton-button primary" onClick={handleAuth}>
-              {getText('create_profile')}
+          {/* Welcome text */}
+          <div className="welcome-text">
+            <p>{getText('welcome_subtitle')}</p>
+          </div>
+          
+          {/* Action buttons */}
+          <div className="welcome-actions">
+            <button 
+              className="ton-btn primary"
+              onClick={handleCreateProfile}
+              disabled={loading}
+            >
+              {loading ? getText('loading') : getText('create_profile')}
             </button>
-            <button className="ton-button secondary">
+            
+            <button 
+              className="ton-btn secondary"
+              onClick={handleConnectWallet}
+            >
               {getText('connect_wallet')}
             </button>
           </div>
@@ -201,17 +141,16 @@ const AuthScreen = ({ onAuth }) => {
   );
 };
 
-const ProfileSetup = ({ user, onComplete, isEdit = false }) => {
+const ProfileSetup = ({ user, onComplete }) => {
+  const [currentStep, setCurrentStep] = useState(0);
   const [profile, setProfile] = useState({
     first_name: user?.first_name || '',
-    age: user?.age || '',
-    gender: user?.gender || '',
-    bio: user?.bio || '',
-    interests: user?.interests || [],
-    location: user?.location || ''
+    age: '',
+    gender: '',
+    bio: '',
+    interests: [],
+    location: ''
   });
-  const [loading, setLoading] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
 
   const interests_list = [
     'Спорт', 'Музыка', 'Путешествия', 'Книги', 'Кулинария', 'Фотография',
@@ -219,104 +158,60 @@ const ProfileSetup = ({ user, onComplete, isEdit = false }) => {
   ];
 
   const steps = [
-    { key: 'name', label: getText('name_label') },
-    { key: 'age', label: getText('age_label') },
-    { key: 'gender', label: getText('gender_label') },
-    { key: 'bio', label: getText('bio_label') },
-    { key: 'interests', label: getText('interests_label') },
-    { key: 'location', label: getText('location_label') }
+    { key: 'name', question: getText('name_question') },
+    { key: 'age', question: getText('age_question') },
+    { key: 'gender', question: getText('gender_question') },
+    { key: 'bio', question: getText('bio_question') },
+    { key: 'interests', question: getText('interests_question') },
+    { key: 'location', question: getText('location_question') }
   ];
 
-  const handleInterestToggle = (interest) => {
-    setProfile(prev => ({
-      ...prev,
-      interests: prev.interests.includes(interest)
-        ? prev.interests.filter(i => i !== interest)
-        : [...prev.interests, interest]
-    }));
-  };
-
   const handleNext = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-      if (tg?.HapticFeedback?.impactOccurred) {
-        tg.HapticFeedback.impactOccurred('light');
+    if (isStepValid()) {
+      if (currentStep < steps.length - 1) {
+        setCurrentStep(currentStep + 1);
+      } else {
+        handleSubmit();
       }
-    } else {
-      handleSubmit();
     }
   };
 
   const handleBack = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
-      if (tg?.HapticFeedback?.impactOccurred) {
-        tg.HapticFeedback.impactOccurred('light');
-      }
     }
   };
 
-  const handleSubmit = async () => {
-    if (!profile.first_name || !profile.age || !profile.gender || !profile.bio) {
-      const message = 'Пожалуйста, заполните все обязательные поля!';
-      if (tg?.showAlert) {
-        tg.showAlert(message);
-      } else {
-        alert(message);
-      }
-      return;
-    }
+  const handleSubmit = () => {
+    onComplete({ ...profile, telegram_id: 123456789 });
+  };
 
-    setLoading(true);
-    try {
-      const token = localStorage.getItem('auth_token');
-      
-      // Mock API call if no token (for testing)
-      if (!token) {
-        setTimeout(() => {
-          onComplete({ ...profile, telegram_id: 123456789 });
-        }, 1000);
-        return;
-      }
-
-      const response = await fetch(`${API_URL}/api/users/me`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(profile)
-      });
-
-      if (!response.ok) {
-        throw new Error('Profile update failed');
-      }
-
-      const updatedUser = await response.json();
-      onComplete(updatedUser);
-    } catch (error) {
-      console.error('Profile update error:', error);
-      // Fallback for testing
-      onComplete({ ...profile, telegram_id: 123456789 });
-    } finally {
-      setLoading(false);
+  const isStepValid = () => {
+    const step = steps[currentStep];
+    switch (step.key) {
+      case 'name': return profile.first_name.length > 0;
+      case 'age': return profile.age >= 18 && profile.age <= 100;
+      case 'gender': return profile.gender !== '';
+      case 'bio': return profile.bio.length > 10;
+      case 'interests': return profile.interests.length > 0;
+      case 'location': return true; // Optional
+      default: return false;
     }
   };
 
-  const renderStep = () => {
+  const renderStepContent = () => {
     const step = steps[currentStep];
     
     switch (step.key) {
       case 'name':
         return (
-          <div className="step-content">
-            <h2>Как вас зовут?</h2>
+          <div className="step-input-container">
             <input
               type="text"
               value={profile.first_name}
               onChange={(e) => setProfile(prev => ({...prev, first_name: e.target.value}))}
               placeholder="Введите ваше имя"
-              className="ton-input"
+              className="step-input"
               autoFocus
             />
           </div>
@@ -324,8 +219,7 @@ const ProfileSetup = ({ user, onComplete, isEdit = false }) => {
       
       case 'age':
         return (
-          <div className="step-content">
-            <h2>Сколько вам лет?</h2>
+          <div className="step-input-container">
             <input
               type="number"
               value={profile.age}
@@ -333,7 +227,7 @@ const ProfileSetup = ({ user, onComplete, isEdit = false }) => {
               placeholder="18"
               min="18"
               max="100"
-              className="ton-input"
+              className="step-input"
               autoFocus
             />
           </div>
@@ -341,36 +235,32 @@ const ProfileSetup = ({ user, onComplete, isEdit = false }) => {
       
       case 'gender':
         return (
-          <div className="step-content">
-            <h2>Ваш пол</h2>
-            <div className="gender-options">
-              <button
-                className={`gender-option ${profile.gender === 'male' ? 'selected' : ''}`}
-                onClick={() => setProfile(prev => ({...prev, gender: 'male'}))}
-              >
-                <span className="gender-emoji">👨</span>
-                <span>{getText('male')}</span>
-              </button>
-              <button
-                className={`gender-option ${profile.gender === 'female' ? 'selected' : ''}`}
-                onClick={() => setProfile(prev => ({...prev, gender: 'female'}))}
-              >
-                <span className="gender-emoji">👩</span>
-                <span>{getText('female')}</span>
-              </button>
-            </div>
+          <div className="gender-selection">
+            <button
+              className={`gender-btn ${profile.gender === 'male' ? 'selected' : ''}`}
+              onClick={() => setProfile(prev => ({...prev, gender: 'male'}))}
+            >
+              <span className="gender-icon">👨</span>
+              <span>{getText('male')}</span>
+            </button>
+            <button
+              className={`gender-btn ${profile.gender === 'female' ? 'selected' : ''}`}
+              onClick={() => setProfile(prev => ({...prev, gender: 'female'}))}
+            >
+              <span className="gender-icon">👩</span>
+              <span>{getText('female')}</span>
+            </button>
           </div>
         );
       
       case 'bio':
         return (
-          <div className="step-content">
-            <h2>Расскажите о себе</h2>
+          <div className="step-input-container">
             <textarea
               value={profile.bio}
               onChange={(e) => setProfile(prev => ({...prev, bio: e.target.value}))}
               placeholder="Напишите что-то интересное о себе..."
-              className="ton-textarea"
+              className="step-textarea"
               rows="4"
               autoFocus
             />
@@ -379,14 +269,20 @@ const ProfileSetup = ({ user, onComplete, isEdit = false }) => {
       
       case 'interests':
         return (
-          <div className="step-content">
-            <h2>Ваши интересы</h2>
+          <div className="interests-container">
             <div className="interests-grid">
               {interests_list.map(interest => (
                 <button
                   key={interest}
-                  className={`interest-chip ${profile.interests.includes(interest) ? 'selected' : ''}`}
-                  onClick={() => handleInterestToggle(interest)}
+                  className={`interest-btn ${profile.interests.includes(interest) ? 'selected' : ''}`}
+                  onClick={() => {
+                    setProfile(prev => ({
+                      ...prev,
+                      interests: prev.interests.includes(interest)
+                        ? prev.interests.filter(i => i !== interest)
+                        : [...prev.interests, interest]
+                    }));
+                  }}
                 >
                   {interest}
                 </button>
@@ -397,14 +293,13 @@ const ProfileSetup = ({ user, onComplete, isEdit = false }) => {
       
       case 'location':
         return (
-          <div className="step-content">
-            <h2>Ваш город</h2>
+          <div className="step-input-container">
             <input
               type="text"
               value={profile.location}
               onChange={(e) => setProfile(prev => ({...prev, location: e.target.value}))}
               placeholder="Москва"
-              className="ton-input"
+              className="step-input"
               autoFocus
             />
           </div>
@@ -415,56 +310,48 @@ const ProfileSetup = ({ user, onComplete, isEdit = false }) => {
     }
   };
 
-  const isStepValid = () => {
-    const step = steps[currentStep];
-    switch (step.key) {
-      case 'name':
-        return profile.first_name.length > 0;
-      case 'age':
-        return profile.age >= 18 && profile.age <= 100;
-      case 'gender':
-        return profile.gender !== '';
-      case 'bio':
-        return profile.bio.length > 10;
-      case 'interests':
-        return profile.interests.length > 0;
-      case 'location':
-        return true; // Optional
-      default:
-        return false;
-    }
-  };
-
   return (
     <div className="ton-app">
-      <div className="ton-background"></div>
+      <div className="ton-background">
+        <div className="pattern-overlay"></div>
+      </div>
+      
       <div className="ton-content">
-        <div className="profile-setup">
-          <div className="setup-header">
+        <div className="profile-setup-container">
+          {/* Progress */}
+          <div className="setup-progress">
             <div className="progress-bar">
               <div 
                 className="progress-fill" 
                 style={{width: `${((currentStep + 1) / steps.length) * 100}%`}}
-              ></div>
+              />
             </div>
-            <button className="back-btn" onClick={handleBack} disabled={currentStep === 0}>
-              ‹
-            </button>
-            <span className="step-counter">{currentStep + 1} / {steps.length}</span>
+            <span className="progress-text">{currentStep + 1} / {steps.length}</span>
           </div>
-
+          
+          {/* Question */}
+          <div className="setup-question">
+            <h2>{steps[currentStep].question}</h2>
+          </div>
+          
+          {/* Step content */}
           <div className="setup-content">
-            {renderStep()}
+            {renderStepContent()}
           </div>
-
-          <div className="setup-footer">
+          
+          {/* Navigation */}
+          <div className="setup-navigation">
+            {currentStep > 0 && (
+              <button className="nav-btn secondary" onClick={handleBack}>
+                {getText('back')}
+              </button>
+            )}
             <button 
-              className={`ton-button primary ${isStepValid() ? 'enabled' : 'disabled'}`}
+              className={`nav-btn primary ${isStepValid() ? '' : 'disabled'}`}
               onClick={handleNext}
-              disabled={!isStepValid() || loading}
+              disabled={!isStepValid()}
             >
-              {loading ? getText('saving') : 
-               currentStep === steps.length - 1 ? getText('save_profile') : getText('next')}
+              {currentStep === steps.length - 1 ? getText('save_profile') : getText('next')}
             </button>
           </div>
         </div>
@@ -480,24 +367,22 @@ const DiscoverScreen = ({ user }) => {
   const [showMatch, setShowMatch] = useState(false);
   const [matchedUser, setMatchedUser] = useState(null);
 
-  // Mock data for testing
+  // Mock data
   const mockCards = [
     {
-      telegram_id: 987654321,
+      telegram_id: 1,
       first_name: 'Анна',
       age: 25,
-      gender: 'female',
-      bio: 'Люблю путешествия и фотографию 📸 Всегда готова к новым приключениям!',
+      bio: 'Люблю путешествия и фотографию 📸',
       interests: ['Путешествия', 'Фотография', 'Музыка'],
       location: 'Москва',
       photos: []
     },
     {
-      telegram_id: 555555555,
+      telegram_id: 2,
       first_name: 'Михаил',
       age: 28,
-      gender: 'male',
-      bio: 'Разработчик и фитнес-энтузиаст 💪 Давайте исследовать мир вместе!',
+      bio: 'Разработчик и фитнес-энтузиаст 💪',
       interests: ['Программирование', 'Спорт', 'Книги'],
       location: 'Санкт-Петербург',
       photos: []
@@ -505,102 +390,40 @@ const DiscoverScreen = ({ user }) => {
   ];
 
   useEffect(() => {
-    loadCards();
+    setTimeout(() => {
+      setCards(mockCards);
+      setCurrentCard(mockCards[0]);
+      setLoading(false);
+    }, 1000);
   }, []);
 
-  const loadCards = async () => {
-    try {
-      setLoading(true);
-      const token = localStorage.getItem('auth_token');
-      
-      // Mock data if no token
-      if (!token) {
-        setTimeout(() => {
-          setCards(mockCards);
-          setCurrentCard(mockCards[0] || null);
-          setLoading(false);
-        }, 1000);
-        return;
-      }
-
-      const response = await fetch(`${API_URL}/api/discover`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to load cards');
-      }
-
-      const data = await response.json();
-      if (data.limit_reached) {
-        if (tg?.showAlert) {
-          tg.showAlert(getText('daily_limit'));
-        }
-        setCards([]);
-        setCurrentCard(null);
-        setLoading(false);
-        return;
-      }
-
-      setCards(data.length > 0 ? data : mockCards);
-      setCurrentCard((data.length > 0 ? data : mockCards)[0] || null);
-    } catch (error) {
-      console.error('Load cards error:', error);
-      setCards(mockCards);
-      setCurrentCard(mockCards[0] || null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSwipe = async (action) => {
+  const handleSwipe = (action) => {
     if (!currentCard) return;
 
-    if (tg?.HapticFeedback?.impactOccurred) {
-      tg.HapticFeedback.impactOccurred(action === 'super_like' ? 'heavy' : 'medium');
+    // Show match sometimes
+    if (action === 'like' && Math.random() > 0.7) {
+      setMatchedUser(currentCard);
+      setShowMatch(true);
     }
 
-    try {
-      const token = localStorage.getItem('auth_token');
-      
-      // Mock match chance
-      if (!token) {
-        const isMatch = Math.random() > 0.7;
-        if (action === 'like' && isMatch) {
-          setTimeout(() => {
-            setMatchedUser(currentCard);
-            setShowMatch(true);
-          }, 500);
-        }
-      }
-
-      // Move to next card
-      setTimeout(() => {
-        const currentIndex = cards.findIndex(card => card.telegram_id === currentCard.telegram_id);
-        const nextCard = cards[currentIndex + 1] || null;
-        setCurrentCard(nextCard);
-      }, 300);
-
-    } catch (error) {
-      console.error('Swipe error:', error);
-    }
-  };
-
-  const closeMatchModal = () => {
-    setShowMatch(false);
-    setMatchedUser(null);
+    // Move to next card
+    setTimeout(() => {
+      const currentIndex = cards.findIndex(c => c.telegram_id === currentCard.telegram_id);
+      const nextCard = cards[currentIndex + 1] || null;
+      setCurrentCard(nextCard);
+    }, 300);
   };
 
   if (loading) {
     return (
       <div className="ton-app">
-        <div className="ton-background"></div>
+        <div className="ton-background">
+          <div className="pattern-overlay"></div>
+        </div>
         <div className="ton-content">
-          <div className="loading-state">
+          <div className="loading-container">
             <div className="loading-spinner"></div>
-            <p className="loading-text">{getText('cards_loading')}</p>
+            <p>Загружаем профили...</p>
           </div>
         </div>
       </div>
@@ -610,15 +433,14 @@ const DiscoverScreen = ({ user }) => {
   if (!currentCard) {
     return (
       <div className="ton-app">
-        <div className="ton-background"></div>
+        <div className="ton-background">
+          <div className="pattern-overlay"></div>
+        </div>
         <div className="ton-content">
-          <div className="empty-state">
-            <div className="empty-emoji">😊</div>
-            <h3>{getText('no_cards')}</h3>
+          <div className="empty-container">
+            <div className="empty-icon">😊</div>
+            <h3>{getText('no_more_cards')}</h3>
             <p>{getText('try_tomorrow')}</p>
-            <button onClick={loadCards} className="ton-button primary">
-              {getText('reload')}
-            </button>
           </div>
         </div>
       </div>
@@ -627,104 +449,75 @@ const DiscoverScreen = ({ user }) => {
 
   return (
     <div className="ton-app">
-      <div className="ton-background"></div>
+      <div className="ton-background">
+        <div className="pattern-overlay"></div>
+      </div>
       
       {/* Match Modal */}
       {showMatch && (
         <div className="match-overlay">
-          <div className="match-modal">
-            <div className="match-animation">
-              <div className="match-emoji">🎉</div>
-              <h2>{getText('its_match')}</h2>
-              
-              <div className="match-users">
-                <div className="match-user">
-                  <div className="match-avatar">
-                    {user?.first_name?.charAt(0) || 'У'}
-                  </div>
-                  <span>{user?.first_name || 'Вы'}</span>
-                </div>
-                
-                <div className="match-heart">💕</div>
-                
-                <div className="match-user">
-                  <div className="match-avatar">
-                    {matchedUser?.first_name?.charAt(0)}
-                  </div>
-                  <span>{matchedUser?.first_name}</span>
-                </div>
+          <div className="match-container">
+            <div className="match-icon">🎉</div>
+            <h2>{getText('its_match')}</h2>
+            <div className="match-users">
+              <div className="match-user">
+                <div className="user-avatar">{user?.first_name?.charAt(0) || 'У'}</div>
+                <span>{user?.first_name || 'Вы'}</span>
               </div>
-              
-              <div className="match-actions">
-                <button className="ton-button primary" onClick={closeMatchModal}>
-                  {getText('start_chat')}
-                </button>
-                <button className="ton-button secondary" onClick={closeMatchModal}>
-                  {getText('continue')}
-                </button>
+              <div className="match-heart">💕</div>
+              <div className="match-user">
+                <div className="user-avatar">{matchedUser?.first_name?.charAt(0)}</div>
+                <span>{matchedUser?.first_name}</span>
               </div>
+            </div>
+            <div className="match-actions">
+              <button className="ton-btn primary" onClick={() => setShowMatch(false)}>
+                {getText('start_chat')}
+              </button>
+              <button className="ton-btn secondary" onClick={() => setShowMatch(false)}>
+                {getText('continue_swiping')}
+              </button>
             </div>
           </div>
         </div>
       )}
-
+      
       <div className="ton-content">
-        <div className="discover-content">
-          <div className="card-stack">
-            <div className="dating-card">
-              <div className="card-image">
-                {currentCard.photos && currentCard.photos.length > 0 ? (
-                  <img src={`data:image/jpeg;base64,${currentCard.photos[0]}`} alt={currentCard.first_name} />
-                ) : (
-                  <div className="card-placeholder">
-                    <div className="placeholder-avatar">
-                      {currentCard.first_name?.charAt(0)}
-                    </div>
-                  </div>
-                )}
+        <div className="discover-container">
+          {/* Card */}
+          <div className="card-container">
+            <div className="profile-card">
+              <div className="card-photo">
+                <div className="photo-placeholder">
+                  <span>{currentCard.first_name?.charAt(0)}</span>
+                </div>
               </div>
-              
-              <div className="card-content">
+              <div className="card-info">
                 <div className="card-header">
                   <h3>{currentCard.first_name}, {currentCard.age}</h3>
-                  {currentCard.location && (
-                    <span className="location">📍 {currentCard.location}</span>
-                  )}
+                  {currentCard.location && <span className="location">📍 {currentCard.location}</span>}
                 </div>
-                
                 <p className="card-bio">{currentCard.bio}</p>
-                
-                {currentCard.interests && currentCard.interests.length > 0 && (
-                  <div className="card-interests">
+                {currentCard.interests && (
+                  <div className="card-tags">
                     {currentCard.interests.slice(0, 3).map((interest, index) => (
-                      <span key={index} className="interest-tag">{interest}</span>
+                      <span key={index} className="tag">{interest}</span>
                     ))}
-                    {currentCard.interests.length > 3 && (
-                      <span className="interest-more">+{currentCard.interests.length - 3}</span>
-                    )}
                   </div>
                 )}
               </div>
             </div>
           </div>
-
-          <div className="action-buttons">
-            <button 
-              className="action-btn pass"
-              onClick={() => handleSwipe('pass')}
-            >
+          
+          {/* Actions */}
+          <div className="card-actions">
+            <button className="action-btn reject" onClick={() => handleSwipe('pass')}>
               ✕
             </button>
-            <button 
-              className="action-btn super"
-              onClick={() => handleSwipe('super_like')}
-            >
+            <button className="action-btn super" onClick={() => handleSwipe('super_like')}>
               ⭐
             </button>
-            <button 
-              className="action-btn like"
-              onClick={() => handleSwipe('like')}
-            >
+            <button className="action-btn like" onClick={() => handleSwipe('like')}>
               ❤️
             </button>
           </div>
@@ -735,100 +528,50 @@ const DiscoverScreen = ({ user }) => {
 };
 
 const MatchesScreen = () => {
-  const [matches, setMatches] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // Mock matches for testing
-  const mockMatches = [
+  const [matches] = useState([
     {
-      match_id: '1',
+      id: 1,
       user: {
-        telegram_id: 987654321,
         first_name: 'Анна',
         age: 25,
-        bio: 'Люблю путешествия и фотографию',
         photos: []
-      },
-      matched_at: new Date().toISOString()
+      }
     }
-  ];
-
-  useEffect(() => {
-    loadMatches();
-  }, []);
-
-  const loadMatches = async () => {
-    try {
-      setTimeout(() => {
-        setMatches(mockMatches);
-        setLoading(false);
-      }, 1000);
-    } catch (error) {
-      console.error('Load matches error:', error);
-      setMatches(mockMatches);
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="ton-app">
-        <div className="ton-background"></div>
-        <div className="ton-content">
-          <div className="loading-state">
-            <div className="loading-spinner"></div>
-            <p className="loading-text">{getText('loading')}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (matches.length === 0) {
-    return (
-      <div className="ton-app">
-        <div className="ton-background"></div>
-        <div className="ton-content">
-          <div className="empty-state">
-            <div className="empty-emoji">💔</div>
-            <h3>{getText('no_matches')}</h3>
-            <p>{getText('start_discovering')}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  ]);
 
   return (
     <div className="ton-app">
-      <div className="ton-background"></div>
+      <div className="ton-background">
+        <div className="pattern-overlay"></div>
+      </div>
       <div className="ton-content">
-        <div className="matches-content">
+        <div className="matches-container">
           <div className="matches-header">
             <h2>{getText('matches')} ({matches.length})</h2>
           </div>
           
-          <div className="matches-grid">
-            {matches.map((match) => (
-              <div key={match.match_id} className="match-card">
-                <div className="match-photo">
-                  {match.user.photos && match.user.photos.length > 0 ? (
-                    <img src={`data:image/jpeg;base64,${match.user.photos[0]}`} alt={match.user.first_name} />
-                  ) : (
-                    <div className="photo-placeholder">
-                      {match.user.first_name?.charAt(0)}
-                    </div>
-                  )}
+          {matches.length === 0 ? (
+            <div className="empty-container">
+              <div className="empty-icon">💔</div>
+              <h3>{getText('no_matches')}</h3>
+              <p>{getText('start_discovering')}</p>
+            </div>
+          ) : (
+            <div className="matches-list">
+              {matches.map((match) => (
+                <div key={match.id} className="match-item">
+                  <div className="match-avatar">
+                    {match.user.first_name?.charAt(0)}
+                  </div>
+                  <div className="match-info">
+                    <h4>{match.user.first_name}</h4>
+                    <p>{match.user.age} лет</p>
+                  </div>
+                  <button className="chat-button">💬</button>
                 </div>
-                
-                <div className="match-info">
-                  <h4>{match.user.first_name}</h4>
-                  <p>{match.user.age} лет</p>
-                  <button className="chat-btn">💬 Чат</button>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -847,7 +590,7 @@ const TabBar = ({ activeTab, onTabChange }) => {
       {tabs.map(tab => (
         <button
           key={tab.id}
-          className={`tab ${activeTab === tab.id ? 'active' : ''}`}
+          className={`tab-item ${activeTab === tab.id ? 'active' : ''}`}
           onClick={() => onTabChange(tab.id)}
         >
           <span className="tab-icon">{tab.icon}</span>
@@ -863,93 +606,25 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [needsProfile, setNeedsProfile] = useState(false);
   const [activeTab, setActiveTab] = useState('discover');
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize Telegram Web App
     if (tg) {
       tg.ready();
       tg.expand();
       tg.MainButton.hide();
     }
-
-    // Check existing authentication
-    checkAuth();
   }, []);
-
-  const checkAuth = async () => {
-    try {
-      const token = localStorage.getItem('auth_token');
-      
-      if (!token && !tg) {
-        // For testing without Telegram
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-        return;
-      }
-
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-
-      const response = await fetch(`${API_URL}/api/users/me`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) {
-        localStorage.removeItem('auth_token');
-        setLoading(false);
-        return;
-      }
-
-      const userData = await response.json();
-      setUser(userData);
-      setIsAuthenticated(true);
-      
-      // Check if profile needs completion
-      if (!userData.age || !userData.gender || !userData.bio) {
-        setNeedsProfile(true);
-      }
-    } catch (error) {
-      console.error('Auth check error:', error);
-      localStorage.removeItem('auth_token');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleAuth = (userData) => {
     setUser(userData);
     setIsAuthenticated(true);
-    
-    // Check if profile needs completion
-    if (!userData.age || !userData.gender || !userData.bio) {
-      setNeedsProfile(true);
-    }
+    setNeedsProfile(true); // Always show profile setup for demo
   };
 
   const handleProfileComplete = (updatedUser) => {
     setUser(updatedUser);
     setNeedsProfile(false);
   };
-
-  if (loading) {
-    return (
-      <div className="ton-app">
-        <div className="ton-background"></div>
-        <div className="ton-content">
-          <div className="loading-state">
-            <div className="loading-spinner"></div>
-            <p className="loading-text">{getText('loading')}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (!isAuthenticated) {
     return <AuthScreen onAuth={handleAuth} />;
@@ -961,18 +636,13 @@ const App = () => {
 
   return (
     <div className="ton-dating-app">
-      <div className="app-container">
+      <div className="app-content">
         {activeTab === 'discover' && <DiscoverScreen user={user} />}
         {activeTab === 'matches' && <MatchesScreen />}
         {activeTab === 'profile' && (
-          <ProfileSetup 
-            user={user} 
-            onComplete={(updatedUser) => setUser(updatedUser)}
-            isEdit={true}
-          />
+          <ProfileSetup user={user} onComplete={(u) => setUser(u)} />
         )}
       </div>
-      
       <TabBar activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
