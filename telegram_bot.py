@@ -183,16 +183,21 @@ async def show_welcome(message, user):
     
     welcome_text = get_text(user_id, 'welcome_text').format(name=user.first_name)
     
+    # Add language parameter to Mini App URL
+    user_lang = get_user_language(user_id)
+    app_url_with_lang = f"{WEB_APP_URL}?lang={user_lang}&user_id={user_id}"
+    
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(
             text=get_text(user_id, 'open_app'), 
-            web_app=WebAppInfo(url=WEB_APP_URL)
+            web_app=WebAppInfo(url=app_url_with_lang)
         )]
     ])
     
     await message.edit_text(
         text=welcome_text,
-        reply_markup=keyboard
+        reply_markup=keyboard,
+        parse_mode="Markdown"
     )
 
 @dp.message(Command("help"))
