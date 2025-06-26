@@ -896,3 +896,20 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+
+/* Hide any external watermarks/badges */
+a[href*="emergent"],
+div[id*="emergent"],
+div[class*="emergent"],
+a[id*="emergent-badge"],
+*[style*="Made with Emergent"],
+*:contains("Made with Emergent"),
+*[style*="emergent.sh"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  z-index: -999999 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+}
