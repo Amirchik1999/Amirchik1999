@@ -343,14 +343,16 @@ body {
   min-height: 120px;
 }
 
-.gender-options {
+/* Gender Selection */
+.gender-selection {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
-  margin-top: 40px;
+  width: 100%;
+  max-width: 320px;
 }
 
-.gender-option {
+.gender-btn {
   padding: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
@@ -362,14 +364,15 @@ body {
   align-items: center;
   gap: 10px;
   color: #fff;
+  backdrop-filter: blur(10px);
 }
 
-.gender-option.selected {
+.gender-btn.selected {
   border-color: #fff;
   background: rgba(255, 255, 255, 0.1);
 }
 
-.gender-emoji {
+.gender-icon {
   font-size: 40px;
 }
 
