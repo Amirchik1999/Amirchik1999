@@ -302,6 +302,133 @@ const LocationService = {
   }
 };
 
+// Intro Splash Screen Component - 3 languages
+const IntroSplashScreen = ({ onContinue }) => {
+  const [currentLang, setCurrentLang] = useState(0);
+  
+  const introTexts = [
+    {
+      lang: "🇺🇿 O'zbekcha",
+      title: "LinkUp Dating",
+      subtitle: "Professional tanishuv platformasi",
+      description: "Telegram asosidagi eksklyuziv tanishuv hamjamiyati — bu yerda haqiqiy qizlar qiziqarli yigitlar bilan tanishadilar."
+    },
+    {
+      lang: "🇷🇺 Русский",
+      title: "LinkUp Dating", 
+      subtitle: "Профессиональная платформа знакомств",
+      description: "Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней."
+    },
+    {
+      lang: "🇺🇸 English",
+      title: "LinkUp Dating",
+      subtitle: "Professional Dating Platform", 
+      description: "Exclusive community for dating based on Telegram — where real girls meet interesting guys."
+    }
+  ];
+
+  useEffect(() => {
+    // Auto cycle through languages
+    const interval = setInterval(() => {
+      setCurrentLang(prev => (prev + 1) % 3);
+    }, 2500);
+
+    // Auto continue after 8 seconds
+    const timer = setTimeout(() => {
+      onContinue();
+    }, 8000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timer);
+    };
+  }, [onContinue]);
+
+  const currentText = introTexts[currentLang];
+
+  return (
+    <div className="intro-splash-screen">
+      <div className="intro-background">
+        <div className="pattern-overlay"></div>
+      </div>
+      
+      <div className="intro-splash-content">
+        {/* Professional Logo */}
+        <div className="intro-logo-section">
+          <div className="intro-logo-container">
+            <svg viewBox="0 0 120 120" className="intro-logo-svg">
+              <defs>
+                <clipPath id="introHeartClip">
+                  <path d="M60,100 C60,100 20,65 20,40 C20,27 30,15 45,15 C52,15 57,20 60,28 C63,20 68,15 75,15 C90,15 100,27 100,40 C100,65 60,100 60,100 Z"/>
+                </clipPath>
+              </defs>
+              
+              {/* Heart background */}
+              <path d="M60,100 C60,100 20,65 20,40 C20,27 30,15 45,15 C52,15 57,20 60,28 C63,20 68,15 75,15 C90,15 100,27 100,40 C100,65 60,100 60,100 Z" 
+                    fill="#f8f9fa" stroke="#e0e0e0" strokeWidth="2"/>
+              
+              {/* Left half (white) */}
+              <rect x="0" y="0" width="60" height="120" fill="#f8f9fa" clipPath="url(#introHeartClip)"/>
+              
+              {/* Right half (dark) */}
+              <rect x="60" y="0" width="60" height="120" fill="#2d3436" clipPath="url(#introHeartClip)"/>
+              
+              {/* Female symbol */}
+              <g transform="translate(40, 45)">
+                <circle cx="0" cy="0" r="9" fill="none" stroke="#2d3436" strokeWidth="3"/>
+                <line x1="0" y1="9" x2="0" y2="22" stroke="#2d3436" strokeWidth="3"/>
+                <line x1="-7" y1="16" x2="7" y2="16" stroke="#2d3436" strokeWidth="3"/>
+              </g>
+              
+              {/* Male symbol */}
+              <g transform="translate(80, 45)">
+                <circle cx="0" cy="0" r="9" fill="none" stroke="#f8f9fa" strokeWidth="3"/>
+                <line x1="7" y1="-7" x2="16" y2="-16" stroke="#f8f9fa" strokeWidth="3"/>
+                <line x1="16" y1="-16" x2="16" y2="-9" stroke="#f8f9fa" strokeWidth="3"/>
+                <line x1="16" y1="-16" x2="9" y2="-16" stroke="#f8f9fa" strokeWidth="3"/>
+              </g>
+            </svg>
+          </div>
+          
+          <div className="intro-brand-text">
+            <h1 className="intro-brand-title">{currentText.title}</h1>
+            <p className="intro-brand-subtitle">{currentText.subtitle}</p>
+          </div>
+        </div>
+
+        {/* Language indicator */}
+        <div className="language-indicator">
+          <span className="current-language">{currentText.lang}</span>
+        </div>
+
+        {/* Description */}
+        <div className="intro-description">
+          <p>{currentText.description}</p>
+        </div>
+
+        {/* Language dots */}
+        <div className="language-dots">
+          {introTexts.map((_, index) => (
+            <div 
+              key={index} 
+              className={`dot ${currentLang === index ? 'active' : ''}`}
+              onClick={() => setCurrentLang(index)}
+            />
+          ))}
+        </div>
+
+        {/* Continue button */}
+        <div className="intro-actions">
+          <button className="intro-continue-btn" onClick={onContinue}>
+            <span>Continue</span>
+            <span>Продолжить</span>
+            <span>Davom etish</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 // Welcome Screen Component
 const WelcomeScreen = ({ onCreateProfile, onConnectWallet }) => {
   return (
