@@ -102,7 +102,7 @@ const texts = {
   location_help: 'Для поиска людей рядом с вами'
 };
 
-// Location service
+// Location service with real city detection
 const LocationService = {
   getCurrentPosition: () => {
     return new Promise((resolve, reject) => {
@@ -112,22 +112,117 @@ const LocationService = {
       }
 
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          resolve({
+        async (position) => {
+          const coords = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
-          });
+          };
+          
+          // Get real city name from coordinates
+          try {
+            const cityName = await LocationService.getCityFromCoords(coords.latitude, coords.longitude);
+            resolve({
+              ...coords,
+              city: cityName
+            });
+          } catch (error) {
+            // If city detection fails, use coordinates with unknown city
+            resolve({
+              ...coords,
+              city: `${coords.latitude.toFixed(2)}, ${coords.longitude.toFixed(2)}`
+            });
+          }
         },
         (error) => {
-          // Fallback to Moscow coordinates
+          console.log('GPS Error:', error);
+          // Fallback to Moscow only if GPS completely fails
           resolve({
             latitude: 55.7558,
-            longitude: 37.6173
+            longitude: 37.6173,
+            city: 'Москва'
           });
         },
-        { timeout: 10000, enableHighAccuracy: true }
+        { 
+          timeout: 10000, 
+          enableHighAccuracy: true,
+          maximumAge: 300000 // 5 minutes cache
+        }
       );
     });
+  },
+
+  getCityFromCoords: async (lat, lng) => {
+    try {
+      // Use Nominatim OpenStreetMap API for reverse geocoding (free)
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1&accept-language=ru`
+      );
+      
+      if (!response.ok) throw new Error('Geocoding failed');
+      
+      const data = await response.json();
+      
+      // Extract city name in order of preference
+      const address = data.address || {};
+      const cityName = 
+        address.city || 
+        address.town || 
+        address.village || 
+        address.municipality || 
+        address.county || 
+        address.state ||
+        address.country ||
+        'Неизвестный город';
+        
+      return cityName;
+    } catch (error) {
+      console.error('City detection error:', error);
+      
+      // Fallback to nearest known city based on coordinates
+      return LocationService.findNearestCity(lat, lng);
+    }
+  },
+
+  findNearestCity: (lat, lng) => {
+    // Calculate distance to known cities
+    let nearestCity = 'Неизвестный город';
+    let minDistance = Infinity;
+    
+    const cities = {
+      "Москва": { lat: 55.7558, lng: 37.6173 },
+      "Санкт-Петербург": { lat: 59.9311, lng: 30.3609 },
+      "Новосибирск": { lat: 55.0084, lng: 82.9357 },
+      "Екатеринбург": { lat: 56.8431, lng: 60.6454 },
+      "Казань": { lat: 55.8304, lng: 49.0661 },
+      "Нижний Новгород": { lat: 56.2965, lng: 43.9361 },
+      "Челябинск": { lat: 55.1644, lng: 61.4368 },
+      "Самара": { lat: 53.2415, lng: 50.2212 },
+      "Омск": { lat: 54.9893, lng: 73.3682 },
+      "Ростов-на-Дону": { lat: 47.2357, lng: 39.7015 },
+      "Уфа": { lat: 54.7388, lng: 55.9721 },
+      "Красноярск": { lat: 56.0184, lng: 92.8672 },
+      "Пермь": { lat: 58.0105, lng: 56.2502 },
+      "Воронеж": { lat: 51.6720, lng: 39.1843 },
+      "Волгоград": { lat: 48.7080, lng: 44.5133 },
+      "Краснодар": { lat: 45.0355, lng: 38.9753 },
+      "Саратов": { lat: 51.5924, lng: 46.0348 },
+      "Тюмень": { lat: 57.1522, lng: 65.5272 },
+      "Тольятти": { lat: 53.5303, lng: 49.3461 },
+      "Ижевск": { lat: 56.8431, lng: 53.2045 }
+    };
+    
+    for (const [cityName, coords] of Object.entries(cities)) {
+      const distance = Math.sqrt(
+        Math.pow(lat - coords.lat, 2) + Math.pow(lng - coords.lng, 2)
+      );
+      
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestCity = cityName;
+      }
+    }
+    
+    return nearestCity;
   }
 };
 
