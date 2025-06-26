@@ -24,67 +24,7 @@
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id="root"></div>
         
-        <!-- Watermark removal script -->
-        <script>
-            // Safer watermark removal that waits for DOM to be ready
-            document.addEventListener('DOMContentLoaded', function() {
-                function removeAllWatermarks() {
-                    try {
-                        const selectors = [
-                            'a[href*="emergent"]',
-                            'a[href*="Emergent"]', 
-                            'div[id*="emergent"]',
-                            'div[id*="Emergent"]',
-                            '*[class*="emergent"]',
-                            '*[class*="Emergent"]',
-                            'a[id*="badge"]',
-                            '*[style*="Made with Emergent"]'
-                        ];
-                        
-                        selectors.forEach(selector => {
-                            const elements = document.querySelectorAll(selector);
-                            elements.forEach(el => {
-                                if (el) {
-                                    el.style.display = 'none';
-                                    if (el.parentNode) {
-                                        el.parentNode.removeChild(el);
-                                    }
-                                }
-                            });
-                        });
-
-                        // Check all elements for "Made with Emergent" text - more selective approach
-                        const allElements = document.querySelectorAll('a, div, span');
-                        allElements.forEach(el => {
-                            if (el.textContent && 
-                                (el.textContent.includes('Made with Emergent') || 
-                                 el.textContent.includes('emergent.sh'))) {
-                                el.style.display = 'none';
-                                if (el.parentNode) {
-                                    el.parentNode.removeChild(el);
-                                }
-                            }
-                        });
-                    } catch (e) {
-                        console.log('Watermark removal error:', e);
-                    }
-                }
-
-                // Run watermark removal
-                removeAllWatermarks();
-                
-                // Run periodically but less aggressively
-                setInterval(removeAllWatermarks, 2000);
-                
-                // Run after DOM changes
-                if (typeof MutationObserver !== 'undefined') {
-                    const observer = new MutationObserver(removeAllWatermarks);
-                    if (document.body) {
-                        observer.observe(document.body, { childList: true, subtree: true });
-                    }
-                }
-            });
-        </script>
+        <!-- Watermark removal script removed to fix React rendering issues -->
         <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
