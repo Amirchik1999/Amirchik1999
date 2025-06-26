@@ -453,21 +453,20 @@ async def send_webapp_message(chat_id):
     
     keyboard = [[
         InlineKeyboardButton(
-            "🚀 TON Dating App ochish", 
+            "💕 Open LinkUp Dating", 
             web_app=WebAppInfo(url=web_app_url)
         )
     ]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     message_text = """
-🌟 *TON Dating - Premium Tanishuv!* 🌟
+💕 *LinkUp Dating - Find Your Match!*
 
-• 💎 TON blockchain bilan himoyalangan
-• 🔥 Professional swipe interface
-• 💕 Real-time matching
-• 🎯 Premium features
+🔥 Swipe through profiles
+💬 Chat with matches
+✨ Find your perfect match
 
-Boshlash uchun tugmani bosing! 👇
+Ready to start dating? 👇
     """
     
     await bot.send_message(
@@ -484,21 +483,19 @@ async def handle_callback_query(callback_query):
 async def send_help_message(chat_id):
     """Send help message"""
     help_text = """
-🆘 *TON Dating Bot Yordam*
+🆘 *LinkUp Dating Help*
 
-*Asosiy funksiyalar:*
-• Web App orqali professional tanishuv
-• TON blockchain integratsiyasi
-• Premium features
-• Xavfsiz va tez
+*How to use:*
+• Tap the menu button to open the app
+• Create your profile
+• Swipe through profiles
+• Match and chat!
 
-*Qo'llanma:*
-1. /start - Web App ochish
-2. Profil yaratish
-3. Swipe qilish va matching
-4. Chat boshlash
+*Commands:*
+• /start - Open the dating app
+• /help - Show this help
 
-*Texnik yordam:* @support_username
+*Support:* @support_username
     """
     
     await bot.send_message(
