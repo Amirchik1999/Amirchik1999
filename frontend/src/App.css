@@ -30,10 +30,9 @@ body {
   overflow: hidden;
 }
 
-.app-container {
+.app-content {
   flex: 1;
   overflow: hidden;
-  position: relative;
 }
 
 /* TON Background Pattern - exact copy */
