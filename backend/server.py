@@ -1,4 +1,5 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Request, UploadFile, File
+from fastapi import FastAPI, APIRouter, HTTPException, Request, UploadFile, File, Depends, Header
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -11,7 +12,7 @@ import uuid
 from datetime import datetime, timedelta
 import httpx
 import base64
-from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 import asyncio
 from telegram.constants import ParseMode
@@ -20,6 +21,38 @@ from PIL import Image
 import io
 from bson import ObjectId
 from fastapi.encoders import jsonable_encoder
+import hmac
+import hashlib
+import urllib.parse
+from jose import JWTError, jwt
+
+
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
+
+# MongoDB connection
+mongo_url = os.environ['MONGO_URL']
+client = AsyncIOMotorClient(mongo_url)
+db = client[os.environ['DB_NAME']]
+
+# Telegram Bot
+TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
+WEBHOOK_SECRET = os.environ['WEBHOOK_SECRET']
+bot = Bot(token=TELEGRAM_TOKEN)
+
+# JWT Settings
+SECRET_KEY = "your-secret-key-change-in-production"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30 * 24 * 60  # 30 days
+
+# Security
+security = HTTPBearer()
+
+# Create the main app without a prefix
+app = FastAPI()
+
+# Create a router with the /api prefix
+api_router = APIRouter(prefix="/api")
 
 # Custom JSON encoder for MongoDB ObjectId
 class JSONEncoder(json.JSONEncoder):
@@ -39,24 +72,67 @@ def mongo_to_dict(obj: Dict[str, Any]) -> Dict[str, Any]:
         obj_dict["_id"] = str(obj_dict["_id"])
     return obj_dict
 
+# Telegram Web App Authentication
+def verify_telegram_web_app_data(init_data: str) -> dict:
+    """Verify Telegram Web App init data"""
+    try:
+        # Parse the init data
+        parsed_data = urllib.parse.parse_qs(init_data)
+        
+        # Extract hash and remove it from data for verification
+        received_hash = parsed_data.get('hash', [None])[0]
+        if not received_hash:
+            raise ValueError("No hash provided")
+        
+        # Remove hash from parsed data
+        if 'hash' in parsed_data:
+            del parsed_data['hash']
+        
+        # Create data check string
+        data_check_arr = []
+        for key, value in parsed_data.items():
+            if isinstance(value, list):
+                value = value[0]
+            data_check_arr.append(f"{key}={value}")
+        
+        data_check_arr.sort()
+        data_check_string = '\n'.join(data_check_arr)
+        
+        # Create secret key
+        secret_key = hmac.new("WebAppData".encode(), TELEGRAM_TOKEN.encode(), hashlib.sha256).digest()
+        
+        # Calculate hash
+        calculated_hash = hmac.new(secret_key, data_check_string.encode(), hashlib.sha256).hexdigest()
+        
+        # Verify hash
+        if not hmac.compare_digest(received_hash, calculated_hash):
+            raise ValueError("Invalid hash")
+        
+        # Parse user data
+        user_data = json.loads(parsed_data.get('user', ['{}'])[0])
+        return user_data
+        
+    except Exception as e:
+        logging.error(f"Telegram Web App verification error: {e}")
+        raise HTTPException(status_code=401, detail="Invalid Telegram Web App data")
 
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
+# JWT Token functions
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
-
-# Telegram Bot
-TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
-bot = Bot(token=TELEGRAM_TOKEN)
-
-# Create the main app without a prefix
-app = FastAPI()
-
-# Create a router with the /api prefix
-api_router = APIRouter(prefix="/api")
+def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        telegram_id: int = payload.get("telegram_id")
+        if telegram_id is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        return telegram_id
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 # Models
 class UserProfile(BaseModel):
@@ -66,12 +142,15 @@ class UserProfile(BaseModel):
     first_name: str
     age: int
     gender: str  # "erkak" yoki "ayol"
-    interests: str
+    interests: List[str] = []
     bio: str
-    photo_base64: Optional[str] = None
+    photos: List[str] = []  # Base64 encoded photos
     location: Optional[str] = None
+    is_premium: bool = False
+    premium_expires: Optional[datetime] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
     is_active: bool = True
+    last_seen: datetime = Field(default_factory=datetime.utcnow)
 
 class DailyLimit(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -79,6 +158,7 @@ class DailyLimit(BaseModel):
     date: str  # YYYY-MM-DD format
     views_count: int = 0
     likes_given: int = 0
+    super_likes_used: int = 0
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class Match(BaseModel):
@@ -87,7 +167,10 @@ class Match(BaseModel):
     user2_id: int
     user1_liked: bool = False
     user2_liked: bool = False
+    user1_super_liked: bool = False
+    user2_super_liked: bool = False
     is_matched: bool = False
+    matched_at: Optional[datetime] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class ChatMessage(BaseModel):
@@ -96,62 +179,97 @@ class ChatMessage(BaseModel):
     sender_id: int
     message: str
     timestamp: datetime = Field(default_factory=datetime.utcnow)
+    is_read: bool = False
 
-# API Routes
-@api_router.get("/")
-async def root():
-    return {"message": "Telegram Dating Bot API"}
+class SwipeAction(BaseModel):
+    target_user_id: int
+    action: str  # "like", "pass", "super_like"
 
-@api_router.post("/users")
-async def create_user_profile(profile: UserProfile):
-    """Create or update user profile"""
-    existing = await db.users.find_one({"telegram_id": profile.telegram_id})
-    if existing:
-        await db.users.update_one(
-            {"telegram_id": profile.telegram_id},
-            {"$set": profile.dict()}
-        )
-    else:
-        await db.users.insert_one(profile.dict())
-    return {"message": "Profile created/updated successfully"}
+class AuthRequest(BaseModel):
+    init_data: str
 
-@api_router.get("/users/{telegram_id}")
-async def get_user_profile(telegram_id: int):
-    """Get user profile by telegram ID"""
+# Web App Authentication
+@api_router.post("/auth/telegram")
+async def authenticate_telegram_user(auth_request: AuthRequest):
+    """Authenticate user via Telegram Web App"""
+    try:
+        user_data = verify_telegram_web_app_data(auth_request.init_data)
+        telegram_id = user_data.get('id')
+        
+        if not telegram_id:
+            raise HTTPException(status_code=400, detail="No user ID in Telegram data")
+        
+        # Check if user exists, if not create
+        existing_user = await db.users.find_one({"telegram_id": telegram_id})
+        if not existing_user:
+            # Create new user profile
+            new_user = UserProfile(
+                telegram_id=telegram_id,
+                username=user_data.get('username'),
+                first_name=user_data.get('first_name', 'Unknown'),
+                age=18,  # Default, will be updated
+                gender="erkak",  # Default, will be updated
+                bio="",
+                interests=[]
+            )
+            await db.users.insert_one(new_user.dict())
+            user_profile = new_user.dict()
+        else:
+            user_profile = mongo_to_dict(existing_user)
+        
+        # Create JWT token
+        access_token = create_access_token({"telegram_id": telegram_id})
+        
+        return {
+            "access_token": access_token,
+            "token_type": "bearer",
+            "user": user_profile
+        }
+        
+    except Exception as e:
+        logging.error(f"Authentication error: {e}")
+        raise HTTPException(status_code=401, detail="Authentication failed")
+
+# Protected Routes
+@api_router.get("/users/me")
+async def get_current_user(telegram_id: int = Depends(verify_token)):
+    """Get current user profile"""
     user = await db.users.find_one({"telegram_id": telegram_id})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return mongo_to_dict(user)
 
-@api_router.get("/users/{telegram_id}/daily-limit")
-async def get_daily_limit(telegram_id: int):
-    """Get today's daily limit for user"""
+@api_router.put("/users/me")
+async def update_current_user(profile_update: dict, telegram_id: int = Depends(verify_token)):
+    """Update current user profile"""
+    # Update last seen
+    profile_update["last_seen"] = datetime.utcnow()
+    
+    await db.users.update_one(
+        {"telegram_id": telegram_id},
+        {"$set": profile_update}
+    )
+    
+    # Return updated profile
+    updated_user = await db.users.find_one({"telegram_id": telegram_id})
+    return mongo_to_dict(updated_user)
+
+@api_router.get("/discover")
+async def get_discover_cards(telegram_id: int = Depends(verify_token)):
+    """Get cards for discovery/swiping"""
+    # Check daily limit
     today = datetime.now().strftime("%Y-%m-%d")
-    limit = await db.daily_limits.find_one({
+    daily_limit = await db.daily_limits.find_one({
         "telegram_id": telegram_id,
         "date": today
     })
-    if not limit:
-        # Create new daily limit
-        new_limit = DailyLimit(telegram_id=telegram_id, date=today)
-        await db.daily_limits.insert_one(new_limit.dict())
-        return new_limit.dict()
-    return mongo_to_dict(limit)
-
-@api_router.post("/users/{telegram_id}/view")
-async def increment_view_count(telegram_id: int):
-    """Increment daily view count"""
-    today = datetime.now().strftime("%Y-%m-%d")
-    await db.daily_limits.update_one(
-        {"telegram_id": telegram_id, "date": today},
-        {"$inc": {"views_count": 1}},
-        upsert=True
-    )
-    return {"message": "View count incremented"}
-
-@api_router.get("/users/{telegram_id}/potential-matches")
-async def get_potential_matches(telegram_id: int):
-    """Get potential matches for user (excluding already seen/matched)"""
+    
+    if daily_limit and daily_limit.get("views_count", 0) >= 20:
+        # Check if user is premium
+        user = await db.users.find_one({"telegram_id": telegram_id})
+        if not user or not user.get("is_premium", False):
+            return {"error": "Daily limit reached", "limit_reached": True}
+    
     # Get user's profile
     user = await db.users.find_one({"telegram_id": telegram_id})
     if not user:
@@ -179,60 +297,99 @@ async def get_potential_matches(telegram_id: int):
     potential_matches = await db.users.find({
         "telegram_id": {"$nin": list(interacted_users) + [telegram_id]},
         "gender": opposite_gender,
-        "is_active": True
-    }).to_list(50)
+        "is_active": True,
+        "photos": {"$ne": []},  # Must have photos
+        "age": {"$exists": True, "$ne": 0}  # Must have age set
+    }).limit(10).to_list(10)
     
-    # Convert MongoDB documents to dicts
     return [mongo_to_dict(match) for match in potential_matches]
 
-@api_router.post("/matches")
-async def create_match(user1_id: int, user2_id: int, liked: bool):
-    """Create or update match"""
-    # Check if match already exists
-    existing = await db.matches.find_one({
-        "$or": [
-            {"user1_id": user1_id, "user2_id": user2_id},
-            {"user1_id": user2_id, "user2_id": user1_id}
-        ]
-    })
+@api_router.post("/swipe")
+async def handle_swipe(swipe: SwipeAction, telegram_id: int = Depends(verify_token)):
+    """Handle swipe action"""
+    # Increment view count
+    today = datetime.now().strftime("%Y-%m-%d")
+    await db.daily_limits.update_one(
+        {"telegram_id": telegram_id, "date": today},
+        {
+            "$inc": {"views_count": 1},
+            "$setOnInsert": {
+                "id": str(uuid.uuid4()),
+                "telegram_id": telegram_id,
+                "date": today,
+                "created_at": datetime.utcnow()
+            }
+        },
+        upsert=True
+    )
     
-    if existing:
-        # Update existing match
-        existing = mongo_to_dict(existing)
-        if existing["user1_id"] == user1_id:
-            update_data = {"user1_liked": liked}
-            other_liked = existing.get("user2_liked", False)
-        else:
-            update_data = {"user2_liked": liked}
-            other_liked = existing.get("user1_liked", False)
+    if swipe.action in ["like", "super_like"]:
+        # Check if match already exists
+        existing_match = await db.matches.find_one({
+            "$or": [
+                {"user1_id": telegram_id, "user2_id": swipe.target_user_id},
+                {"user1_id": swipe.target_user_id, "user2_id": telegram_id}
+            ]
+        })
         
-        if liked and other_liked:
-            update_data["is_matched"] = True
-        
-        await db.matches.update_one(
-            {"_id": ObjectId(existing["_id"])},
-            {"$set": update_data}
-        )
-        
-        # Check if it's a new match
-        if liked and other_liked and not existing.get("is_matched", False):
-            return {"message": "It's a match!", "matched": True}
+        if existing_match:
+            # Update existing match
+            existing_match = mongo_to_dict(existing_match)
+            if existing_match["user1_id"] == telegram_id:
+                update_data = {
+                    "user1_liked": True,
+                    "user1_super_liked": swipe.action == "super_like"
+                }
+                other_liked = existing_match.get("user2_liked", False)
+            else:
+                update_data = {
+                    "user2_liked": True,
+                    "user2_super_liked": swipe.action == "super_like"
+                }
+                other_liked = existing_match.get("user1_liked", False)
             
-    else:
-        # Create new match
-        match = Match(
-            user1_id=user1_id,
-            user2_id=user2_id,
-            user1_liked=liked,
-            user2_liked=False
-        )
-        await db.matches.insert_one(match.dict())
+            if other_liked and not existing_match.get("is_matched", False):
+                update_data["is_matched"] = True
+                update_data["matched_at"] = datetime.utcnow()
+            
+            await db.matches.update_one(
+                {"_id": ObjectId(existing_match["_id"])},
+                {"$set": update_data}
+            )
+            
+            # Check if it's a new match
+            is_new_match = other_liked and not existing_match.get("is_matched", False)
+            
+        else:
+            # Create new match
+            new_match = Match(
+                user1_id=telegram_id,
+                user2_id=swipe.target_user_id,
+                user1_liked=True,
+                user1_super_liked=swipe.action == "super_like"
+            )
+            await db.matches.insert_one(new_match.dict())
+            is_new_match = False
+        
+        return {
+            "success": True,
+            "is_match": is_new_match,
+            "action": swipe.action
+        }
     
-    return {"message": "Match updated", "matched": False}
+    else:  # pass
+        # Create pass record
+        pass_match = Match(
+            user1_id=telegram_id,
+            user2_id=swipe.target_user_id,
+            user1_liked=False
+        )
+        await db.matches.insert_one(pass_match.dict())
+        return {"success": True, "action": "pass"}
 
-@api_router.get("/users/{telegram_id}/matches")
-async def get_user_matches(telegram_id: int):
-    """Get all matches for user"""
+@api_router.get("/matches")
+async def get_matches(telegram_id: int = Depends(verify_token)):
+    """Get user's matches"""
     matches = await db.matches.find({
         "$or": [
             {"user1_id": telegram_id},
@@ -251,19 +408,17 @@ async def get_user_matches(telegram_id: int):
             matched_users.append({
                 "match_id": match_dict.get("id", str(match_dict.get("_id", ""))),
                 "user": mongo_to_dict(user),
-                "matched_at": match_dict.get("created_at", "")
+                "matched_at": match_dict.get("matched_at", match_dict.get("created_at", ""))
             })
     
     return matched_users
 
-# Telegram Bot Webhook
+# Telegram Bot Commands
 @api_router.post("/telegram-webhook")
 async def telegram_webhook(request: Request):
     """Handle Telegram webhook"""
     try:
         update_data = await request.json()
-        # For testing purposes, we'll just acknowledge the webhook
-        # In a real scenario, we would process the update with the bot
         logging.info(f"Received webhook data: {json.dumps(update_data)}")
         
         # Try to process with the bot if possible
@@ -275,288 +430,80 @@ async def telegram_webhook(request: Request):
             elif update and update.callback_query:
                 await handle_callback_query(update.callback_query)
         except Exception as e:
-            # Log the error but don't fail the webhook
             logging.error(f"Error processing update: {str(e)}")
             
         return {"status": "ok", "message": "Webhook received"}
     except Exception as e:
         logging.error(f"Webhook error: {e}")
-        # Return 200 even on error to prevent Telegram from retrying
         return {"status": "error", "message": str(e)}
 
-# Telegram Bot Handlers
 async def handle_message(message):
     """Handle incoming messages"""
     chat_id = message.chat_id
     text = message.text
     
     if text == "/start":
-        await send_welcome_message(chat_id)
-    elif text == "/profile":
-        await start_profile_creation(chat_id, message.from_user)
-    elif text == "/search" or text == "🔍 Qidiruv":
-        await start_search(chat_id)
-    elif text == "/matches" or text == "💕 Matchlar":
-        await show_matches(chat_id)
+        await send_webapp_message(chat_id)
     elif text == "/help":
         await send_help_message(chat_id)
-    elif message.photo:
-        await handle_photo_upload(message)
 
-async def handle_callback_query(callback_query):
-    """Handle inline keyboard callbacks"""
-    data = callback_query.data
-    chat_id = callback_query.message.chat_id
+async def send_webapp_message(chat_id):
+    """Send Web App button"""
+    web_app_url = "https://a8447bef-3339-4070-80f8-ad58b7c2a078.preview.emergentagent.com"
     
-    if data == "create_profile":
-        await start_profile_creation(chat_id, callback_query.from_user)
-    elif data == "start_search":
-        await start_search(chat_id)
-    elif data == "my_matches":
-        await show_matches(chat_id)
-    elif data.startswith("like_"):
-        user_id = int(data.split("_")[1])
-        await handle_like(chat_id, callback_query.from_user.id, user_id)
-    elif data.startswith("skip_"):
-        await continue_search(chat_id)
-
-async def send_welcome_message(chat_id):
-    """Send welcome message with main menu"""
-    keyboard = [
-        [InlineKeyboardButton("📝 Profil yaratish", callback_data="create_profile")],
-        [InlineKeyboardButton("🔍 Qidiruv", callback_data="start_search")],
-        [InlineKeyboardButton("💕 Matchlar", callback_data="my_matches")]
-    ]
+    keyboard = [[
+        InlineKeyboardButton(
+            "🚀 TON Dating App ochish", 
+            web_app=WebAppInfo(url=web_app_url)
+        )
+    ]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    welcome_text = """
-🌟 *Tanshuv Botiga Xush Kelibsiz!* 🌟
+    message_text = """
+🌟 *TON Dating - Premium Tanishuv!* 🌟
 
-Bu bot orqali siz:
-• Profil yaratishingiz
-• Har kuni 20 tagacha odamni ko'rishingiz  
-• Agar ikkingiz ham yoqtirsangiz - chat boshlanadi!
+• 💎 TON blockchain bilan himoyalangan
+• 🔥 Professional swipe interface
+• 💕 Real-time matching
+• 🎯 Premium features
 
 Boshlash uchun tugmani bosing! 👇
     """
     
     await bot.send_message(
         chat_id=chat_id,
-        text=welcome_text,
+        text=message_text,
         parse_mode=ParseMode.MARKDOWN,
         reply_markup=reply_markup
     )
 
-async def start_profile_creation(chat_id, user):
-    """Start profile creation process"""
-    await bot.send_message(
-        chat_id=chat_id,
-        text="📝 *Profil yaratish boshlandi!*\n\nIltimos, quyidagi ma'lumotlarni kiriting:\n\n*Ismingiz:*",
-        parse_mode=ParseMode.MARKDOWN
-    )
-    
-    # Store user state for profile creation
-    await db.user_states.update_one(
-        {"telegram_id": user.id},
-        {"$set": {"state": "waiting_name", "data": {}}},
-        upsert=True
-    )
-
-async def start_search(chat_id):
-    """Start profile search"""
-    # Check daily limit
-    limit = await get_daily_limit(chat_id)
-    if limit["views_count"] >= 20:
-        await bot.send_message(
-            chat_id=chat_id,
-            text="⏰ *Kunlik limit tugadi!*\n\nSiz bugun 20 ta profilni ko'rdingiz. Ertaga qayta urinib ko'ring!",
-            parse_mode=ParseMode.MARKDOWN
-        )
-        return
-    
-    # Get potential matches
-    try:
-        matches = await get_potential_matches(chat_id)
-        if not matches:
-            await bot.send_message(
-                chat_id=chat_id,
-                text="😔 *Hozircha yangi profillar yo'q*\n\nKeyin qayta urinib ko'ring!",
-                parse_mode=ParseMode.MARKDOWN
-            )
-            return
-        
-        # Show first profile
-        await show_profile(chat_id, matches[0])
-        
-    except Exception as e:
-        await bot.send_message(
-            chat_id=chat_id,
-            text="❌ Xatolik yuz berdi. Avval profilingizni yarating: /profile",
-            parse_mode=ParseMode.MARKDOWN
-        )
-
-async def show_profile(chat_id, profile):
-    """Show a profile to user"""
-    keyboard = [
-        [
-            InlineKeyboardButton("❤️ Yoqdi", callback_data=f"like_{profile['telegram_id']}"),
-            InlineKeyboardButton("👎 Keyingisi", callback_data=f"skip_{profile['telegram_id']}")
-        ]
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    
-    profile_text = f"""
-👤 *{profile['first_name']}*, {profile['age']} yosh
-
-🔸 *Jins:* {profile['gender']}
-🔸 *Qiziqishlar:* {profile['interests']}
-🔸 *Haqida:* {profile['bio']}
-    """
-    
-    if profile.get('photo_base64'):
-        try:
-            # Convert base64 to image
-            image_data = base64.b64decode(profile['photo_base64'])
-            await bot.send_photo(
-                chat_id=chat_id,
-                photo=io.BytesIO(image_data),
-                caption=profile_text,
-                parse_mode=ParseMode.MARKDOWN,
-                reply_markup=reply_markup
-            )
-        except:
-            await bot.send_message(
-                chat_id=chat_id,
-                text=profile_text,
-                parse_mode=ParseMode.MARKDOWN,
-                reply_markup=reply_markup
-            )
-    else:
-        await bot.send_message(
-            chat_id=chat_id,
-            text=profile_text,
-            parse_mode=ParseMode.MARKDOWN,
-            reply_markup=reply_markup
-        )
-    
-    # Increment view count
-    await increment_view_count(chat_id)
-
-async def handle_like(chat_id, user_id, liked_user_id):
-    """Handle like action"""
-    # Create match
-    result = await create_match(user_id, liked_user_id, True)
-    
-    if result.get("matched"):
-        # It's a match!
-        await bot.send_message(
-            chat_id=chat_id,
-            text="🎉 *IT'S A MATCH!* 🎉\n\nIkkingiz ham bir-biringizni yoqtirdingiz!\n\n💬 Endi suhbat boshlay olasiz!",
-            parse_mode=ParseMode.MARKDOWN
-        )
-        
-        # Notify the other user
-        await bot.send_message(
-            chat_id=liked_user_id,
-            text="🎉 *YANGI MATCH!* 🎉\n\nKimdir sizni yoqtirdi va siz ham uni yoqtirgan edingiz!\n\n💬 Matchlar bo'limida ko'ring: /matches",
-            parse_mode=ParseMode.MARKDOWN
-        )
-    else:
-        await bot.send_message(
-            chat_id=chat_id,
-            text="👍 *Yuborildi!*\n\nAgar u ham sizni yoqtirsa - match bo'ladi!",
-            parse_mode=ParseMode.MARKDOWN
-        )
-    
-    # Continue search
-    await continue_search(chat_id)
-
-async def continue_search(chat_id):
-    """Continue showing profiles"""
-    await asyncio.sleep(1)  # Small delay
-    await start_search(chat_id)
-
-async def show_matches(chat_id):
-    """Show user's matches"""
-    try:
-        matches = await get_user_matches(chat_id)
-        if not matches:
-            await bot.send_message(
-                chat_id=chat_id,
-                text="😔 *Hali matchlaringiz yo'q*\n\nQidiruv boshlang: /search",
-                parse_mode=ParseMode.MARKDOWN
-            )
-            return
-        
-        text = "💕 *Sizning Matchlaringiz:*\n\n"
-        for match in matches:
-            user = match["user"]
-            text += f"👤 *{user['first_name']}* - {user['age']} yosh\n"
-            text += f"💬 Chat: @{user.get('username', 'mavjud_emas')}\n\n"
-        
-        await bot.send_message(
-            chat_id=chat_id,
-            text=text,
-            parse_mode=ParseMode.MARKDOWN
-        )
-        
-    except Exception as e:
-        await bot.send_message(
-            chat_id=chat_id,
-            text="❌ Xatolik yuz berdi. Avval profilingizni yarating: /profile"
-        )
+async def handle_callback_query(callback_query):
+    """Handle callback queries"""
+    pass
 
 async def send_help_message(chat_id):
     """Send help message"""
     help_text = """
-🆘 *Yordam*
+🆘 *TON Dating Bot Yordam*
 
-*Asosiy buyruqlar:*
-• /start - Botni ishga tushirish
-• /profile - Profil yaratish/tahrirlash  
-• /search - Qidiruv boshlash
-• /matches - Matchlarni ko'rish
-• /help - Yordam
+*Asosiy funksiyalar:*
+• Web App orqali professional tanishuv
+• TON blockchain integratsiyasi
+• Premium features
+• Xavfsiz va tez
 
-*Qoidalar:*
-• Har kuni 20 ta profil ko'rish mumkin
-• Agar ikkingiz ham like qilsangiz - match!
-• Faqat haqiqiy ma'lumotlar kiriting
+*Qo'llanma:*
+1. /start - Web App ochish
+2. Profil yaratish
+3. Swipe qilish va matching
+4. Chat boshlash
 
-*Muammo bo'lsa:* @admin_username ga murojaat qiling
+*Texnik yordam:* @support_username
     """
     
     await bot.send_message(
         chat_id=chat_id,
         text=help_text,
-        parse_mode=ParseMode.MARKDOWN
-    )
-
-async def handle_photo_upload(message):
-    """Handle photo upload during profile creation"""
-    chat_id = message.chat_id
-    
-    # Get largest photo
-    photo = message.photo[-1]
-    file = await bot.get_file(photo.file_id)
-    
-    # Download and convert to base64
-    async with httpx.AsyncClient() as client:
-        response = await client.get(f"https://api.telegram.org/file/bot{TELEGRAM_TOKEN}/{file.file_path}")
-        image_data = response.content
-    
-    # Convert to base64
-    image_base64 = base64.b64encode(image_data).decode()
-    
-    # Store in user state
-    await db.user_states.update_one(
-        {"telegram_id": message.from_user.id},
-        {"$set": {"data.photo_base64": image_base64}}
-    )
-    
-    await bot.send_message(
-        chat_id=chat_id,
-        text="✅ *Rasm qabul qilindi!*\n\nEndi profilingiz tayyor. Qidiruv boshlang: /search",
         parse_mode=ParseMode.MARKDOWN
     )
 
