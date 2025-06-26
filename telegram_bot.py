@@ -50,9 +50,32 @@ Boshlash uchun tugmani bosing 👇
 
 async def main():
     """Bot ishga tushirish"""
-    print("🤖 LinkUp Dating Bot starting...")
-    await bot.delete_webhook(drop_pending_updates=True)
+    print("🤖 LinkUp Dating Bot - Mock Mode")
+    print("Real bot uchun BOT_TOKEN environment variable qo'ying")
+    print(f"🌐 Web App URL: {WEB_APP_URL}")
+
+    # Mock rejimda ishga tushirish
+    if BOT_TOKEN == "7890123456:AAHBcdefghijklmnopqrstuvwxyz1234567890":
+        print("⚠️  Mock token - real bot emas")
+        print("💡 Real token olish uchun: https://t.me/BotFather")
+        
+        # Mock bot ma'lumotlari
+        print("""
+    📋 Bot sozlash:
+    1. @BotFather ga /start yozing
+    2. /newbot komandasi
+    3. Bot nomi: LinkUp Dating Bot  
+    4. Username: linkup_dating_bot
+    5. Tokenni oling va BOT_TOKEN environment variable ga qo'ying
     
+    🔧 Mini App sozlash:
+    /setmycommands - start, help, profile
+    /setdescription - LinkUp Dating - Tanishuv Mini App
+    /setmenubutton - 💕 LinkUp Dating
+    """)
+        return
+
+    # Real bot ishga tushirish
     try:
         await dp.start_polling(bot)
     except Exception as e:
