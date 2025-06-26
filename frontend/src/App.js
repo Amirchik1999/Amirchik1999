@@ -612,7 +612,7 @@ const DiscoverScreen = ({ user }) => {
               {currentCard.isOnline && (
                 <div className="online-indicator">
                   <span className="status-dot"></span>
-                  {texts.online}
+                  {getText('online')}
                 </div>
               )}
             </div>
