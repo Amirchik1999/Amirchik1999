@@ -376,14 +376,19 @@ body {
   font-size: 40px;
 }
 
+/* Interests */
+.interests-container {
+  width: 100%;
+  max-width: 320px;
+}
+
 .interests-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 12px;
-  margin-top: 40px;
 }
 
-.interest-chip {
+.interest-btn {
   padding: 12px 16px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
@@ -393,17 +398,50 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   color: #fff;
+  backdrop-filter: blur(10px);
 }
 
-.interest-chip.selected {
+.interest-btn.selected {
   border-color: #fff;
   background: rgba(255, 255, 255, 0.1);
 }
 
-.setup-footer {
+/* Navigation */
+.setup-navigation {
   padding: 30px;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+  display: flex;
+  gap: 15px;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn.primary {
+  background: #fff;
+  color: #000;
+}
+
+.nav-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.nav-btn:active {
+  transform: scale(0.98);
 }
 
 /* Discover Screen */
