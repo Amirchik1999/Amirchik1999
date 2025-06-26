@@ -459,9 +459,9 @@ const ProfileSetup = ({ onComplete }) => {
           <div className="step-content">
             <div className="location-section">
               <button className="btn btn-primary" onClick={handleLocationRequest}>
-                📍 {texts.enable_location}
+                📍 {getText('enable_location')}
               </button>
-              <p className="help-text">{texts.location_help}</p>
+              <p className="help-text">{getText('location_help')}</p>
               {profile.location && (
                 <div className="location-result">
                   <span>📍 {profile.location}</span>
