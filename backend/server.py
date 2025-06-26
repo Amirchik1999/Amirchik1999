@@ -243,13 +243,14 @@ async def get_user_matches(telegram_id: int):
     # Get matched users details
     matched_users = []
     for match in matches:
+        match_dict = mongo_to_dict(match)
         other_user_id = match["user2_id"] if match["user1_id"] == telegram_id else match["user1_id"]
         user = await db.users.find_one({"telegram_id": other_user_id})
         if user:
             matched_users.append({
-                "match_id": match["id"],
-                "user": user,
-                "matched_at": match["created_at"]
+                "match_id": match_dict.get("id", str(match_dict.get("_id", ""))),
+                "user": mongo_to_dict(user),
+                "matched_at": match_dict.get("created_at", "")
             })
     
     return matched_users
