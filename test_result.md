@@ -225,3 +225,5 @@ agent_communication:
     message: "Created full Telegram dating bot backend with profile management, daily limits, matching system. Bot token configured. Need to test API endpoints and webhook integration. Frontend dashboard ready."
   - agent: "testing"
     message: "Completed testing of all backend API endpoints. Fixed MongoDB ObjectId serialization issues that were causing errors in several endpoints. All tests are now passing. The Telegram Dating Bot API is working correctly with proper profile management, daily limits, and matching system."
+  - agent: "main"
+    message: "Removed persistent Emergent watermark from site. Updated frontend UI to better match TON Dating app - improved intro screen, welcome screen styling, glass morphism buttons, logo design, typography. User previously reported UI was not similar to TON Dating app. Need frontend testing to verify if 1:1 visual match is achieved."
