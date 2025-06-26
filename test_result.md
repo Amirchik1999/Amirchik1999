@@ -166,6 +166,33 @@ backend:
         comment: "Successfully tested matching system. Users can like each other and matches are created when both users like each other. Fixed MongoDB ObjectId serialization issue."
 
 frontend:
+  - task: "Remove Emergent Watermark"
+    implemented: true
+    working: true
+    file: "/app/frontend/public/index.html"
+    stuck_count: 0
+    priority: "high"  
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Successfully removed the persistent 'Made with Emergent' badge/watermark from the bottom of the site. Removed entire badge markup from index.html."
+
+  - task: "1:1 TON Dating UI Copy - Welcome Screen"
+    implemented: true
+    working: "unknown"
+    file: "/app/frontend/src/App.js, /app/frontend/src/App.css"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported 'oxshamagan vabshey' (not similar at all) - current UI doesn't match TON Dating app"
+      - working: "unknown"
+        agent: "main"
+        comment: "Updated intro screen, welcome screen, improved glass morphism buttons, enhanced logo styling, adjusted background patterns, improved typography and spacing to better match TON Dating design. Need testing to verify 1:1 match."
+
   - task: "Bot Dashboard Landing Page"
     implemented: true
     working: true
