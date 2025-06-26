@@ -541,34 +541,66 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('discover');
 
   useEffect(() => {
-    if (tg) {
-      tg.ready();
-      tg.expand();
-      tg.MainButton.hide();
+    // Telegram Web App initialization with error handling
+    try {
+      if (tg) {
+        tg.ready();
+        tg.expand();
+        tg.MainButton.hide();
+      }
+    } catch (error) {
+      console.log('Telegram Web App not available:', error);
     }
 
-    // Remove any external watermarks/badges
+    // Aggressive watermark removal
     const removeWatermarks = () => {
       const selectors = [
         'a[href*="emergent"]',
         'div[id*="emergent"]',
         'a[id*="emergent-badge"]',
-        '*[style*="Made with Emergent"]'
+        '*[style*="Made with Emergent"]',
+        '*:contains("Made with Emergent")',
+        '[class*="emergent"]',
+        '[id*="emergent"]'
       ];
       
       selectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => {
-          if (el) {
-            el.style.display = 'none';
+        try {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach(el => {
+            if (el && el.textContent && el.textContent.includes('Made with Emergent')) {
+              el.style.display = 'none !important';
+              el.style.visibility = 'hidden !important';
+              el.style.opacity = '0 !important';
+              el.remove();
+            }
+          });
+        } catch (e) {
+          console.log('Error removing element:', e);
+        }
+      });
+
+      // Additional check for any element containing "Made with Emergent"
+      try {
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+          if (el.textContent && el.textContent.includes('Made with Emergent')) {
+            el.style.display = 'none !important';
             el.remove();
           }
         });
-      });
+      } catch (e) {
+        console.log('Error in additional check:', e);
+      }
     };
 
+    // Run immediately and periodically
     removeWatermarks();
-    const intervalId = setInterval(removeWatermarks, 1000);
+    const intervalId = setInterval(removeWatermarks, 500);
+    
+    // Also run after page loads
+    setTimeout(removeWatermarks, 1000);
+    setTimeout(removeWatermarks, 3000);
     
     return () => clearInterval(intervalId);
   }, []);
