@@ -1,0 +1,81 @@
+🤖 BOTFATHER SOZLAMALARI - "ОТКРЫТЬ" TUGMASI QILISH
+
+===============================
+📱 HOZIRGI MUAMMO:
+===============================
+❌ Bot profile kirmasdan oldin "ОТКРЫТЬ" tugmasi yo'q
+❌ TON Dating kabi professional ko'rinish yo'q
+❌ Mini App tugmasi notification/listda ko'rinmaydi
+
+===============================
+✅ BOTFATHER DA SOZLASH:
+===============================
+
+1️⃣ @BotFather ga boring: https://t.me/BotFather
+
+2️⃣ MENU TUGMASI SOZLASH:
+/setmenubutton
+
+Bot username: @LinkUp_Dating_bot
+
+Menu button text: LinkUp Dating 💕
+Menu button URL: https://23276d44-c6c8-4999-aa05-14f02da19e1b.preview.emergentagent.com
+
+3️⃣ BOT TAVSIFI (DESCRIPTION):
+/setdescription
+
+@LinkUp_Dating_bot
+
+Description:
+💕 LinkUp Dating - Professional tanishuv platformasi
+
+Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней.
+
+Все профили проходят многоступенчатую верификацию.
+
+4️⃣ QISQA TAVSIF (ABOUT):
+/setabouttext
+
+@LinkUp_Dating_bot
+
+About text:
+Professional tanishuv platformasi 💕
+Verified profiles | GPS matching | Real people
+
+5️⃣ KOMANDALAR:
+/setcommands
+
+@LinkUp_Dating_bot
+
+Commands:
+start - Boshlash va til tanlash
+help - Yordam va ma'lumot
+language - Tilni o'zgartirish  
+profile - Profilni ochish
+
+6️⃣ BOT PROFIL RASMI:
+/setuserpic
+
+@LinkUp_Dating_bot
+
+(Logo rasmini yuklang)
+
+===============================
+🎯 NATIJA:
+===============================
+
+Shundan keyin:
+✅ Bot listda "ОТКРЫТЬ" tugmasi ko'rsatiladi
+✅ TON Dating kabi professional ko'rinish
+✅ Menu button avtomatik Mini App ochadi
+✅ Bot profile professional ko'rinadi
+
+===============================
+🔥 KEYINGI QADAM:
+===============================
+
+1. Yuqoridagi sozlamalarni BotFather da qiling
+2. Bot restart qiling
+3. Test qiling - notification listda "ОТКРЫТЬ" tugmasi paydo bo'ladi!
+
+===============================
