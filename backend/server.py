@@ -121,7 +121,7 @@ async def get_user_profile(telegram_id: int):
     user = await db.users.find_one({"telegram_id": telegram_id})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    return user
+    return mongo_to_dict(user)
 
 @api_router.get("/users/{telegram_id}/daily-limit")
 async def get_daily_limit(telegram_id: int):
