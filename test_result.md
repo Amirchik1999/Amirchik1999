@@ -189,6 +189,9 @@ frontend:
       - working: true
         agent: "main"
         comment: "Successfully removed the persistent 'Made with Emergent' badge/watermark from the bottom of the site. Removed entire badge markup from index.html."
+      - working: true
+        agent: "testing"
+        comment: "Verified that the Emergent watermark has been completely removed from the application. No watermark elements were found in the DOM during testing."
 
   - task: "1:1 TON Dating UI Copy - Welcome Screen"
     implemented: true
