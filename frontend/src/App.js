@@ -328,19 +328,19 @@ const IntroSplashScreen = ({ onContinue }) => {
       lang: "🇺🇿 O'zbekcha",
       title: "LinkUp Dating",
       subtitle: "Professional tanishuv platformasi",
-      description: "Telegram asosidagi eksklyuziv tanishuv hamjamiyati — bu yerda haqiqiy qizlar qiziqarli yigitlar bilan tanishadilar."
+      description: "Faqat haqiqiy odamlar. Faqat tekshirilgan profillar.\nTanishing, muloqot qiling va o'zingizga mos odamlarni toping.🖤"
     },
     {
       lang: "🇷🇺 Русский",
       title: "LinkUp Dating", 
       subtitle: "Профессиональная платформа знакомств",
-      description: "Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней."
+      description: "Только реальные люди. Только проверенные анкеты.\nЗнакомься, общайся и находи тех, кто тебе подходит.🖤"
     },
     {
       lang: "🇺🇸 English",
       title: "LinkUp Dating",
       subtitle: "Professional Dating Platform", 
-      description: "Exclusive community for dating based on Telegram — where real girls meet interesting guys."
+      description: "Only real people. Only verified profiles.\nMeet, chat and find those who suit you.🖤"
     }
   ];
 
