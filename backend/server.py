@@ -6,7 +6,7 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List, Optional, Any, Dict
 import uuid
 from datetime import datetime, timedelta
 import httpx
@@ -18,6 +18,26 @@ from telegram.constants import ParseMode
 import json
 from PIL import Image
 import io
+from bson import ObjectId
+from fastapi.encoders import jsonable_encoder
+
+# Custom JSON encoder for MongoDB ObjectId
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        if isinstance(o, datetime):
+            return o.isoformat()
+        return json.JSONEncoder.default(self, o)
+
+# Helper function to convert MongoDB document to dict with proper ObjectId handling
+def mongo_to_dict(obj: Dict[str, Any]) -> Dict[str, Any]:
+    if obj is None:
+        return None
+    obj_dict = dict(obj)
+    if "_id" in obj_dict:
+        obj_dict["_id"] = str(obj_dict["_id"])
+    return obj_dict
 
 
 ROOT_DIR = Path(__file__).parent
