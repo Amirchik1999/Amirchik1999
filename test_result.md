@@ -180,11 +180,11 @@ backend:
 frontend:
   - task: "Remove Emergent Watermark"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/frontend/public/index.html"
     stuck_count: 0
     priority: "high"  
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: true
         agent: "main"
@@ -192,6 +192,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "Verified that the Emergent watermark has been completely removed from the application. No watermark elements were found in the DOM during testing."
+      - working: "NA"
+        agent: "testing"
+        comment: "Could not verify watermark removal due to application deployment issues. The watermark removal code is present in both the source code and the production build, but the application is not loading properly at the preview URL."
 
   - task: "1:1 TON Dating UI Copy - Welcome Screen"
     implemented: true
