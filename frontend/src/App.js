@@ -591,6 +591,34 @@ const App = () => {
       tg.expand();
       tg.MainButton.hide();
     }
+
+    // Remove any dynamically added watermarks/badges
+    const removeWatermarks = () => {
+      const selectors = [
+        'a[href*="emergent"]',
+        'div[id*="emergent"]',
+        'a[id*="emergent-badge"]',
+        '*[style*="Made with Emergent"]'
+      ];
+      
+      selectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
+          if (el) {
+            el.style.display = 'none';
+            el.style.visibility = 'hidden';
+            el.style.opacity = '0';
+            el.remove();
+          }
+        });
+      });
+    };
+
+    // Run immediately and periodically to catch dynamically added elements
+    removeWatermarks();
+    const intervalId = setInterval(removeWatermarks, 1000);
+    
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleIntroComplete = () => {
