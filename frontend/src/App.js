@@ -889,7 +889,7 @@ const BottomNav = ({ activeTab, onTabChange }) => {
 
 // Main App Component
 const App = () => {
-  const [currentScreen, setCurrentScreen] = useState('welcome');
+  const [currentScreen, setCurrentScreen] = useState('intro');
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('discover');
 
