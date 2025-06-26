@@ -162,11 +162,28 @@ const TEXTS = {
   }
 };
 
-// Get user language from URL parameters
+// Get user language from Telegram or URL
 const getUserLanguage = () => {
+  // Try to get from Telegram WebApp first
+  if (window.Telegram?.WebApp?.initDataUnsafe?.user?.language_code) {
+    const tgLang = window.Telegram.WebApp.initDataUnsafe.user.language_code;
+    if (tgLang.startsWith('ru')) return 'ru';
+    if (tgLang.startsWith('uz')) return 'uz';
+    if (tgLang.startsWith('en')) return 'en';
+  }
+  
+  // Try URL parameter
   const urlParams = new URLSearchParams(window.location.search);
-  const lang = urlParams.get('lang');
-  return lang && TEXTS[lang] ? lang : 'uz'; // Default to Uzbek
+  const urlLang = urlParams.get('lang');
+  if (urlLang && TEXTS[urlLang]) return urlLang;
+  
+  // Try browser language
+  const browserLang = navigator.language || navigator.userLanguage;
+  if (browserLang.startsWith('ru')) return 'ru';
+  if (browserLang.startsWith('uz')) return 'uz';
+  
+  // Default to Russian for wider audience
+  return 'ru';
 };
 
 // Current user language
