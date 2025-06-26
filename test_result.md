@@ -182,9 +182,9 @@ frontend:
     implemented: true
     working: "NA"
     file: "/app/frontend/public/index.html"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"  
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
@@ -195,6 +195,9 @@ frontend:
       - working: "NA"
         agent: "testing"
         comment: "Could not verify watermark removal due to application deployment issues. The watermark removal code is present in both the source code and the production build, but the application is not loading properly at the preview URL."
+      - working: "NA"
+        agent: "testing"
+        comment: "After multiple attempts, the application is still not loading properly. The page only returns '<!DOCTYPE html>' without any content. Tried downgrading React from v19 to v18, rebuilding the application, and restarting the frontend service, but the issue persists. The preview URL returns a 200 status code but the content is not being properly rendered."
 
   - task: "1:1 TON Dating UI Copy - Welcome Screen"
     implemented: true
