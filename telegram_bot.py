@@ -23,97 +23,103 @@ user_languages = {}
 # Multi-language texts
 TEXTS = {
     'en': {
-        'select_language': '🌐 Select your language:',
-        'language_selected': '✅ Language set to English',
-        'welcome_title': '💕 LinkUp Dating',
-        'welcome_text': '''Hello {name}! 👋
+        'select_language': '💫 Choose your language to continue:',
+        'language_selected': '✅ Language set to English! Welcome!',
+        'welcome_title': '🌟 LinkUp Dating',
+        'welcome_text': '''Welcome to **LinkUp Dating**, {name}! 🎉
 
-🔥 Welcome to LinkUp Dating!
+I'm your personal dating assistant bot. I'll help you:
 
-✨ Here you can:
-• Meet people nearby
-• Find matches using GPS location
-• Chat with your matches
-• Professional dating experience
+💕 **Find real people nearby** using GPS
+🎯 **Get perfect matches** based on your interests  
+💬 **Start meaningful conversations** with your matches
+🌟 **Experience professional dating** like never before
 
-🎯 Press the button below to start:''',
-        'open_app': '🚀 Open LinkUp Dating',
-        'help_title': '🆘 LinkUp Dating Help',
-        'help_text': '''📋 Available commands:
-• /start - Start the bot
-• /help - Get help
-• /language - Change language
+Ready to find your perfect match? Let's start your journey! 🚀''',
+        'open_app': '💕 Start My Dating Journey',
+        'help_title': '🤖 Your Dating Assistant',
+        'help_text': '''Hi! I'm your LinkUp Dating assistant! 🤖
 
-🎯 How it works:
-1. Start with /start command
-2. Press "Open LinkUp Dating"
-3. Create your profile
-4. Meet people nearby!
+📋 **What I can help you with:**
+• `/start` - Begin your dating journey
+• `/help` - Get assistance anytime
+• `/language` - Change your language
+• `/profile` - Access your dating profile
 
-💕 LinkUp Dating - Best dating experience!''',
-        'profile_btn': '👤 Open Profile'
+🎯 **How LinkUp Dating works:**
+1. I'll help you create an amazing profile
+2. You'll discover people near you using GPS
+3. Swipe and match with people you like
+4. Start conversations with your matches!
+
+💡 **Pro tip:** Complete your profile for better matches!''',
+        'profile_btn': '👤 My Dating Profile'
     },
     'ru': {
-        'select_language': '🌐 Выберите ваш язык:',
-        'language_selected': '✅ Язык установлен: Русский',
-        'welcome_title': '💕 LinkUp Dating',
-        'welcome_text': '''Привет {name}! 👋
+        'select_language': '💫 Выберите язык для продолжения:',
+        'language_selected': '✅ Язык установлен: Русский! Добро пожаловать!',
+        'welcome_title': '🌟 LinkUp Dating',
+        'welcome_text': '''Добро пожаловать в **LinkUp Dating**, {name}! 🎉
 
-🔥 Добро пожаловать в LinkUp Dating!
+Я ваш персональный бот-помощник для знакомств. Помогу вам:
 
-✨ Здесь вы можете:
-• Знакомиться с людьми рядом
-• Находить совпадения по GPS
-• Общаться с парами
-• Профессиональный опыт знакомств
+💕 **Найти реальных людей рядом** через GPS
+🎯 **Получить идеальные совпадения** по интересам
+💬 **Начать значимые разговоры** с парами
+🌟 **Испытать профессиональные знакомства** как никогда
 
-🎯 Нажмите кнопку ниже, чтобы начать:''',
-        'open_app': '🚀 Открыть LinkUp Dating',
-        'help_title': '🆘 Помощь LinkUp Dating',
-        'help_text': '''📋 Доступные команды:
-• /start - Запустить бота
-• /help - Получить помощь
-• /language - Изменить язык
+Готовы найти идеальную пару? Начнём ваше путешествие! 🚀''',
+        'open_app': '💕 Начать Моё Знакомство',
+        'help_title': '🤖 Ваш Помощник Знакомств',
+        'help_text': '''Привет! Я ваш помощник LinkUp Dating! 🤖
 
-🎯 Как это работает:
-1. Начните с команды /start
-2. Нажмите "Открыть LinkUp Dating"
-3. Создайте свой профиль
-4. Знакомьтесь с людьми рядом!
+📋 **Чем могу помочь:**
+• `/start` - Начать путешествие знакомств
+• `/help` - Получить помощь в любое время
+• `/language` - Изменить язык
+• `/profile` - Доступ к профилю знакомств
 
-💕 LinkUp Dating - Лучший опыт знакомств!''',
-        'profile_btn': '👤 Открыть профиль'
+🎯 **Как работает LinkUp Dating:**
+1. Помогу создать потрясающий профиль
+2. Вы найдёте людей рядом через GPS
+3. Свайпайте и находите совпадения
+4. Начинайте разговоры с парами!
+
+💡 **Совет:** Заполните профиль для лучших совпадений!''',
+        'profile_btn': '👤 Мой Профиль Знакомств'
     },
     'uz': {
-        'select_language': '🌐 Tilingizni tanlang:',
-        'language_selected': '✅ Til o\'rnatildi: O\'zbek',
-        'welcome_title': '💕 LinkUp Dating',
-        'welcome_text': '''Salom {name}! 👋
+        'select_language': '💫 Davom etish uchun tilni tanlang:',
+        'language_selected': '✅ Til o\'rnatildi: O\'zbek! Xush kelibsiz!',
+        'welcome_title': '🌟 LinkUp Dating',
+        'welcome_text': '''**LinkUp Dating** ga xush kelibsiz, {name}! 🎉
 
-🔥 LinkUp Dating ga xush kelibsiz!
+Men sizning shaxsiy tanishuv yordamchi botingizman. Sizga yordam beraman:
 
-✨ Bu yerda siz:
-• Yaqin atrofdagi odamlar bilan tanishishingiz mumkin
-• GPS orqali eng yaqin odamlarni topishingiz mumkin
-• Matchlar bilan chat qilishingiz mumkin
-• Professional tanishuv tajribasini boshdan kechirishingiz mumkin
+💕 **Yaqin atrofdagi real odamlarni topishda** GPS orqali
+🎯 **Mukammal matchlarni olishda** qiziqishlaringiz asosida
+💬 **Mazmunli suhbatlar boshlashda** matchlaringiz bilan
+🌟 **Professional tanishuv tajribasini boshdan kechirishda**
 
-🎯 Boshlash uchun quyidagi tugmani bosing:''',
-        'open_app': '🚀 LinkUp Dating ni ochish',
-        'help_title': '🆘 LinkUp Dating Yordam',
-        'help_text': '''📋 Mavjud komandalar:
-• /start - Botni boshlash
-• /help - Yordam olish
-• /language - Tilni o'zgartirish
+Mukammal juftingizni topishga tayyormisiz? Sayohatingizni boshlaylik! 🚀''',
+        'open_app': '💕 Tanishuv Sayohatimni Boshlash',
+        'help_title': '🤖 Sizning Tanishuv Yordamchingiz',
+        'help_text': '''Salom! Men sizning LinkUp Dating yordamchingizman! 🤖
 
-🎯 Qanday ishlaydi:
-1. /start komandasi bilan boshlang
-2. "LinkUp Dating ni ochish" tugmasini bosing
-3. Profilingizni yarating
-4. Yaqin atrofdagi odamlar bilan tanishing!
+📋 **Nima bilan yordam bera olaman:**
+• `/start` - Tanishuv sayohatingizni boshlash
+• `/help` - Istalgan vaqtda yordam olish
+• `/language` - Tilni o'zgartirish
+• `/profile` - Tanishuv profilingizga kirish
 
-💕 LinkUp Dating - Eng yaxshi tanishuv tajribasi!''',
-        'profile_btn': '👤 Profilni ochish'
+🎯 **LinkUp Dating qanday ishlaydi:**
+1. Ajoyib profil yaratishda yordam beraman
+2. GPS orqali yaqin odamlarni topasiz
+3. Swipe qiling va yoqqanlaringiz bilan match oling
+4. Matchlaringiz bilan suhbat boshlang!
+
+💡 **Maslahat:** Yaxshi matchlar uchun profilingizni to'ldiring!''',
+        'profile_btn': '👤 Mening Tanishuv Profilim'
     }
 }
 
