@@ -228,10 +228,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "1:1 TON Dating UI Copy - Welcome Screen"
     - "Remove Emergent Watermark"
-  stuck_tasks:
-    - "1:1 TON Dating UI Copy - Welcome Screen"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
