@@ -107,51 +107,63 @@ user_problem_statement: "Telegram dating bot yaratish - profil yaratish, kunlik 
 backend:
   - task: "Telegram Bot API Integration"
     implemented: true
-    working: false  # needs webhook setup
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "unknown"
         agent: "main"
         comment: "Created Telegram bot handlers, API routes for profiles, matches, daily limits. Bot token configured. Need to test webhook integration."
+      - working: true
+        agent: "testing"
+        comment: "Tested Telegram webhook endpoint. It successfully receives and acknowledges webhook data. Fixed issue with MongoDB ObjectId serialization."
 
   - task: "User Profile Management"
     implemented: true
-    working: "unknown"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "unknown"
         agent: "main"
         comment: "Created UserProfile model, MongoDB storage, CRUD endpoints for profiles"
+      - working: true
+        agent: "testing"
+        comment: "Successfully tested user profile creation and retrieval. Fixed MongoDB ObjectId serialization issue. Created test profiles with different genders and interests."
 
   - task: "Daily Viewing Limits"
     implemented: true
-    working: "unknown"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "unknown"
         agent: "main"
         comment: "Implemented DailyLimit model, tracking views per day (max 20), increment endpoints"
+      - working: true
+        agent: "testing"
+        comment: "Successfully tested daily limit functionality. View count increments correctly and daily limit is enforced. Fixed MongoDB ObjectId serialization issue."
 
   - task: "Matching System"
     implemented: true
-    working: "unknown"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "unknown"
         agent: "main"
         comment: "Created Match model, like/skip logic, mutual like detection for matches"
+      - working: true
+        agent: "testing"
+        comment: "Successfully tested matching system. Users can like each other and matches are created when both users like each other. Fixed MongoDB ObjectId serialization issue."
 
 frontend:
   - task: "Bot Dashboard Landing Page"
@@ -184,3 +196,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Created full Telegram dating bot backend with profile management, daily limits, matching system. Bot token configured. Need to test API endpoints and webhook integration. Frontend dashboard ready."
+  - agent: "testing"
+    message: "Completed testing of all backend API endpoints. Fixed MongoDB ObjectId serialization issues that were causing errors in several endpoints. All tests are now passing. The Telegram Dating Bot API is working correctly with proper profile management, daily limits, and matching system."
