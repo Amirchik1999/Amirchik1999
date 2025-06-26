@@ -319,7 +319,7 @@ const LocationService = {
   }
 };
 
-// Intro Splash Screen Component - 3 languages
+// Intro Splash Screen Component - Auto detects user language
 const IntroSplashScreen = ({ onContinue }) => {
   const [currentLang, setCurrentLang] = useState(0);
   
@@ -345,15 +345,20 @@ const IntroSplashScreen = ({ onContinue }) => {
   ];
 
   useEffect(() => {
-    // Auto cycle through languages
+    // Detect user language and set initial language
+    const userLang = getUserLanguage();
+    const langIndex = userLang === 'ru' ? 1 : userLang === 'en' ? 2 : 0;
+    setCurrentLang(langIndex);
+
+    // Auto cycle through languages starting from user's language
     const interval = setInterval(() => {
       setCurrentLang(prev => (prev + 1) % 3);
-    }, 2500);
+    }, 3000); // 3 seconds per language
 
-    // Auto continue after 8 seconds
+    // Auto continue after 10 seconds
     const timer = setTimeout(() => {
       onContinue();
-    }, 8000);
+    }, 10000);
 
     return () => {
       clearInterval(interval);
@@ -370,46 +375,40 @@ const IntroSplashScreen = ({ onContinue }) => {
       </div>
       
       <div className="intro-splash-content">
-        {/* Professional Logo */}
+        {/* Professional Logo - Updated */}
         <div className="intro-logo-section">
           <div className="intro-logo-container">
-            <svg viewBox="0 0 120 120" className="intro-logo-svg">
-              <defs>
-                <clipPath id="introHeartClip">
-                  <path d="M60,100 C60,100 20,65 20,40 C20,27 30,15 45,15 C52,15 57,20 60,28 C63,20 68,15 75,15 C90,15 100,27 100,40 C100,65 60,100 60,100 Z"/>
-                </clipPath>
-              </defs>
-              
-              {/* Heart background */}
-              <path d="M60,100 C60,100 20,65 20,40 C20,27 30,15 45,15 C52,15 57,20 60,28 C63,20 68,15 75,15 C90,15 100,27 100,40 C100,65 60,100 60,100 Z" 
-                    fill="#f8f9fa" stroke="#e0e0e0" strokeWidth="2"/>
-              
-              {/* Left half (white) */}
-              <rect x="0" y="0" width="60" height="120" fill="#f8f9fa" clipPath="url(#introHeartClip)"/>
-              
-              {/* Right half (dark) */}
-              <rect x="60" y="0" width="60" height="120" fill="#2d3436" clipPath="url(#introHeartClip)"/>
-              
-              {/* Female symbol */}
-              <g transform="translate(40, 45)">
-                <circle cx="0" cy="0" r="9" fill="none" stroke="#2d3436" strokeWidth="3"/>
-                <line x1="0" y1="9" x2="0" y2="22" stroke="#2d3436" strokeWidth="3"/>
-                <line x1="-7" y1="16" x2="7" y2="16" stroke="#2d3436" strokeWidth="3"/>
-              </g>
-              
-              {/* Male symbol */}
-              <g transform="translate(80, 45)">
-                <circle cx="0" cy="0" r="9" fill="none" stroke="#f8f9fa" strokeWidth="3"/>
-                <line x1="7" y1="-7" x2="16" y2="-16" stroke="#f8f9fa" strokeWidth="3"/>
-                <line x1="16" y1="-16" x2="16" y2="-9" stroke="#f8f9fa" strokeWidth="3"/>
-                <line x1="16" y1="-16" x2="9" y2="-16" stroke="#f8f9fa" strokeWidth="3"/>
-              </g>
-            </svg>
-          </div>
-          
-          <div className="intro-brand-text">
-            <h1 className="intro-brand-title">{currentText.title}</h1>
-            <p className="intro-brand-subtitle">{currentText.subtitle}</p>
+            <div className="professional-heart-logo">
+              <svg viewBox="0 0 200 60" className="intro-logo-svg">
+                {/* Heart shape background */}
+                <path d="M20,40 C20,25 35,15 50,25 C65,15 80,25 80,40 C80,55 50,75 50,75 C50,75 20,55 20,40 Z" 
+                      fill="#f8f9fa" stroke="#e0e0e0" strokeWidth="1"/>
+                
+                {/* Female symbol inside heart */}
+                <g transform="translate(40, 35)">
+                  <circle cx="0" cy="0" r="6" fill="none" stroke="#2d3436" strokeWidth="2"/>
+                  <line x1="0" y1="6" x2="0" y2="15" stroke="#2d3436" strokeWidth="2"/>
+                  <line x1="-4" y1="11" x2="4" y2="11" stroke="#2d3436" strokeWidth="2"/>
+                </g>
+                
+                {/* Male symbol */}
+                <g transform="translate(60, 35)">
+                  <circle cx="0" cy="0" r="6" fill="none" stroke="#2d3436" strokeWidth="2"/>
+                  <line x1="4" y1="-4" x2="10" y2="-10" stroke="#2d3436" strokeWidth="2"/>
+                  <line x1="10" y1="-10" x2="10" y2="-6" stroke="#2d3436" strokeWidth="2"/>
+                  <line x1="10" y1="-10" x2="6" y2="-10" stroke="#2d3436" strokeWidth="2"/>
+                </g>
+                
+                {/* LinkUp text */}
+                <text x="105" y="25" fill="#ffffff" fontSize="18" fontWeight="700" fontFamily="Arial, sans-serif">
+                  LinkUp
+                </text>
+                {/* Dating text */}
+                <text x="105" y="45" fill="#ffffff" fontSize="18" fontWeight="700" fontFamily="Arial, sans-serif">
+                  Dating
+                </text>
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -437,9 +436,7 @@ const IntroSplashScreen = ({ onContinue }) => {
         {/* Continue button */}
         <div className="intro-actions">
           <button className="intro-continue-btn" onClick={onContinue}>
-            <span>Continue</span>
-            <span>Продолжить</span>
-            <span>Davom etish</span>
+            <span>Continue • Продолжить • Davom etish</span>
           </button>
         </div>
       </div>
