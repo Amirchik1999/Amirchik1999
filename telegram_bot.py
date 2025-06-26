@@ -123,9 +123,37 @@ def get_text(user_id, key):
 
 @dp.message(Command("start"))
 async def start_command(message: types.Message):
-    """Start komanda - professional til tanlash"""
+    """Start komanda - logo ko'rsatish va til tanlash"""
     
-    # Professional language selection design
+    # First send the professional logo
+    logo_caption = """🌟 **LinkUp Dating** 🌟
+
+💕 Professional tanishuv platformasi
+🔥 Exclusive sообщество для знакомств  
+✨ Professional dating community
+
+Davom etish uchun tilni tanlang 👇
+Выберите язык для продолжения 👇  
+Choose language to continue 👇"""
+
+    # Create logo image URL (using a placeholder, you can replace with real image)
+    logo_url = "https://i.imgur.com/placeholder.png"  # Replace with actual logo URL
+    
+    try:
+        # Send logo photo
+        await message.answer_photo(
+            photo=logo_url,
+            caption=logo_caption,
+            parse_mode="Markdown"
+        )
+    except:
+        # If photo fails, send text version
+        await message.answer(
+            text=f"💕 **LinkUp Dating** 💕\n\n{logo_caption}",
+            parse_mode="Markdown"
+        )
+    
+    # Then send language selection
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [
             InlineKeyboardButton(text="🇺🇿 O'zbekcha", callback_data="lang_uz")
@@ -138,19 +166,9 @@ async def start_command(message: types.Message):
         ]
     ])
     
-    # Professional welcome with language selection
-    welcome_msg = """
-🌟 **LinkUp Dating** ga xush kelibsiz!
-
-Yaqin atrofdagi odamlar bilan tanishing, real people bilan chat qiling va hayotingizni o'zgartiring! 
-
-💫 **Boshlash uchun tilni tanlang:**
-    """
-    
     await message.answer(
-        text=welcome_msg,
-        reply_markup=keyboard,
-        parse_mode="Markdown"
+        text="💫 Tilni tanlang / Выберите язык / Choose language:",
+        reply_markup=keyboard
     )
 
 @dp.callback_query(F.data.startswith("lang_"))
