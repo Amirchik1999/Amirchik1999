@@ -310,36 +310,36 @@ const WelcomeScreen = ({ onCreateProfile, onConnectWallet }) => {
         <div className="logo-section">
           <div className="app-logo">
             <div className="professional-logo">
-              <svg viewBox="0 0 100 100" className="logo-svg">
+              <svg viewBox="0 0 120 120" className="logo-svg">
                 <defs>
                   <clipPath id="heartClip">
-                    <path d="M50,85 C50,85 15,55 15,35 C15,25 25,15 35,15 C40,15 45,20 50,25 C55,20 60,15 65,15 C75,15 85,25 85,35 C85,55 50,85 50,85 Z"/>
+                    <path d="M60,100 C60,100 20,65 20,40 C20,27 30,15 45,15 C52,15 57,20 60,28 C63,20 68,15 75,15 C90,15 100,27 100,40 C100,65 60,100 60,100 Z"/>
                   </clipPath>
                 </defs>
                 
-                {/* Heart background */}
-                <path d="M50,85 C50,85 15,55 15,35 C15,25 25,15 35,15 C40,15 45,20 50,25 C55,20 60,15 65,15 C75,15 85,25 85,35 C85,55 50,85 50,85 Z" 
-                      fill="#f5f5f5" stroke="#ddd" strokeWidth="1"/>
+                {/* Heart background with border */}
+                <path d="M60,100 C60,100 20,65 20,40 C20,27 30,15 45,15 C52,15 57,20 60,28 C63,20 68,15 75,15 C90,15 100,27 100,40 C100,65 60,100 60,100 Z" 
+                      fill="#f8f9fa" stroke="#e0e0e0" strokeWidth="2"/>
                 
-                {/* Left half (white) */}
-                <rect x="0" y="0" width="50" height="100" fill="#f8f9fa" clipPath="url(#heartClip)"/>
+                {/* Left half (white/light) */}
+                <rect x="0" y="0" width="60" height="120" fill="#f8f9fa" clipPath="url(#heartClip)"/>
                 
                 {/* Right half (dark) */}
-                <rect x="50" y="0" width="50" height="100" fill="#343a40" clipPath="url(#heartClip)"/>
+                <rect x="60" y="0" width="60" height="120" fill="#2d3436" clipPath="url(#heartClip)"/>
                 
-                {/* Female symbol (♀) - left side */}
-                <g transform="translate(25, 35)">
-                  <circle cx="0" cy="0" r="8" fill="none" stroke="#343a40" strokeWidth="2.5"/>
-                  <line x1="0" y1="8" x2="0" y2="20" stroke="#343a40" strokeWidth="2.5"/>
-                  <line x1="-6" y1="14" x2="6" y2="14" stroke="#343a40" strokeWidth="2.5"/>
+                {/* Female symbol (♀) - left side, moved more inside */}
+                <g transform="translate(40, 45)">
+                  <circle cx="0" cy="0" r="9" fill="none" stroke="#2d3436" strokeWidth="3"/>
+                  <line x1="0" y1="9" x2="0" y2="22" stroke="#2d3436" strokeWidth="3"/>
+                  <line x1="-7" y1="16" x2="7" y2="16" stroke="#2d3436" strokeWidth="3"/>
                 </g>
                 
-                {/* Male symbol (♂) - right side */}
-                <g transform="translate(75, 35)">
-                  <circle cx="0" cy="0" r="8" fill="none" stroke="#f8f9fa" strokeWidth="2.5"/>
-                  <line x1="6" y1="-6" x2="15" y2="-15" stroke="#f8f9fa" strokeWidth="2.5"/>
-                  <line x1="15" y1="-15" x2="15" y2="-8" stroke="#f8f9fa" strokeWidth="2.5"/>
-                  <line x1="15" y1="-15" x2="8" y2="-15" stroke="#f8f9fa" strokeWidth="2.5"/>
+                {/* Male symbol (♂) - right side, moved more inside */}
+                <g transform="translate(80, 45)">
+                  <circle cx="0" cy="0" r="9" fill="none" stroke="#f8f9fa" strokeWidth="3"/>
+                  <line x1="7" y1="-7" x2="16" y2="-16" stroke="#f8f9fa" strokeWidth="3"/>
+                  <line x1="16" y1="-16" x2="16" y2="-9" stroke="#f8f9fa" strokeWidth="3"/>
+                  <line x1="16" y1="-16" x2="9" y2="-16" stroke="#f8f9fa" strokeWidth="3"/>
                 </g>
               </svg>
             </div>
