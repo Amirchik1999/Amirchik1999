@@ -15,7 +15,7 @@ const getTelegramLanguage = () => {
 // Exact texts from TON Dating
 const texts = {
   'ru': {
-    welcome_title: 'Добро пожаловать в TON Dating',
+    welcome_title: 'TON Dating',
     app_name: 'TON Dating',
     welcome_subtitle: 'Знакомства в Telegram.\nПрисоединяйтесь к сообществу\nамбициозных и реальных людей.',
     create_profile: 'Создать профиль',
