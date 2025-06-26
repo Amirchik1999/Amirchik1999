@@ -445,22 +445,21 @@ body {
 }
 
 /* Discover Screen */
-.discover-content {
-  height: 100vh;
+.discover-container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
   padding: 20px;
 }
 
-.card-stack {
+.card-container {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 
-.dating-card {
+.profile-card {
   width: 100%;
   max-width: 340px;
   height: 580px;
@@ -468,32 +467,18 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   overflow: hidden;
-  position: relative;
   backdrop-filter: blur(10px);
 }
 
-.card-image {
+.card-photo {
   height: 70%;
-  position: relative;
   background: rgba(255, 255, 255, 0.05);
-}
-
-.card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-placeholder {
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.placeholder-avatar {
+.photo-placeholder {
   width: 120px;
   height: 120px;
   background: rgba(255, 255, 255, 0.2);
@@ -506,12 +491,9 @@ body {
   font-weight: bold;
 }
 
-.card-content {
+.card-info {
   height: 30%;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .card-header {
@@ -530,43 +512,27 @@ body {
 .location {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
-  display: flex;
-  align-items: center;
-  gap: 4px;
 }
 
 .card-bio {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.8);
-  line-height: 1.4;
   margin-bottom: 15px;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  line-height: 1.4;
 }
 
-.card-interests {
+.card-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.interest-tag {
+.tag {
   padding: 4px 8px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   font-size: 12px;
-  font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
-}
-
-.interest-more {
-  padding: 4px 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
 }
 
 /* Action Buttons */
