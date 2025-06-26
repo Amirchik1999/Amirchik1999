@@ -126,22 +126,34 @@ def get_text(user_id, key):
 
 @dp.message(Command("start"))
 async def start_command(message: types.Message):
-    """Start komanda - til tanlash"""
+    """Start komanda - professional til tanlash"""
     
-    # Language selection keyboard
+    # Professional language selection design
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [
-            InlineKeyboardButton(text="🇺🇿 O'zbek", callback_data="lang_uz"),
-            InlineKeyboardButton(text="🇷🇺 Русский", callback_data="lang_ru")
+            InlineKeyboardButton(text="🇺🇿 O'zbekcha", callback_data="lang_uz")
+        ],
+        [
+            InlineKeyboardButton(text="🇷🇺 Русский язык", callback_data="lang_ru")
         ],
         [
             InlineKeyboardButton(text="🇺🇸 English", callback_data="lang_en")
         ]
     ])
     
+    # Professional welcome with language selection
+    welcome_msg = """
+🌟 **LinkUp Dating** ga xush kelibsiz!
+
+Yaqin atrofdagi odamlar bilan tanishing, real people bilan chat qiling va hayotingizni o'zgartiring! 
+
+💫 **Boshlash uchun tilni tanlang:**
+    """
+    
     await message.answer(
-        text="🌐 Tilni tanlang / Выберите язык / Select language:",
-        reply_markup=keyboard
+        text=welcome_msg,
+        reply_markup=keyboard,
+        parse_mode="Markdown"
     )
 
 @dp.callback_query(F.data.startswith("lang_"))
