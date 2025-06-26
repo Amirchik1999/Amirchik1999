@@ -690,7 +690,7 @@ const MatchesScreen = () => {
                 <h4>{match.name}</h4>
                 <p>{match.age} лет • {match.distance}</p>
                 {match.isOnline && (
-                  <span className="online-status">{texts.online}</span>
+                  <span className="online-status">{getText('online')}</span>
                 )}
               </div>
               <button className="chat-btn">💬</button>
