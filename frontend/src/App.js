@@ -310,11 +310,38 @@ const WelcomeScreen = ({ onCreateProfile, onConnectWallet }) => {
         <div className="logo-section">
           <div className="app-logo">
             <div className="professional-logo">
-              <img 
-                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDYwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0zMDAgNTcwQzMwMCA1NzAgMTAgMzgwIDEwIDI1MEM1MCAyMTAgMTEwIDE3MCAyMDAgMTcwQzI1MCAyMzAgMzAwIDIzMCAzMDAgMjMwQzMwMCAyMzAgMzUwIDIzMCA0MDAgMTcwQzQ5MCAxNzAgNTUwIDIxMCA1OTAgMjUwQzU5MCAzODAgMzAwIDU3MCAzMDAgNTcwWiIgZmlsbD0iI0YzRjNGMyIvPgo8cGF0aCBkPSJNMzAwIDU3MEM0NzEuODc0IDU3MCA1OTAgNDY0LjE5NCA1OTAgMjUwQzU1MCAyMTAgNDkwIDE3MCA0MDAgMTcwQzM1MCAyMzAgMzAwIDIzMCAzMDAgMjMwVjU3MFoiIGZpbGw9IiMyMzI0MjYiLz4KPHN2ZyB4PSIxNjAiIHk9IjIyMCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxNzAiIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjIuODggMTIyLjg4Ij4KPGRlZnM+CjxzdHlsZT4KLmNscy0xe2ZpbGw6IzIzMjQyNjt9Cjwvc3R5bGU+CjwvZGVmcz4KPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNjEuNDQsNDBBMjEuNDQsMjEuNDQsMCwxLDAsODIuODgsNjEuNDQsNDMuNDQsNDMuNDQsMCwwLDAsNjEuNDQsNDAiLz4KPGxpbmUgY2xhc3M9ImNscy0xIiB4MT0iNjEuNDQiIHkxPSI4Mi44OCIgeDI9IjYxLjQ0IiB5Mj0iMTIwLjg4IiBzdHJva2U9IiMyMzI0MjYiIHN0cm9rZS13aWR0aD0iNCIvPgo8bGluZSBjbGFzcz0iY2xzLTEiIHgxPSI0My40NCIgeTE9IjEwMS44OCIgeDI9Ijc5LjQ0IiB5Mj0iMTAxLjg4IiBzdHJva2U9IiMyMzI0MjYiIHN0cm9rZS13aWR0aD0iNCIvPgo8L3N2Zz4KPC9zdmc+CjxzdmcgeD0iMzQwIiB5PSIyMDAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTcwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+CjxzdmcgaWQ9IkxheWVyXzEiIGRhdGEtbmFtZT0iTGF5ZXIgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTIyLjg4IDEyMi44OCI+CjxkZWZzPgo8c3R5bGU+Ci5jbHMtMXtmaWxsOndoaXRlO30KPC9zdHlsZT4KPC9kZWZzPgo8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02MS40NCw0MEEyMS40NCwyMS40NCwwLDEsMCw4Mi44OCw2MS40NCw0My40NCw0My40NCwwLDAsMCw2MS40NCw0MCIvPgo8bGluZSBjbGFzcz0iY2xzLTEiIHgxPSI4Mi44OCIgeTE9IjQwIiB4Mj0iMTAwLjg4IiB5Mj0iMjIiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNCIvPgo8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iOTQuODgsNDAuOTcgMTAwLjg4LDIyIDgyLjg4LDI4IDk0Ljg4LDQwLjk3Ii8+Cjwvc3ZnPgo8L3N2Zz4KPC9zdmc+"
-                alt="LinkUp Dating Logo"
-                className="logo-image"
-              />
+              <svg viewBox="0 0 100 100" className="logo-svg">
+                <defs>
+                  <clipPath id="heartClip">
+                    <path d="M50,85 C50,85 15,55 15,35 C15,25 25,15 35,15 C40,15 45,20 50,25 C55,20 60,15 65,15 C75,15 85,25 85,35 C85,55 50,85 50,85 Z"/>
+                  </clipPath>
+                </defs>
+                
+                {/* Heart background */}
+                <path d="M50,85 C50,85 15,55 15,35 C15,25 25,15 35,15 C40,15 45,20 50,25 C55,20 60,15 65,15 C75,15 85,25 85,35 C85,55 50,85 50,85 Z" 
+                      fill="#f5f5f5" stroke="#ddd" strokeWidth="1"/>
+                
+                {/* Left half (white) */}
+                <rect x="0" y="0" width="50" height="100" fill="#f8f9fa" clipPath="url(#heartClip)"/>
+                
+                {/* Right half (dark) */}
+                <rect x="50" y="0" width="50" height="100" fill="#343a40" clipPath="url(#heartClip)"/>
+                
+                {/* Female symbol (♀) - left side */}
+                <g transform="translate(25, 35)">
+                  <circle cx="0" cy="0" r="8" fill="none" stroke="#343a40" strokeWidth="2.5"/>
+                  <line x1="0" y1="8" x2="0" y2="20" stroke="#343a40" strokeWidth="2.5"/>
+                  <line x1="-6" y1="14" x2="6" y2="14" stroke="#343a40" strokeWidth="2.5"/>
+                </g>
+                
+                {/* Male symbol (♂) - right side */}
+                <g transform="translate(75, 35)">
+                  <circle cx="0" cy="0" r="8" fill="none" stroke="#f8f9fa" strokeWidth="2.5"/>
+                  <line x1="6" y1="-6" x2="15" y2="-15" stroke="#f8f9fa" strokeWidth="2.5"/>
+                  <line x1="15" y1="-15" x2="15" y2="-8" stroke="#f8f9fa" strokeWidth="2.5"/>
+                  <line x1="15" y1="-15" x2="8" y2="-15" stroke="#f8f9fa" strokeWidth="2.5"/>
+                </g>
+              </svg>
             </div>
           </div>
           <h1 className="app-title">{getText('app_name')}</h1>
