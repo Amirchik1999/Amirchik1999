@@ -241,8 +241,7 @@ metadata:
 test_plan:
   current_focus:
     - "Remove Emergent Watermark"
-  stuck_tasks:
-    - "Remove Emergent Watermark"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
