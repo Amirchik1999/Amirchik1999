@@ -109,7 +109,29 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-.ton-title {
+/* Intro Screen */
+.intro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 40px 30px;
+}
+
+.intro-icon {
+  font-size: 80px;
+  margin-bottom: 30px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.intro-title {
   font-size: 32px;
   font-weight: 700;
   color: #fff;
@@ -117,59 +139,63 @@ body {
   letter-spacing: -0.5px;
 }
 
-.ton-subtitle {
-  font-size: 16px;
+.intro-subtitle {
+  font-size: 17px;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.5;
   margin-bottom: 50px;
-  max-width: 300px;
-  white-space: pre-line;
+  max-width: 320px;
 }
 
-/* Action Buttons */
-.action-buttons {
+/* Welcome Screen - exact copy */
+.welcome-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  max-width: 280px;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 40px 30px;
 }
 
-.ton-button {
-  width: 100%;
-  padding: 16px 20px;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.ton-logo-container {
+  margin-bottom: 40px;
+}
+
+.ton-logo {
+  width: 80px;
+  height: 80px;
+  background: #fff;
+  border-radius: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
 }
 
-.ton-button.primary {
-  background: #fff;
-  color: #000;
+.logo-diamond {
+  font-size: 40px;
 }
 
-.ton-button.secondary {
-  background: rgba(255, 255, 255, 0.1);
+.app-title {
+  font-size: 32px;
+  font-weight: 700;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 0;
+  letter-spacing: -0.5px;
 }
 
-.ton-button:active {
-  transform: scale(0.98);
+.welcome-text {
+  margin-bottom: 50px;
 }
 
-.ton-button:disabled,
-.ton-button.disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none !important;
+.welcome-text p {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  white-space: pre-line;
+  max-width: 320px;
 }
 
 /* Loading States */
