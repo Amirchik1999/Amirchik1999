@@ -26,17 +26,14 @@ TEXTS = {
         'select_language': '💫 Choose your language to continue:',
         'language_selected': '✅ Language set to English! Welcome!',
         'welcome_title': '🌟 LinkUp Dating',
-        'welcome_text': '''Welcome to **LinkUp Dating**, {name}! 🎉
+        'welcome_text': '''Welcome to LinkUp Dating 🖤
 
-I'm your personal dating assistant bot. I'll help you:
+Exclusive community for dating based on Telegram — where real girls meet interesting guys.
 
-💕 **Find real people nearby** using GPS
-🎯 **Get perfect matches** based on your interests  
-💬 **Start meaningful conversations** with your matches
-🌟 **Experience professional dating** like never before
+All profiles go through multi-stage verification, ensuring that every meeting is a unique communication experience with a real person.
 
-Ready to find your perfect match? Let's start your journey! 🚀''',
-        'open_app': '💕 Start My Dating Journey',
+The most active participants receive rewards 💎''',
+        'open_app': '💕 Join Exclusive Community',
         'help_title': '🤖 Your Dating Assistant',
         'help_text': '''Hi! I'm your LinkUp Dating assistant! 🤖
 
@@ -47,79 +44,73 @@ Ready to find your perfect match? Let's start your journey! 🚀''',
 • `/profile` - Access your dating profile
 
 🎯 **How LinkUp Dating works:**
-1. I'll help you create an amazing profile
-2. You'll discover people near you using GPS
-3. Swipe and match with people you like
-4. Start conversations with your matches!
+1. I'll help you create a verified profile
+2. Meet verified people near you using GPS
+3. Swipe and match with real people
+4. Start meaningful conversations!
 
-💡 **Pro tip:** Complete your profile for better matches!''',
-        'profile_btn': '👤 My Dating Profile'
+💡 **Pro tip:** Active users get special rewards!''',
+        'profile_btn': '👤 My Exclusive Profile'
     },
     'ru': {
         'select_language': '💫 Выберите язык для продолжения:',
         'language_selected': '✅ Язык установлен: Русский! Добро пожаловать!',
         'welcome_title': '🌟 LinkUp Dating',
-        'welcome_text': '''Добро пожаловать в **LinkUp Dating**, {name}! 🎉
+        'welcome_text': '''Добро пожаловать в LinkUp Dating 🖤
 
-Я ваш персональный бот-помощник для знакомств. Помогу вам:
+Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней.
 
-💕 **Найти реальных людей рядом** через GPS
-🎯 **Получить идеальные совпадения** по интересам
-💬 **Начать значимые разговоры** с парами
-🌟 **Испытать профессиональные знакомства** как никогда
+Все профили проходят многоступенчатую верификацию, гарантируя, что каждая встреча - это уникальный опыт коммуникации с реальным человеком.
 
-Готовы найти идеальную пару? Начнём ваше путешествие! 🚀''',
-        'open_app': '💕 Начать Моё Знакомство',
+Самые активные участники получают вознаграждение 💎''',
+        'open_app': '💕 Присоединиться к Сообществу',
         'help_title': '🤖 Ваш Помощник Знакомств',
         'help_text': '''Привет! Я ваш помощник LinkUp Dating! 🤖
 
 📋 **Чем могу помочь:**
-• `/start` - Начать путешествие знакомств
+• `/start` - Начать эксклюзивное знакомство
 • `/help` - Получить помощь в любое время
 • `/language` - Изменить язык
-• `/profile` - Доступ к профилю знакомств
+• `/profile` - Доступ к эксклюзивному профилю
 
 🎯 **Как работает LinkUp Dating:**
-1. Помогу создать потрясающий профиль
-2. Вы найдёте людей рядом через GPS
-3. Свайпайте и находите совпадения
-4. Начинайте разговоры с парами!
+1. Помогу создать верифицированный профиль
+2. Встречайте верифицированных людей рядом через GPS
+3. Свайпайте и находите совпадения с реальными людьми
+4. Начинайте значимые разговоры!
 
-💡 **Совет:** Заполните профиль для лучших совпадений!''',
-        'profile_btn': '👤 Мой Профиль Знакомств'
+💡 **Совет:** Активные пользователи получают особые награды!''',
+        'profile_btn': '👤 Мой Эксклюзивный Профиль'
     },
     'uz': {
         'select_language': '💫 Davom etish uchun tilni tanlang:',
         'language_selected': '✅ Til o\'rnatildi: O\'zbek! Xush kelibsiz!',
         'welcome_title': '🌟 LinkUp Dating',
-        'welcome_text': '''**LinkUp Dating** ga xush kelibsiz, {name}! 🎉
+        'welcome_text': '''LinkUp Dating ga xush kelibsiz 🖤
 
-Men sizning shaxsiy tanishuv yordamchi botingizman. Sizga yordam beraman:
+Telegram asosidagi eksklyuziv tanishuv hamjamiyati — bu yerda haqiqiy qizlar qiziqarli yigitlar bilan tanishadilar.
 
-💕 **Yaqin atrofdagi real odamlarni topishda** GPS orqali
-🎯 **Mukammal matchlarni olishda** qiziqishlaringiz asosida
-💬 **Mazmunli suhbatlar boshlashda** matchlaringiz bilan
-🌟 **Professional tanishuv tajribasini boshdan kechirishda**
+Barcha profillar ko'p bosqichli tekshiruvdan o'tadi, bu har bir uchrashuvning haqiqiy odam bilan noyob muloqot tajribasi ekanligini kafolatlaydi.
 
-Mukammal juftingizni topishga tayyormisiz? Sayohatingizni boshlaylik! 🚀''',
-        'open_app': '💕 Tanishuv Sayohatimni Boshlash',
+Eng faol ishtirokchilar mukofot oladilar 💎''',
+        'open_app': '💕 Eksklyuziv Hamjamiyatga Qo\'shilish',
         'help_title': '🤖 Sizning Tanishuv Yordamchingiz',
         'help_text': '''Salom! Men sizning LinkUp Dating yordamchingizman! 🤖
 
 📋 **Nima bilan yordam bera olaman:**
-• `/start` - Tanishuv sayohatingizni boshlash
+• `/start` - Eksklyuziv tanishuv sayohatingizni boshlash
 • `/help` - Istalgan vaqtda yordam olish
 • `/language` - Tilni o'zgartirish
-• `/profile` - Tanishuv profilingizga kirish
+• `/profile` - Eksklyuziv profilingizga kirish
 
 🎯 **LinkUp Dating qanday ishlaydi:**
-1. Ajoyib profil yaratishda yordam beraman
-2. GPS orqali yaqin odamlarni topasiz
-3. Swipe qiling va yoqqanlaringiz bilan match oling
-4. Matchlaringiz bilan suhbat boshlang!
+1. Tekshirilgan profil yaratishda yordam beraman
+2. GPS orqali yaqin tekshirilgan odamlar bilan tanishing
+3. Swipe qiling va haqiqiy odamlar bilan match oling
+4. Mazmunli suhbatlar boshlang!
 
-💡 **Maslahat:** Yaxshi matchlar uchun profilingizni to'ldiring!''',
-        'profile_btn': '👤 Mening Tanishuv Profilim'
+💡 **Maslahat:** Faol foydalanuvchilar maxsus mukofotlar oladilar!''',
+        'profile_btn': '👤 Mening Eksklyuziv Profilim'
     }
 }
 
