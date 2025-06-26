@@ -389,6 +389,13 @@ const ProfileSetup = ({ onComplete }) => {
               {profile.location && (
                 <div className="location-result">
                   <span>📍 {profile.location}</span>
+                  <div className="location-coordinates">
+                    {location && (
+                      <small>
+                        {location.latitude?.toFixed(4)}, {location.longitude?.toFixed(4)}
+                      </small>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
