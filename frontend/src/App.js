@@ -705,10 +705,10 @@ const MatchesScreen = () => {
 // Bottom Navigation Component
 const BottomNav = ({ activeTab, onTabChange }) => {
   const tabs = [
-    { id: 'discover', icon: '🔍', label: texts.discover },
-    { id: 'matches', icon: '💕', label: texts.matches },
-    { id: 'chat', icon: '💬', label: texts.chat },
-    { id: 'profile', icon: '👤', label: texts.profile }
+    { id: 'discover', icon: '🔍', label: getText('discover') },
+    { id: 'matches', icon: '💕', label: getText('matches') },
+    { id: 'chat', icon: '💬', label: getText('chat') },
+    { id: 'profile', icon: '👤', label: getText('profile') }
   ];
 
   return (
