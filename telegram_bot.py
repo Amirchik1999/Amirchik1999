@@ -246,7 +246,7 @@ async def profile_command(message: types.Message):
 # Handle when user opens bot chat (no command)
 @dp.message()
 async def handle_any_message(message: types.Message):
-    """Any message handler - show intro screen"""
+    """Show intro screen with image when user opens bot"""
     user = message.from_user
     
     # Get user language from Telegram
@@ -258,60 +258,62 @@ async def handle_any_message(message: types.Message):
     else:
         lang = 'ru'  # Default Russian
     
-    # Intro messages by language
+    # Messages by language
     intro_messages = {
         'uz': {
-            'logo': '💕💔💕',
-            'title': '**LinkUp Dating**',
-            'subtitle': 'Professional tanishuv platformasi',
-            'description': 'Faqat haqiqiy odamlar. Faqat tekshirilgan profillar.\nTanishing, muloqot qiling va o\'zingizga mos odamlarni toping.🖤'
+            'caption': '''**LinkUp Dating**
+Professional tanishuv platformasi
+
+Faqat haqiqiy odamlar. Faqat tekshirilgan profillar.
+Tanishing, muloqot qiling va o'zingizga mos odamlarni toping.🖤''',
+            'button': '🚀 Boshlash'
         },
         'ru': {
-            'logo': '💕💔💕',
-            'title': '**LinkUp Dating**', 
-            'subtitle': 'Профессиональная платформа знакомств',
-            'description': 'Только реальные люди. Только проверенные анкеты.\nЗнакомься, общайся и находи тех, кто тебе подходит.🖤'
+            'caption': '''**LinkUp Dating**
+Профессиональная платформа знакомств
+
+Только реальные люди. Только проверенные анкеты.
+Знакомься, общайся и находи тех, кто тебе подходит.🖤''',
+            'button': '🚀 Начать'
         },
         'en': {
-            'logo': '💕💔💕',
-            'title': '**LinkUp Dating**',
-            'subtitle': 'Professional Dating Platform',
-            'description': 'Only real people. Only verified profiles.\nMeet, chat and find those who suit you.🖤'
+            'caption': '''**LinkUp Dating**
+Professional Dating Platform
+
+Only real people. Only verified profiles.
+Meet, chat and find those who suit you.🖤''',
+            'button': '🚀 Start'
         }
     }
     
     intro = intro_messages[lang]
     
-    # Create intro message
-    intro_text = f"""{intro['logo']}
-
-{intro['title']}
-{intro['subtitle']}
-
-{intro['description']}
-
-Boshlash uchun tugmani bosing 👇"""
-
-    if message.text and not message.text.startswith('/'):
-        # Show intro with start button
+    # Create intro image (placeholder for now - replace with your actual image)
+    # You need to upload your logo image to get file_id
+    intro_image_url = "https://via.placeholder.com/400x300/000000/FFFFFF?text=LinkUp+Dating+Logo"
+    
+    try:
+        # Try to send photo
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(
-                text="🚀 Boshlash / Начать / Start", 
+                text=intro['button'], 
                 callback_data="start_bot"
             )]
         ])
         
-        await message.answer(
-            text=intro_text,
+        await message.answer_photo(
+            photo=intro_image_url,
+            caption=intro['caption'],
             reply_markup=keyboard,
             parse_mode="Markdown"
         )
-    else:
-        # For unknown commands, show intro
+    except Exception as e:
+        # If image fails, send text version
+        print(f"Image send failed: {e}")
         await message.answer(
-            text=intro_text,
+            text=f"💕 {intro['caption']}",
             reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="🚀 Boshlash", callback_data="start_bot")]
+                [InlineKeyboardButton(text=intro['button'], callback_data="start_bot")]
             ]),
             parse_mode="Markdown"
         )
