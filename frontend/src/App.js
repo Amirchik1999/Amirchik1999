@@ -570,8 +570,8 @@ const DiscoverScreen = ({ user }) => {
       <div className="app-screen discover-screen">
         <div className="empty-state">
           <div className="empty-icon">😊</div>
-          <h3>{texts.no_more_cards}</h3>
-          <p>{texts.try_tomorrow}</p>
+          <h3>{getText('no_more_cards')}</h3>
+          <p>{getText('try_tomorrow')}</p>
         </div>
       </div>
     );
