@@ -30,6 +30,13 @@ from jose import JWTError, jwt
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+# Disable logging for production
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.getLogger("telegram").setLevel(logging.WARNING)
+logging.getLogger("motor").setLevel(logging.WARNING)
+logging.getLogger("pymongo").setLevel(logging.WARNING)
+
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
@@ -112,8 +119,7 @@ def verify_telegram_web_app_data(init_data: str) -> dict:
         user_data = json.loads(parsed_data.get('user', ['{}'])[0])
         return user_data
         
-    except Exception as e:
-        logging.error(f"Telegram Web App verification error: {e}")
+    except Exception:
         raise HTTPException(status_code=401, detail="Invalid Telegram Web App data")
 
 # JWT Token functions
@@ -226,8 +232,7 @@ async def authenticate_telegram_user(auth_request: AuthRequest):
             "user": user_profile
         }
         
-    except Exception as e:
-        logging.error(f"Authentication error: {e}")
+    except Exception:
         raise HTTPException(status_code=401, detail="Authentication failed")
 
 # Protected Routes
@@ -419,9 +424,8 @@ async def telegram_webhook(request: Request):
     """Handle Telegram webhook"""
     try:
         update_data = await request.json()
-        logging.info(f"Received webhook data: {json.dumps(update_data)}")
         
-        # Try to process with the bot if possible
+        # Process with the bot
         try:
             update = Update.de_json(update_data, bot)
             
@@ -429,13 +433,12 @@ async def telegram_webhook(request: Request):
                 await handle_message(update.message)
             elif update and update.callback_query:
                 await handle_callback_query(update.callback_query)
-        except Exception as e:
-            logging.error(f"Error processing update: {str(e)}")
+        except Exception:
+            pass
             
         return {"status": "ok", "message": "Webhook received"}
-    except Exception as e:
-        logging.error(f"Webhook error: {e}")
-        return {"status": "error", "message": str(e)}
+    except Exception:
+        return {"status": "error", "message": "Webhook error"}
 
 async def handle_message(message):
     """Handle incoming messages"""
@@ -515,12 +518,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Configure logging
+# Configure minimal logging for production
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=logging.WARNING,
+    format='%(levelname)s - %(message)s'
 )
-logger = logging.getLogger(__name__)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
