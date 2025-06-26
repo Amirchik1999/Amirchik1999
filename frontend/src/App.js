@@ -670,14 +670,14 @@ const MatchesScreen = () => {
   return (
     <div className="app-screen matches-screen">
       <div className="screen-header">
-        <h2>{texts.matches} ({matches.length})</h2>
+        <h2>{getText('matches')} ({matches.length})</h2>
       </div>
       
       {matches.length === 0 ? (
         <div className="empty-state">
           <div className="empty-icon">💔</div>
-          <h3>{texts.no_matches}</h3>
-          <p>{texts.start_discovering}</p>
+          <h3>{getText('no_matches')}</h3>
+          <p>{getText('start_discovering')}</p>
         </div>
       ) : (
         <div className="matches-list">
