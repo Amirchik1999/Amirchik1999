@@ -452,7 +452,7 @@ async def handle_message(message):
 
 async def send_webapp_message(chat_id):
     """Send Web App button"""
-    web_app_url = "https://a8447bef-3339-4070-80f8-ad58b7c2a078.preview.emergentagent.com"
+    web_app_url = "https://23276d44-c6c8-4999-aa05-14f02da19e1b.preview.emergentagent.com"
     
     keyboard = [[
         InlineKeyboardButton(

@@ -5,7 +5,7 @@ import './App.css';
 const tg = window.Telegram?.WebApp;
 
 // API Configuration
-const API_URL = process.env.REACT_APP_BACKEND_URL || 'https://a8447bef-3339-4070-80f8-ad58b7c2a078.preview.emergentagent.com';
+const API_URL = process.env.REACT_APP_BACKEND_URL || 'https://23276d44-c6c8-4999-aa05-14f02da19e1b.preview.emergentagent.com';
 
 // Language detection - always Russian like real TON Dating
 const getTelegramLanguage = () => {
