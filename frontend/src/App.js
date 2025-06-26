@@ -176,30 +176,7 @@ const USER_LANGUAGE = getUserLanguage();
 const getText = (key) => {
   return TEXTS[USER_LANGUAGE][key] || TEXTS['uz'][key] || key;
 };
-  discover: 'Поиск',
-  matches: 'Пары',
-  profile: 'Профиль',
-  chat: 'Чаты',
-  its_match: 'ЭТО МЭТЧ!',
-  start_chat: 'Начать чат',
-  continue_swiping: 'Продолжить',
-  no_more_cards: 'Больше нет профилей',
-  try_tomorrow: 'Попробуйте завтра!',
-  no_matches: 'Пока нет совпадений',
-  start_discovering: 'Начните поиск!',
-  online: 'В сети',
-  recently_active: 'Недавно был(а)',
-  name_question: 'Как вас зовут?',
-  age_question: 'Сколько вам лет?',
-  bio_question: 'Расскажите о себе',
-  location_question: 'Ваш город',
-  interests_question: 'Ваши интересы',
-  next: 'Далее',
-  back: 'Назад',
-  save: 'Сохранить',
-  enable_location: 'Разрешить геолокацию',
-  location_help: 'Для поиска людей рядом с вами'
-};
+
 
 // Location service with real city detection
 const LocationService = {
