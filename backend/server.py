@@ -182,7 +182,8 @@ async def get_potential_matches(telegram_id: int):
         "is_active": True
     }).to_list(50)
     
-    return potential_matches
+    # Convert MongoDB documents to dicts
+    return [mongo_to_dict(match) for match in potential_matches]
 
 @api_router.post("/matches")
 async def create_match(user1_id: int, user2_id: int, liked: bool):
