@@ -1,0 +1,60 @@
+🤖 TELEGRAM BOT SOZLASH YO'RIQNOMASI
+
+📱 Bot: @LinkUp_Dating_bot
+🔗 Link: https://t.me/LinkUp_Dating_bot
+
+===============================
+🔧 BOT SOZLAMALARI (@BotFather):
+===============================
+
+1️⃣ KOMANDALAR SOZLASH:
+@BotFather ga /setcommands yozing va quyidagini paste qiling:
+
+start - Botni boshlash va til tanlash
+help - Yordam va ma'lumot olish  
+language - Tilni o'zgartirish
+profile - Profilni ko'rish
+
+2️⃣ BOT TAVSIFI:
+@BotFather ga /setdescription yozing:
+
+LinkUp Dating - Professional tanishuv Mini App. GPS orqali yaqin atrofdagi odamlar bilan tanishing, chat qiling va real match toping! 💕
+
+3️⃣ QISQA TAVSIF:  
+@BotFather ga /setabouttext yozing:
+
+Yaqin atrofdagi odamlar bilan tanishing! GPS, chat, matching.
+
+4️⃣ MENU TUGMASI:
+@BotFather ga /setmenubutton yozing:
+Text: 💕 LinkUp Dating
+URL: https://23276d44-c6c8-4999-aa05-14f02da19e1b.preview.emergentagent.com
+
+5️⃣ BOT PROFIL RASMI:
+@BotFather ga /setuserpic yozing va 💕 emoji yoki heart rasmi yuklang
+
+===============================
+✅ YANGI FUNKSIYALAR:
+===============================
+
+🌐 3 TIL QOLLAB-QUVVATLASH:
+• 🇺🇿 O'zbek (default)
+• 🇷🇺 Русский  
+• 🇺🇸 English
+
+📋 KOMANDALAR:
+• /start - Til tanlash + welcome
+• /help - Yordam (har tilga mos)
+• /language - Tilni o'zgartirish
+• /profile - Mini App ochish
+
+🔥 ENDI SINAB KO'RING:
+https://t.me/LinkUp_Dating_bot
+
+1. /start bosing
+2. Til tanlang (uz/ru/en)  
+3. "LinkUp Dating ni ochish" tugmasini bosing
+4. Profil yarating va location bering
+5. Swiping boshlang!
+
+===============================
