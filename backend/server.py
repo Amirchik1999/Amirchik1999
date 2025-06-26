@@ -198,23 +198,24 @@ async def create_match(user1_id: int, user2_id: int, liked: bool):
     
     if existing:
         # Update existing match
+        existing = mongo_to_dict(existing)
         if existing["user1_id"] == user1_id:
             update_data = {"user1_liked": liked}
-            other_liked = existing["user2_liked"]
+            other_liked = existing.get("user2_liked", False)
         else:
             update_data = {"user2_liked": liked}
-            other_liked = existing["user1_liked"]
+            other_liked = existing.get("user1_liked", False)
         
         if liked and other_liked:
             update_data["is_matched"] = True
         
         await db.matches.update_one(
-            {"_id": existing["_id"]},
+            {"_id": ObjectId(existing["_id"])},
             {"$set": update_data}
         )
         
         # Check if it's a new match
-        if liked and other_liked and not existing["is_matched"]:
+        if liked and other_liked and not existing.get("is_matched", False):
             return {"message": "It's a match!", "matched": True}
             
     else:
