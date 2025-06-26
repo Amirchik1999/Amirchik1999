@@ -309,7 +309,13 @@ const WelcomeScreen = ({ onCreateProfile, onConnectWallet }) => {
       <div className="welcome-content">
         <div className="logo-section">
           <div className="app-logo">
-            <div className="diamond-icon">❤️</div>
+            <div className="professional-logo">
+              <img 
+                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDYwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0zMDAgNTcwQzMwMCA1NzAgMTAgMzgwIDEwIDI1MEM1MCAyMTAgMTEwIDE3MCAyMDAgMTcwQzI1MCAyMzAgMzAwIDIzMCAzMDAgMjMwQzMwMCAyMzAgMzUwIDIzMCA0MDAgMTcwQzQ5MCAxNzAgNTUwIDIxMCA1OTAgMjUwQzU5MCAzODAgMzAwIDU3MCAzMDAgNTcwWiIgZmlsbD0iI0YzRjNGMyIvPgo8cGF0aCBkPSJNMzAwIDU3MEM0NzEuODc0IDU3MCA1OTAgNDY0LjE5NCA1OTAgMjUwQzU1MCAyMTAgNDkwIDE3MCA0MDAgMTcwQzM1MCAyMzAgMzAwIDIzMCAzMDAgMjMwVjU3MFoiIGZpbGw9IiMyMzI0MjYiLz4KPHN2ZyB4PSIxNjAiIHk9IjIyMCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxNzAiIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjIuODggMTIyLjg4Ij4KPGRlZnM+CjxzdHlsZT4KLmNscy0xe2ZpbGw6IzIzMjQyNjt9Cjwvc3R5bGU+CjwvZGVmcz4KPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNjEuNDQsNDBBMjEuNDQsMjEuNDQsMCwxLDAsODIuODgsNjEuNDQsNDMuNDQsNDMuNDQsMCwwLDAsNjEuNDQsNDAiLz4KPGxpbmUgY2xhc3M9ImNscy0xIiB4MT0iNjEuNDQiIHkxPSI4Mi44OCIgeDI9IjYxLjQ0IiB5Mj0iMTIwLjg4IiBzdHJva2U9IiMyMzI0MjYiIHN0cm9rZS13aWR0aD0iNCIvPgo8bGluZSBjbGFzcz0iY2xzLTEiIHgxPSI0My40NCIgeTE9IjEwMS44OCIgeDI9Ijc5LjQ0IiB5Mj0iMTAxLjg4IiBzdHJva2U9IiMyMzI0MjYiIHN0cm9rZS13aWR0aD0iNCIvPgo8L3N2Zz4KPC9zdmc+CjxzdmcgeD0iMzQwIiB5PSIyMDAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTcwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+CjxzdmcgaWQ9IkxheWVyXzEiIGRhdGEtbmFtZT0iTGF5ZXIgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTIyLjg4IDEyMi44OCI+CjxkZWZzPgo8c3R5bGU+Ci5jbHMtMXtmaWxsOndoaXRlO30KPC9zdHlsZT4KPC9kZWZzPgo8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02MS40NCw0MEEyMS40NCwyMS40NCwwLDEsMCw4Mi44OCw2MS40NCw0My40NCw0My40NCwwLDAsMCw2MS40NCw0MCIvPgo8bGluZSBjbGFzcz0iY2xzLTEiIHgxPSI4Mi44OCIgeTE9IjQwIiB4Mj0iMTAwLjg4IiB5Mj0iMjIiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNCIvPgo8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iOTQuODgsNDAuOTcgMTAwLjg4LDIyIDgyLjg4LDI4IDk0Ljg4LDQwLjk3Ii8+Cjwvc3ZnPgo8L3N2Zz4KPC9zdmc+"
+                alt="LinkUp Dating Logo"
+                className="logo-image"
+              />
+            </div>
           </div>
           <h1 className="app-title">{getText('app_name')}</h1>
         </div>
