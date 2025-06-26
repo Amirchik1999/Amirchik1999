@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { margin: 0; padding: 20px; background: #000; }
+        .logo-container {
+            width: 600px;
+            height: 200px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+            display: flex;
+            align-items: center;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .heart-logo {
+            width: 120px;
+            height: 120px;
+            margin-right: 30px;
+        }
+        .text-logo {
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: -1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <svg class="heart-logo" viewBox="0 0 120 120">
+            <defs>
+                <clipPath id="heartClip">
+                    <path d="M60,100 C60,100 20,65 20,40 C20,27 30,15 45,15 C52,15 57,20 60,28 C63,20 68,15 75,15 C90,15 100,27 100,40 C100,65 60,100 60,100 Z"/>
+                </clipPath>
+            </defs>
+            
+            <!-- Heart background -->
+            <path d="M60,100 C60,100 20,65 20,40 C20,27 30,15 45,15 C52,15 57,20 60,28 C63,20 68,15 75,15 C90,15 100,27 100,40 C100,65 60,100 60,100 Z" 
+                  fill="#f8f9fa" stroke="#e0e0e0" stroke-width="2"/>
+            
+            <!-- Left half (white) -->
+            <rect x="0" y="0" width="60" height="120" fill="#f8f9fa" clip-path="url(#heartClip)"/>
+            
+            <!-- Right half (dark) -->
+            <rect x="60" y="0" width="60" height="120" fill="#2d3436" clip-path="url(#heartClip)"/>
+            
+            <!-- Female symbol -->
+            <g transform="translate(40, 45)">
+                <circle cx="0" cy="0" r="9" fill="none" stroke="#2d3436" stroke-width="3"/>
+                <line x1="0" y1="9" x2="0" y2="22" stroke="#2d3436" stroke-width="3"/>
+                <line x1="-7" y1="16" x2="7" y2="16" stroke="#2d3436" stroke-width="3"/>
+            </g>
+            
+            <!-- Male symbol -->
+            <g transform="translate(80, 45)">
+                <circle cx="0" cy="0" r="9" fill="none" stroke="#f8f9fa" stroke-width="3"/>
+                <line x1="7" y1="-7" x2="16" y2="-16" stroke="#f8f9fa" stroke-width="3"/>
+                <line x1="16" y1="-16" x2="16" y2="-9" stroke="#f8f9fa" stroke-width="3"/>
+                <line x1="16" y1="-16" x2="9" y2="-16" stroke="#f8f9fa" stroke-width="3"/>
+            </g>
+        </svg>
+        
+        <div class="text-logo">
+            LinkUp<br>Dating
+        </div>
+    </div>
+</body>
+</html>
