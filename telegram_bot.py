@@ -172,7 +172,7 @@ async def show_welcome(message, user):
     """Welcome message ko'rsatish"""
     user_id = user.id
     
-    welcome_text = get_text(user_id, 'welcome_text').format(name=user.first_name)
+    welcome_text = get_text(user_id, 'welcome_text')
     
     # Add language parameter to Mini App URL
     user_lang = get_user_language(user_id)
