@@ -246,18 +246,74 @@ async def profile_command(message: types.Message):
 # Handle when user opens bot chat (no command)
 @dp.message()
 async def handle_any_message(message: types.Message):
-    """Any message handler - auto start"""
-    if message.text and not message.text.startswith('/'):
-        # If user sends any text (not command), show start
-        await start_command(message)
+    """Any message handler - show intro screen"""
+    user = message.from_user
+    
+    # Get user language from Telegram
+    user_lang = user.language_code or 'ru'
+    if user_lang.startswith('uz'):
+        lang = 'uz'
+    elif user_lang.startswith('en'):
+        lang = 'en'
     else:
-        # For unknown commands
+        lang = 'ru'  # Default Russian
+    
+    # Intro messages by language
+    intro_messages = {
+        'uz': {
+            'logo': '💕💔💕',
+            'title': '**LinkUp Dating**',
+            'subtitle': 'Professional tanishuv platformasi',
+            'description': 'Faqat haqiqiy odamlar. Faqat tekshirilgan profillar.\nTanishing, muloqot qiling va o\'zingizga mos odamlarni toping.🖤'
+        },
+        'ru': {
+            'logo': '💕💔💕',
+            'title': '**LinkUp Dating**', 
+            'subtitle': 'Профессиональная платформа знакомств',
+            'description': 'Только реальные люди. Только проверенные анкеты.\nЗнакомься, общайся и находи тех, кто тебе подходит.🖤'
+        },
+        'en': {
+            'logo': '💕💔💕',
+            'title': '**LinkUp Dating**',
+            'subtitle': 'Professional Dating Platform',
+            'description': 'Only real people. Only verified profiles.\nMeet, chat and find those who suit you.🖤'
+        }
+    }
+    
+    intro = intro_messages[lang]
+    
+    # Create intro message
+    intro_text = f"""{intro['logo']}
+
+{intro['title']}
+{intro['subtitle']}
+
+{intro['description']}
+
+Boshlash uchun tugmani bosing 👇"""
+
+    if message.text and not message.text.startswith('/'):
+        # Show intro with start button
+        keyboard = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(
+                text="🚀 Boshlash / Начать / Start", 
+                callback_data="start_bot"
+            )]
+        ])
+        
         await message.answer(
-            "💕 LinkUp Dating ga xush kelibsiz!\n\n"
-            "Boshlash uchun /start tugmasini bosing",
+            text=intro_text,
+            reply_markup=keyboard,
+            parse_mode="Markdown"
+        )
+    else:
+        # For unknown commands, show intro
+        await message.answer(
+            text=intro_text,
             reply_markup=InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="🚀 Boshlash", callback_data="start_bot")]
-            ])
+            ]),
+            parse_mode="Markdown"
         )
 
 @dp.callback_query(F.data == "start_bot")
