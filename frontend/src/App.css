@@ -811,9 +811,9 @@ body {
   transform: scale(0.95);
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 480px) {
-  .dating-card {
+  .profile-card {
     max-width: 300px;
     height: 520px;
   }
@@ -821,61 +821,30 @@ body {
   .action-btn {
     width: 48px;
     height: 48px;
-    font-size: 18px;
   }
   
   .action-btn.super {
     width: 40px;
     height: 40px;
-    font-size: 14px;
-  }
-  
-  .matches-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-  }
-  
-  .match-photo {
-    height: 160px;
-  }
-  
-  .ton-title {
-    font-size: 28px;
-  }
-  
-  .step-content h2 {
-    font-size: 24px;
   }
 }
 
-/* Safe area support */
-@supports (padding: max(0px)) {
-  .ton-dating-app,
-  .ton-app {
-    padding-bottom: max(0px, env(safe-area-inset-bottom));
-  }
-  
-  .tab-bar {
-    padding-bottom: max(0px, env(safe-area-inset-bottom));
-  }
-}
-
-/* Prevent text selection on interactive elements */
+/* Performance */
+.profile-card,
 .action-btn,
-.tab,
-.ton-button,
-.gender-option,
-.interest-chip {
+.tab-item,
+.ton-btn {
+  will-change: transform;
+}
+
+/* Text selection prevention */
+.action-btn,
+.tab-item,
+.ton-btn,
+.gender-btn,
+.interest-btn {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-/* Performance optimizations */
-.dating-card,
-.action-btn,
-.tab,
-.ton-button {
-  will-change: transform;
 }
