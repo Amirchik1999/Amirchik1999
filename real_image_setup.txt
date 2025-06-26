@@ -1,0 +1,59 @@
+📸 TELEGRAM BOTGA REAL RASM QO'SHISH YO'RIQNOMASI
+
+===============================
+✅ BAJARILGAN ISHLAR:
+===============================
+• Mini App intro screen o'chirildi ✅
+• Bot chat ga intro message qo'yildi ✅ 
+• User tili avtomatik aniqlanadi ✅
+• Mini App to'g'ridan-to'g'ri welcome screen bilan boshlanadi ✅
+
+===============================
+🖼️ REAL RASM QO'SHISH:
+===============================
+
+HOZIR: Placeholder rasm ishlayapti
+KERAK: Sizning ko'rsatgan professional logo rasmingiz
+
+1️⃣ RASMNI TELEGRAM GA YUKLASH:
+   • @LinkUp_Dating_bot ga boring
+   • Sizning logo rasmingizni bot chatiga yuboring
+   • Bot rasm file_id ni qaytaradi
+
+2️⃣ FILE_ID NI OLISH:
+   • Rasm yuborilgandan keyin
+   • Bot logidan file_id ni ko'rish
+   • Yoki kod orqali avtomatik olish
+
+3️⃣ KODGA QO'SHISH:
+   • intro_image_url o'rniga file_id qo'yish
+   • Real rasm ko'rsatiladi
+
+===============================
+🔥 HOZIRGI HOLAT:
+===============================
+
+BOT CHAT ICHIDA:
+• User tilida intro message ✅
+• Professional matn ✅  
+• Placeholder rasm ✅
+• "🚀 Boshlash" tugmasi ✅
+
+MINI APP ICHIDA:
+• To'g'ridan-to'g'ri welcome screen ✅
+• Intro screen yo'q ✅
+• Tezroq yuklash ✅
+
+===============================
+📱 TEST QILING:
+===============================
+
+Bot: https://t.me/LinkUp_Dating_bot
+
+1. Bot ochilganida → Intro rasm + matn (user tilida)
+2. "🚀 Boshlash" → Til tanlash
+3. Til tanlaganda → Mini App (to'g'ridan welcome)
+
+===============================
+
+🎯 KEYINGI QADAM: Sizning rasmingizni bot chatiga yuboring!
