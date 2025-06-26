@@ -249,16 +249,17 @@ body {
 }
 
 /* Profile Setup */
-.profile-setup {
-  height: 100vh;
+.profile-setup-container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
-.setup-header {
+.setup-progress {
   display: flex;
   align-items: center;
-  padding: 20px;
+  justify-content: space-between;
+  padding: 20px 30px;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
 }
@@ -268,7 +269,7 @@ body {
   height: 3px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
-  margin: 0 20px;
+  margin-right: 20px;
   overflow: hidden;
 }
 
@@ -279,33 +280,27 @@ body {
   transition: width 0.3s ease;
 }
 
-.back-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.back-btn:disabled {
-  opacity: 0.3;
-}
-
-.step-counter {
+.progress-text {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
   font-weight: 500;
 }
 
+.setup-question {
+  padding: 60px 30px 40px;
+  text-align: center;
+}
+
+.setup-question h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
 .setup-content {
   flex: 1;
-  padding: 60px 30px;
+  padding: 0 30px;
   display: flex;
   align-items: center;
   justify-content: center;
