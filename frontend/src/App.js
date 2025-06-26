@@ -73,10 +73,10 @@ const REALISTIC_PROFILES = [
 
 // Language texts
 const texts = {
-  app_name: 'TON Dating',
-  welcome_subtitle: 'Знакомства в Telegram.\nНайдите свою вторую половинку\nрядом с вами.',
-  create_profile: 'Создать профиль',
-  connect_wallet: 'Подключить кошелёк',
+  app_name: 'LinkUp Dating',
+  welcome_subtitle: 'Tanishuv Mini App.\nYaqin atrofdagi odamlar bilan\ntanishing va chat qiling.',
+  create_profile: 'Profil yaratish',
+  connect_wallet: 'Koshyolok ulash',
   discover: 'Поиск',
   matches: 'Пары',
   profile: 'Профиль',
