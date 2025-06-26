@@ -198,34 +198,54 @@ body {
   max-width: 320px;
 }
 
-/* Loading States */
-.loading-state {
+/* Buttons */
+.welcome-actions {
   display: flex;
   flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.ton-btn {
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  text-align: center;
+  text-decoration: none;
 }
 
-.loading-spinner {
-  width: 24px;
-  height: 24px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-top: 2px solid #fff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 20px;
+.ton-btn.primary {
+  background: #fff;
+  color: #000;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.ton-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
 }
 
-.loading-text {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 16px;
+.ton-btn:hover {
+  opacity: 0.9;
+}
+
+.ton-btn:active {
+  transform: scale(0.98);
+}
+
+.ton-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
 /* Profile Setup */
