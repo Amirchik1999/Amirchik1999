@@ -58,11 +58,11 @@ body {
 }
 
 .intro-logo-container {
-  width: 120px;
-  height: 120px;
+  width: 320px;
+  height: 100px;
   margin-bottom: 25px;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 60px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,9 +73,15 @@ body {
     0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
+.professional-heart-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .intro-logo-svg {
-  width: 90px;
-  height: 90px;
+  width: 280px;
+  height: 70px;
   filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.2));
 }
 
