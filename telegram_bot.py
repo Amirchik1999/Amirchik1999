@@ -243,6 +243,22 @@ async def profile_command(message: types.Message):
         reply_markup=keyboard
     )
 
+# Handle photo uploads to get file_id
+@dp.message(F.photo)
+async def handle_photo(message: types.Message):
+    """Handle photo upload to get file_id"""
+    photo = message.photo[-1]  # Get highest resolution
+    file_id = photo.file_id
+    
+    print(f"📸 Received photo file_id: {file_id}")
+    
+    await message.answer(
+        f"✅ Rasm qabul qilindi!\n\n"
+        f"File ID: `{file_id}`\n\n"
+        f"Endi bot intro rasmini yangilayman...",
+        parse_mode="Markdown"
+    )
+
 # Handle when user opens bot chat (no command)
 @dp.message()
 async def handle_any_message(message: types.Message):
