@@ -136,7 +136,7 @@ async def get_daily_limit(telegram_id: int):
         new_limit = DailyLimit(telegram_id=telegram_id, date=today)
         await db.daily_limits.insert_one(new_limit.dict())
         return new_limit.dict()
-    return limit
+    return mongo_to_dict(limit)
 
 @api_router.post("/users/{telegram_id}/view")
 async def increment_view_count(telegram_id: int):
