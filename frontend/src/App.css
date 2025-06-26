@@ -306,21 +306,14 @@ body {
   justify-content: center;
 }
 
-.step-content {
+/* Step Inputs */
+.step-input-container {
   width: 100%;
   max-width: 320px;
-  text-align: center;
 }
 
-.step-content h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 40px;
-}
-
-.ton-input,
-.ton-textarea {
+.step-input,
+.step-textarea {
   width: 100%;
   padding: 16px 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -329,22 +322,22 @@ body {
   text-align: center;
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
-  transition: border-color 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
-.ton-input:focus,
-.ton-textarea:focus {
+.step-input:focus,
+.step-textarea:focus {
   outline: none;
   border-color: #fff;
   background: rgba(255, 255, 255, 0.1);
 }
 
-.ton-input::placeholder,
-.ton-textarea::placeholder {
+.step-input::placeholder,
+.step-textarea::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.ton-textarea {
+.step-textarea {
   text-align: left;
   resize: none;
   min-height: 120px;
