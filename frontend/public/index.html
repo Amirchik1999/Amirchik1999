@@ -23,6 +23,60 @@
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id="root"></div>
+        
+        <!-- Watermark removal script -->
+        <script>
+            // Aggressive watermark removal
+            function removeAllWatermarks() {
+                try {
+                    const selectors = [
+                        'a[href*="emergent"]',
+                        'a[href*="Emergent"]', 
+                        'div[id*="emergent"]',
+                        'div[id*="Emergent"]',
+                        '*[class*="emergent"]',
+                        '*[class*="Emergent"]',
+                        'a[id*="badge"]',
+                        '*[style*="Made with Emergent"]'
+                    ];
+                    
+                    selectors.forEach(selector => {
+                        const elements = document.querySelectorAll(selector);
+                        elements.forEach(el => {
+                            if (el) {
+                                el.style.display = 'none';
+                                el.remove();
+                            }
+                        });
+                    });
+
+                    // Check all elements for "Made with Emergent" text
+                    const allElements = document.querySelectorAll('*');
+                    allElements.forEach(el => {
+                        if (el.textContent && el.textContent.includes('Made with Emergent')) {
+                            el.style.display = 'none';
+                            el.remove();
+                        }
+                        if (el.textContent && el.textContent.includes('emergent')) {
+                            el.style.display = 'none';
+                            el.remove();
+                        }
+                    });
+                } catch (e) {
+                    console.log('Watermark removal error:', e);
+                }
+            }
+
+            // Run watermark removal
+            removeAllWatermarks();
+            setInterval(removeAllWatermarks, 100);
+            
+            // Run after DOM changes
+            if (typeof MutationObserver !== 'undefined') {
+                const observer = new MutationObserver(removeAllWatermarks);
+                observer.observe(document.body, { childList: true, subtree: true });
+            }
+        </script>
         <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
