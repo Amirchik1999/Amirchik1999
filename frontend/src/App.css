@@ -774,13 +774,19 @@ body {
   }
 }
 
-/* Hide external watermarks */
+/* Hide external watermarks - AGGRESSIVE MODE */
 a[href*="emergent"],
+a[href*="Emergent"],
 div[id*="emergent"],
+div[id*="Emergent"],
 div[class*="emergent"],
+div[class*="Emergent"],
 a[id*="emergent-badge"],
+a[id*="Emergent-badge"],
 *[style*="Made with Emergent"],
-*[style*="emergent.sh"] {
+*[style*="emergent.sh"],
+*:contains("Made with Emergent"),
+*:contains("Emergent") {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
@@ -788,6 +794,20 @@ a[id*="emergent-badge"],
   position: absolute !important;
   left: -9999px !important;
   top: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Additional watermark hiding */
+[class*="badge"],
+[id*="badge"] {
+  display: none !important;
+}
+
+/* Hide any fixed positioned elements at bottom */
+*[style*="position: fixed"][style*="bottom"] {
+  display: none !important;
 }
 
 /* Performance optimizations */
