@@ -222,7 +222,7 @@ async def handle_any_message(message: types.Message):
     if message.text and not message.text.startswith('/'):
         # User sent a message, show start prompt
         await message.answer(
-            "💕 LinkUp Dating ga xush kelibsiz!\n\n"
+            "🖤 LinkUp Dating ga xush kelibsiz!\n\n"
             "Boshlash uchun /start tugmasini bosing",
             reply_markup=InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="🚀 Boshlash", callback_data="start_bot")]
