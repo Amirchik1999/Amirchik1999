@@ -100,7 +100,10 @@ const TEXTS = {
     back: 'Back',
     save: 'Save',
     enable_location: 'Enable Location',
-    location_help: 'To find people near you'
+    location_help: 'To find people near you',
+    name_placeholder: 'Enter your name',
+    age_placeholder: '18',
+    bio_placeholder: 'Tell about yourself, your interests and who you are looking for...',
   },
   ru: {
     app_name: 'LinkUp Dating',
