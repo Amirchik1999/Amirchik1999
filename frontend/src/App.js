@@ -75,7 +75,7 @@ const REALISTIC_PROFILES = [
 const TEXTS = {
   en: {
     app_name: 'LinkUp Dating',
-    welcome_subtitle: 'Dating Mini App.\nMeet people nearby\nand start meaningful connections.',
+    welcome_subtitle: 'Only real people. Only verified profiles.\nMeet, chat and find those who suit you.',
     create_profile: 'Create Profile',
     connect_wallet: 'Connect Wallet',
     discover: 'Discover',
