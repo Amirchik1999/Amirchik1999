@@ -317,9 +317,8 @@ Meet, chat and find those who suit you.🖤''',
     
     intro = intro_messages[lang]
     
-    # Create intro image (placeholder for now - replace with your actual image)
-    # You need to upload your logo image to get file_id
-    intro_image_url = "https://via.placeholder.com/400x300/000000/FFFFFF?text=LinkUp+Dating+Logo"
+    # Create intro image
+    intro_image = INTRO_IMAGE_FILE_ID or "https://via.placeholder.com/400x300/000000/FFFFFF?text=LinkUp+Dating"
     
     try:
         # Try to send photo
@@ -330,15 +329,24 @@ Meet, chat and find those who suit you.🖤''',
             )]
         ])
         
-        await message.answer_photo(
-            photo=intro_image_url,
-            caption=intro['caption'],
-            reply_markup=keyboard,
-            parse_mode="Markdown"
-        )
+        if INTRO_IMAGE_FILE_ID:
+            # Use uploaded image file_id
+            await message.answer_photo(
+                photo=intro_image,
+                caption=intro['caption'],
+                reply_markup=keyboard,
+                parse_mode="Markdown"
+            )
+        else:
+            # Use text message if no image uploaded yet
+            await message.answer(
+                text=f"💕 {intro['caption']}\n\n📸 Rasmni bot chatiga yuboring!",
+                reply_markup=keyboard,
+                parse_mode="Markdown"
+            )
     except Exception as e:
-        # If image fails, send text version
-        print(f"Image send failed: {e}")
+        print(f"❌ Intro message error: {e}")
+        # Fallback to text
         await message.answer(
             text=f"💕 {intro['caption']}",
             reply_markup=InlineKeyboardMarkup(inline_keyboard=[
