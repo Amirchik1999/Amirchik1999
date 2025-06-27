@@ -23,94 +23,25 @@ user_languages = {}
 # Multi-language texts
 TEXTS = {
     'en': {
-        'select_language': '💫 Choose your language to continue:',
-        'language_selected': '✅ Language set to English! Welcome!',
-        'welcome_title': '🌟 LinkUp Dating',
-        'welcome_text': '''Welcome to LinkUp Dating 🖤
+        'welcome_title': 'Welcome to LinkUp Dating 🖤',
+        'welcome_text': '''Exclusive community for dating based on Telegram — where real girls meet interesting guys.
 
-Exclusive community for dating based on Telegram — where real girls meet interesting guys.
-
-All profiles go through multi-stage verification, ensuring that every meeting is a unique communication experience with a real person.
-
-The most active participants receive rewards 💎''',
-        'open_app': '💕 Join Exclusive Community',
-        'help_title': '🤖 Your Dating Assistant',
-        'help_text': '''Hi! I'm your LinkUp Dating assistant! 🤖
-
-📋 **What I can help you with:**
-• `/start` - Begin your dating journey
-• `/help` - Get assistance anytime
-• `/language` - Change your language
-• `/profile` - Access your dating profile
-
-🎯 **How LinkUp Dating works:**
-1. I'll help you create a verified profile
-2. Meet verified people near you using GPS
-3. Swipe and match with real people
-4. Start meaningful conversations!
-
-💡 **Pro tip:** Active users get special rewards!''',
-        'profile_btn': '👤 My Exclusive Profile'
+All profiles go through multi-stage verification, ensuring that every meeting is a unique communication experience with a real person.''',
+        'join_button': '💕 Join Exclusive Community'
     },
     'ru': {
-        'select_language': '💫 Выберите язык для продолжения:',
-        'language_selected': '✅ Язык установлен: Русский! Добро пожаловать!',
-        'welcome_title': '🌟 LinkUp Dating',
-        'welcome_text': '''Добро пожаловать в LinkUp Dating 🖤
+        'welcome_title': 'Добро пожаловать в LinkUp Dating 🖤',
+        'welcome_text': '''Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней.
 
-Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней.
-
-Все профили проходят многоступенчатую верификацию, гарантируя, что каждая встреча - это уникальный опыт коммуникации с реальным человеком.
-
-Самые активные участники получают вознаграждение 💎''',
-        'open_app': '💕 Присоединиться к Сообществу',
-        'help_title': '🤖 Ваш Помощник Знакомств',
-        'help_text': '''Привет! Я ваш помощник LinkUp Dating! 🤖
-
-📋 **Чем могу помочь:**
-• `/start` - Начать эксклюзивное знакомство
-• `/help` - Получить помощь в любое время
-• `/language` - Изменить язык
-• `/profile` - Доступ к эксклюзивному профилю
-
-🎯 **Как работает LinkUp Dating:**
-1. Помогу создать верифицированный профиль
-2. Встречайте верифицированных людей рядом через GPS
-3. Свайпайте и находите совпадения с реальными людьми
-4. Начинайте значимые разговоры!
-
-💡 **Совет:** Активные пользователи получают особые награды!''',
-        'profile_btn': '👤 Мой Эксклюзивный Профиль'
+Все профили проходят многоступенчатую верификацию, гарантируя, что каждая встреча - это уникальный опыт коммуникации с реальным человеком.''',
+        'join_button': '💕 Присоединиться к Сообществу'
     },
     'uz': {
-        'select_language': '💫 Davom etish uchun tilni tanlang:',
-        'language_selected': '✅ Til o\'rnatildi: O\'zbek! Xush kelibsiz!',
-        'welcome_title': '🌟 LinkUp Dating',
-        'welcome_text': '''LinkUp Dating ga xush kelibsiz 🖤
+        'welcome_title': 'LinkUp Dating ga xush kelibsiz 🖤',
+        'welcome_text': '''Telegram asosidagi eksklyuziv tanishuv hamjamiyati — bu yerda haqiqiy qizlar qiziqarli yigitlar bilan tanishadilar.
 
-Telegram asosidagi eksklyuziv tanishuv hamjamiyati — bu yerda haqiqiy qizlar qiziqarli yigitlar bilan tanishadilar.
-
-Barcha profillar ko'p bosqichli tekshiruvdan o'tadi, bu har bir uchrashuvning haqiqiy odam bilan noyob muloqot tajribasi ekanligini kafolatlaydi.
-
-Eng faol ishtirokchilar mukofot oladilar 💎''',
-        'open_app': '💕 Eksklyuziv Hamjamiyatga Qo\'shilish',
-        'help_title': '🤖 Sizning Tanishuv Yordamchingiz',
-        'help_text': '''Salom! Men sizning LinkUp Dating yordamchingizman! 🤖
-
-📋 **Nima bilan yordam bera olaman:**
-• `/start` - Eksklyuziv tanishuv sayohatingizni boshlash
-• `/help` - Istalgan vaqtda yordam olish
-• `/language` - Tilni o'zgartirish
-• `/profile` - Eksklyuziv profilingizga kirish
-
-🎯 **LinkUp Dating qanday ishlaydi:**
-1. Tekshirilgan profil yaratishda yordam beraman
-2. GPS orqali yaqin tekshirilgan odamlar bilan tanishing
-3. Swipe qiling va haqiqiy odamlar bilan match oling
-4. Mazmunli suhbatlar boshlang!
-
-💡 **Maslahat:** Faol foydalanuvchilar maxsus mukofotlar oladilar!''',
-        'profile_btn': '👤 Mening Eksklyuziv Profilim'
+Barcha profillar ko'p bosqichli tekshiruvdan o'tadi, bu har bir uchrashuvning haqiqiy odam bilan noyob muloqot tajribasi ekanligini kafolatlaydi.''',
+        'join_button': '💕 Eksklyuziv Hamjamiyatga Qo\'shilish'
     }
 }
 
