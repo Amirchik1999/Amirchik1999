@@ -603,7 +603,7 @@ const ProfileSetup = ({ onComplete }) => {
               type="text"
               value={profile.name}
               onChange={(e) => setProfile(prev => ({ ...prev, name: e.target.value }))}
-              placeholder="Введите ваше имя"
+              placeholder={getText('name_placeholder')}
               className="text-input"
             />
           </div>
