@@ -247,17 +247,30 @@ async def profile_command(message: types.Message):
 @dp.message(F.photo)
 async def handle_photo(message: types.Message):
     """Handle photo upload to get file_id"""
-    photo = message.photo[-1]  # Get highest resolution
-    file_id = photo.file_id
-    
-    print(f"📸 Received photo file_id: {file_id}")
-    
-    await message.answer(
-        f"✅ Rasm qabul qilindi!\n\n"
-        f"File ID: `{file_id}`\n\n"
-        f"Endi bot intro rasmini yangilayman...",
-        parse_mode="Markdown"
-    )
+    try:
+        photo = message.photo[-1]  # Get highest resolution
+        file_id = photo.file_id
+        
+        print(f"📸 Received photo file_id: {file_id}")
+        
+        await message.answer(
+            f"✅ Rasm qabul qilindi!\n\n"
+            f"File ID: `{file_id}`\n\n"
+            f"Endi bot intro rasmini yangilayman...",
+            parse_mode="Markdown"
+        )
+        
+        # Auto update the intro image in code
+        global INTRO_IMAGE_FILE_ID
+        INTRO_IMAGE_FILE_ID = file_id
+        print(f"🔄 Updated intro image file_id: {file_id}")
+        
+    except Exception as e:
+        print(f"❌ Photo handler error: {e}")
+        await message.answer("❌ Rasm yuklashda xatolik!")
+
+# Global variable for intro image
+INTRO_IMAGE_FILE_ID = None
 
 # Handle when user opens bot chat (no command)
 @dp.message()
