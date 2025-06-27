@@ -123,44 +123,46 @@ def get_text(user_id, key):
 
 @dp.message(Command("start"))
 async def start_command(message: types.Message):
-    """Start komanda - logo ko'rsatish va til tanlash"""
+    """Start komanda - professional intro with custom image and text"""
     
-    # Professional logo caption in 3 languages
-    logo_caption = """💕 **LinkUp Dating** 💕
+    # Custom welcome message (always in Russian as requested)
+    welcome_text = """Добро пожаловать в LinkUp Dating 🖤
 
-🌟 **O'zbek**: Professional tanishuv platformasi
-🌟 **Русский**: Эксклюзивная платформа знакомств  
-🌟 **English**: Professional dating platform
+Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней.
 
-Davom etish uchun tilni tanlang 👇"""
+Все профили проходят многоступенчатую верификацию, гарантируя, что каждая встреча - это уникальный опыт коммуникации с реальным человеком."""
 
-    # Send the logo as a document/sticker simulation
-    # Note: In real bot, you would upload your logo image to Telegram and use file_id
+    # Use the uploaded logo image
+    logo_image = INTRO_IMAGE_FILE_ID or "AgACAgIAAxkBAAICzWhd5McGMSgN1zqbXjbYkhg9qD7rAAJM8TEbbivwSllK5DewA85TAQADAgADeAADNgQ"
     
-    # Send welcome message with logo description
-    await message.answer(
-        text=logo_caption,
-        parse_mode="Markdown"
-    )
-    
-    # Language selection
-    keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [
-            InlineKeyboardButton(text="🇺🇿 O'zbekcha", callback_data="lang_uz")
-        ],
-        [
-            InlineKeyboardButton(text="🇷🇺 Русский язык", callback_data="lang_ru")
-        ],
-        [
-            InlineKeyboardButton(text="🇺🇸 English", callback_data="lang_en")
-        ]
-    ])
-    
-    await message.answer(
-        text="💫 **Tilni tanlang / Выберите язык / Choose language:**",
-        reply_markup=keyboard,
-        parse_mode="Markdown"
-    )
+    try:
+        # Send photo with welcome text
+        keyboard = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(
+                text="💕 Присоединиться к Сообществу", 
+                web_app=WebAppInfo(url=f"{WEB_APP_URL}?lang=ru&user_id={message.from_user.id}")
+            )]
+        ])
+        
+        await message.answer_photo(
+            photo=logo_image,
+            caption=welcome_text,
+            reply_markup=keyboard,
+            parse_mode="Markdown"
+        )
+    except Exception as e:
+        print(f"❌ Start command error: {e}")
+        # Fallback to text
+        await message.answer(
+            text=f"💕 {welcome_text}",
+            reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(
+                    text="💕 Присоединиться к Сообществу",
+                    web_app=WebAppInfo(url=f"{WEB_APP_URL}?lang=ru&user_id={message.from_user.id}")
+                )]
+            ]),
+            parse_mode="Markdown"
+        )
 
 @dp.callback_query(F.data.startswith("lang_"))
 async def language_callback(callback: CallbackQuery):
