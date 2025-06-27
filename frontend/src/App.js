@@ -133,7 +133,7 @@ const TEXTS = {
   },
   uz: {
     app_name: 'LinkUp Dating',
-    welcome_subtitle: 'Tanishuv Mini Ilova.\nYaqin atrofdagi odamlar bilan\ntanishing va aloqa o\'rnatishni boshlang.',
+    welcome_subtitle: 'Faqat haqiqiy odamlar. Faqat tekshirilgan profillar.\nTanishing, muloqot qiling va o\'zingizga mos odamlarni toping.',
     create_profile: 'Profil Yaratish',
     connect_wallet: 'Hamyon Ulash',
     discover: 'Qidiruv',
