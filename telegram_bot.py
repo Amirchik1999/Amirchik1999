@@ -272,88 +272,21 @@ async def handle_photo(message: types.Message):
 # Global variable for intro image
 INTRO_IMAGE_FILE_ID = "AgACAgIAAxkBAAICzWhd5McGMSgN1zqbXjbYkhg9qD7rAAJM8TEbbivwSllK5DewA85TAQADAgADeAADNgQ"
 
-# Handle when user opens bot chat (no command)
+# Handle only specific messages, not automatic greeting
 @dp.message()
 async def handle_any_message(message: types.Message):
-    """Show intro screen with image when user opens bot"""
-    user = message.from_user
-    
-    # Get user language from Telegram
-    user_lang = user.language_code or 'ru'
-    if user_lang.startswith('uz'):
-        lang = 'uz'
-    elif user_lang.startswith('en'):
-        lang = 'en'
-    else:
-        lang = 'ru'  # Default Russian
-    
-    # Messages by language
-    intro_messages = {
-        'uz': {
-            'caption': '''**LinkUp Dating**
-Professional tanishuv platformasi
-
-Faqat haqiqiy odamlar. Faqat tekshirilgan profillar.
-Tanishing, muloqot qiling va o'zingizga mos odamlarni toping.🖤''',
-            'button': '🚀 Boshlash'
-        },
-        'ru': {
-            'caption': '''**LinkUp Dating**
-Профессиональная платформа знакомств
-
-Только реальные люди. Только проверенные анкеты.
-Знакомься, общайся и находи тех, кто тебе подходит.🖤''',
-            'button': '🚀 Начать'
-        },
-        'en': {
-            'caption': '''**LinkUp Dating**
-Professional Dating Platform
-
-Only real people. Only verified profiles.
-Meet, chat and find those who suit you.🖤''',
-            'button': '🚀 Start'
-        }
-    }
-    
-    intro = intro_messages[lang]
-    
-    # Create intro image
-    intro_image = INTRO_IMAGE_FILE_ID or "https://via.placeholder.com/400x300/000000/FFFFFF?text=LinkUp+Dating"
-    
-    try:
-        # Try to send photo
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(
-                text=intro['button'], 
-                callback_data="start_bot"
-            )]
-        ])
-        
-        if INTRO_IMAGE_FILE_ID:
-            # Use uploaded image file_id
-            await message.answer_photo(
-                photo=intro_image,
-                caption=intro['caption'],
-                reply_markup=keyboard,
-                parse_mode="Markdown"
-            )
-        else:
-            # Use text message if no image uploaded yet
-            await message.answer(
-                text=f"💕 {intro['caption']}\n\n📸 Rasmni bot chatiga yuboring!",
-                reply_markup=keyboard,
-                parse_mode="Markdown"
-            )
-    except Exception as e:
-        print(f"❌ Intro message error: {e}")
-        # Fallback to text
+    """Handle messages only when user sends something"""
+    # Only respond to actual text messages from user
+    if message.text and not message.text.startswith('/'):
+        # User sent a message, show start prompt
         await message.answer(
-            text=f"💕 {intro['caption']}",
+            "💕 LinkUp Dating ga xush kelibsiz!\n\n"
+            "Boshlash uchun /start tugmasini bosing",
             reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text=intro['button'], callback_data="start_bot")]
-            ]),
-            parse_mode="Markdown"
+                [InlineKeyboardButton(text="🚀 Boshlash", callback_data="start_bot")]
+            ])
         )
+    # Don't auto-respond when user just opens bot
 
 @dp.callback_query(F.data == "start_bot")
 async def start_bot_callback(callback: CallbackQuery):
