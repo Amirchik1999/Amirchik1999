@@ -270,7 +270,7 @@ async def handle_photo(message: types.Message):
         await message.answer("❌ Rasm yuklashda xatolik!")
 
 # Global variable for intro image
-INTRO_IMAGE_FILE_ID = None
+INTRO_IMAGE_FILE_ID = "AgACAgIAAxkBAAICzWhd5McGMSgN1zqbXjbYkhg9qD7rAAJM8TEbbivwSllK5DewA85TAQADAgADeAADNgQ"
 
 # Handle when user opens bot chat (no command)
 @dp.message()
