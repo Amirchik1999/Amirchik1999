@@ -91,27 +91,56 @@ async def language_callback(callback: CallbackQuery):
     await show_welcome(callback.message, callback.from_user)
 
 async def show_welcome(message, user):
-    """Welcome message ko'rsatish"""
+    """Show welcome message with image in selected language"""
     user_id = user.id
+    user_lang = get_user_language(user_id)
     
-    welcome_text = get_text(user_id, 'welcome_text')
+    # Get welcome text in user's language
+    welcome_title = TEXTS[user_lang]['welcome_title'] 
+    welcome_text = TEXTS[user_lang]['welcome_text']
+    join_button = TEXTS[user_lang]['join_button']
+    
+    # Combine title and text
+    full_welcome = f"{welcome_title}\n\n{welcome_text}"
+    
+    # Use the uploaded logo image
+    logo_image = INTRO_IMAGE_FILE_ID or "AgACAgIAAxkBAAICzWhd5McGMSgN1zqbXjbYkhg9qD7rAAJM8TEbbivwSllK5DewA85TAQADAgADeAADNgQ"
     
     # Add language parameter to Mini App URL
-    user_lang = get_user_language(user_id)
     app_url_with_lang = f"{WEB_APP_URL}?lang={user_lang}&user_id={user_id}"
     
-    keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(
-            text=get_text(user_id, 'open_app'), 
-            web_app=WebAppInfo(url=app_url_with_lang)
-        )]
-    ])
-    
-    await message.edit_text(
-        text=welcome_text,
-        reply_markup=keyboard,
-        parse_mode="Markdown"
-    )
+    try:
+        # Send photo with welcome text
+        keyboard = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(
+                text=join_button, 
+                web_app=WebAppInfo(url=app_url_with_lang)
+            )]
+        ])
+        
+        await message.edit_text(
+            text="✅ Til saqlandi! / Language saved! / Язык сохранён!"
+        )
+        
+        await message.answer_photo(
+            photo=logo_image,
+            caption=full_welcome,
+            reply_markup=keyboard,
+            parse_mode="Markdown"
+        )
+    except Exception as e:
+        print(f"❌ Welcome message error: {e}")
+        # Fallback to text
+        await message.answer(
+            text=f"💕 {full_welcome}",
+            reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(
+                    text=join_button,
+                    web_app=WebAppInfo(url=app_url_with_lang)
+                )]
+            ]),
+            parse_mode="Markdown"
+        )
 
 @dp.message(Command("help"))
 async def help_command(message: types.Message):
