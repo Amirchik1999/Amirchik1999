@@ -761,7 +761,7 @@ const DiscoverScreen = ({ user }) => {
             <h2>{getText('its_match')}</h2>
             <div className="match-users">
               <div className="user-avatar">{user?.name?.charAt(0) || 'Я'}</div>
-              <div className="heart-icon">💕</div>
+              <div className="heart-icon">🖤</div>
               <div className="user-avatar">{matchedUser?.name?.charAt(0)}</div>
             </div>
             <div className="match-actions">
