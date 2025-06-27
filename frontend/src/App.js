@@ -132,7 +132,10 @@ const TEXTS = {
     back: 'Назад',
     save: 'Сохранить',
     enable_location: 'Разрешить Геолокацию',
-    location_help: 'Для поиска людей рядом с вами'
+    location_help: 'Для поиска людей рядом с вами',
+    name_placeholder: 'Введите ваше имя',
+    age_placeholder: '18',
+    bio_placeholder: 'Расскажите о себе, своих интересах и том, кого ищете...',
   },
   uz: {
     app_name: 'LinkUp Dating',
