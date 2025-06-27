@@ -164,7 +164,10 @@ const TEXTS = {
     back: 'Orqaga',
     save: 'Saqlash',
     enable_location: 'Joylashuvni Ruxsat Berish',
-    location_help: 'Yaqin atrofdagi odamlarni topish uchun'
+    location_help: 'Yaqin atrofdagi odamlarni topish uchun',
+    name_placeholder: 'Ismingizni kiriting',
+    age_placeholder: '18',
+    bio_placeholder: 'O\'zingiz haqingizda, qiziqishlaringiz va kimni qidirayotganingiz haqida gapirib bering...',
   }
 };
 
