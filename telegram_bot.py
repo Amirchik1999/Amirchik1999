@@ -132,7 +132,7 @@ async def show_welcome(message, user):
         print(f"❌ Welcome message error: {e}")
         # Fallback to text
         await message.answer(
-            text=f"💕 {full_welcome}",
+            text=f"🖤 {full_welcome}",
             reply_markup=InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(
                     text=join_button,
