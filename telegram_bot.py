@@ -123,46 +123,26 @@ def get_text(user_id, key):
 
 @dp.message(Command("start"))
 async def start_command(message: types.Message):
-    """Start komanda - professional intro with custom image and text"""
+    """Start komanda - 3 tilda til tanlash"""
     
-    # Custom welcome message (always in Russian as requested)
-    welcome_text = """Добро пожаловать в LinkUp Dating 🖤
-
-Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней.
-
-Все профили проходят многоступенчатую верификацию, гарантируя, что каждая встреча - это уникальный опыт коммуникации с реальным человеком."""
-
-    # Use the uploaded logo image
-    logo_image = INTRO_IMAGE_FILE_ID or "AgACAgIAAxkBAAICzWhd5McGMSgN1zqbXjbYkhg9qD7rAAJM8TEbbivwSllK5DewA85TAQADAgADeAADNgQ"
+    # Language selection first
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [
+            InlineKeyboardButton(text="🇺🇿 O'zbekcha", callback_data="lang_uz")
+        ],
+        [
+            InlineKeyboardButton(text="🇷🇺 Русский язык", callback_data="lang_ru")
+        ],
+        [
+            InlineKeyboardButton(text="🇺🇸 English", callback_data="lang_en")
+        ]
+    ])
     
-    try:
-        # Send photo with welcome text
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(
-                text="💕 Присоединиться к Сообществу", 
-                web_app=WebAppInfo(url=f"{WEB_APP_URL}?lang=ru&user_id={message.from_user.id}")
-            )]
-        ])
-        
-        await message.answer_photo(
-            photo=logo_image,
-            caption=welcome_text,
-            reply_markup=keyboard,
-            parse_mode="Markdown"
-        )
-    except Exception as e:
-        print(f"❌ Start command error: {e}")
-        # Fallback to text
-        await message.answer(
-            text=f"💕 {welcome_text}",
-            reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(
-                    text="💕 Присоединиться к Сообществу",
-                    web_app=WebAppInfo(url=f"{WEB_APP_URL}?lang=ru&user_id={message.from_user.id}")
-                )]
-            ]),
-            parse_mode="Markdown"
-        )
+    # Simple language selection message
+    await message.answer(
+        text="🌍 Tilni tanlang / Выберите язык / Choose language:",
+        reply_markup=keyboard
+    )
 
 @dp.callback_query(F.data.startswith("lang_"))
 async def language_callback(callback: CallbackQuery):
