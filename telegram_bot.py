@@ -27,21 +27,21 @@ TEXTS = {
         'welcome_text': '''Exclusive community for dating based on Telegram — where real girls meet interesting guys.
 
 All profiles go through multi-stage verification, ensuring that every meeting is a unique communication experience with a real person.''',
-        'join_button': '💕 Join Exclusive Community'
+        'join_button': '🖤 Join Exclusive Community'
     },
     'ru': {
         'welcome_title': 'Добро пожаловать в LinkUp Dating 🖤',
         'welcome_text': '''Эксклюзивное сообщество для знакомств на базе Telegram — там, где реальные девушки встречают интересных парней.
 
 Все профили проходят многоступенчатую верификацию, гарантируя, что каждая встреча - это уникальный опыт коммуникации с реальным человеком.''',
-        'join_button': '💕 Присоединиться к Сообществу'
+        'join_button': '🖤 Присоединиться к Сообществу'
     },
     'uz': {
         'welcome_title': 'LinkUp Dating ga xush kelibsiz 🖤',
         'welcome_text': '''Telegram asosidagi eksklyuziv tanishuv hamjamiyati — bu yerda haqiqiy qizlar qiziqarli yigitlar bilan tanishadilar.
 
 Barcha profillar ko'p bosqichli tekshiruvdan o'tadi, bu har bir uchrashuvning haqiqiy odam bilan noyob muloqot tajribasi ekanligini kafolatlaydi.''',
-        'join_button': '💕 Eksklyuziv Hamjamiyatga Qo\'shilish'
+        'join_button': '🖤 Eksklyuziv Hamjamiyatga Qo\'shilish'
     }
 }
 
